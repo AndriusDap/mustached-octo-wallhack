@@ -1,0 +1,38 @@
+Lekseris
+	Komponentai
+		Tokenizer
+		RulePool
+		SyntaxMatcher
+		PostProcessors
+
+
+	Tokenizer ("Žetonatorius")
+		Atliekama funkcija
+		Input
+		Output
+		veikimo principas
+		Testavimas
+
+	RulePool ("Taisyklių sąrašas")
+		Atliekama funkcija
+		Taisyklės
+		veikimo principas
+		Testavimas
+
+	SyntaxMatcher ("Sintaksės atpažinimo sistema")
+		Atliekama funkcija
+		input
+		output
+		veikimo principas
+		optimizacijos
+		Testavimas
+
+	PostProcesorius
+		Atliekama funkcija
+		Input
+		output
+		veikimo princpias
+		post procesoriai
+			...
+		testavimas
+
