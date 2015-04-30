@@ -9,8 +9,50 @@ Summary
 Lentelių sąrašas
 Paveikslų sąrašas
 Terminų ir santrumpų žodynas
+
+	Asemblis – failas, kuris yra LaborasLang programos kompiliavimo rezultatas. 
+	CIL (Common Intermediate Language) – kalba, kurią supranta ir geba vykdyti CLI implementacijų vykdymo aplinkos.
+	CLI (Common Language Infrastructure) – tai specifikacija, aprašanti virtualią vykdymo aplinką ir CIL kodą. CLI yra specifikuota ECMA-335 tarptautiniame standarte. Dvi populiariausios CLI implementacijos yra CLR (.NET karkaso dalis) ir Mono Runtime.
+	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie paduodami LaborasLang kompiliatoriui kaip duomenys. 
+	Įeities taškas (entry point)– speciali funkcija, kuri yra iškviečiama paleidus aplikaciją.
+	Išraiška (expression)– kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
+	Skaitoma išraiška (gettable expression, rvalue) – išraiška, kuri garantuotai gražina reikšmę.
+	Rašoma išraiška (settable expression, lvalue) – išraiška, kuriai galima nustatyti reikšmę.
+	Lokalus kintamasis (local variable) – kintamasis deklaruotas funkcijoje.
+	Globalus kintamasis (global variable) – kintamasis deklaruotas faile.
+	Galiojimo sritis (scope) – taisyklės nusakančios kintamųjų pasiekiamumą.
+	Sąveika (interoperability) – sistemos galimybė bendrauti su kitomis sistemomis. Kalbos kontekste tai yra galimybė naudoti resursus sukurtus kitomis kalbomis, taip pat kitose kalbose naudoti LaborasLang resursus.
+	Blokas, kodo blokas – Kodo fragmentas apribotas simboliais „{“ ir „}“.
+	Literalas (literal) – Kode įrašyta reikšmė.
+	Vertės tipas (value type) – tipas, kurio kintamasis laiko reikšmę.
+	Nuorodos tipas (reference type) – tipas, kurio kintamasis laiko nuorodą į reikšmę.
+	Daugybinis tipas (generic type) – tipas turintis kelis daugybinius parametrus, galintis aprašyti kelis skirtigus tipus.
+	Tipo pseudonimas (type alias) – papildomas vardas skiriamas tipui.
+	Dantytas masyvas (jagged array) – masyvas sudarytas iš kitų masyvų.
+	Automatinis tipo keitimas (implicit cast) – reikšmės tipas pagal poreikį keičiamas be vartotojo reikalavimo.
+	Nurodomasis tipo keitimas (explicit cast) – reikšmės tipas keičiamas, nes taip nurodė vartotojas.
+
+
 Įvadas
+
+	Ši specifikacija aprašo programavimo kalbą, pavadinimu „LaborasLang“. LaborasLang kalbos autoriai yra Andrius Dapševičius, Darius Lapūnas ir Tautvydas Žilys. 
+	Pagrindiniai tikslai, keliami LaborasLang, yra:
+	•	Esamiems programuotojams pažįstama sintaksė. Yra siekiama, kad programuotojai,  pažystami su bet kuria programavimo kalba, kurios sintaksė yra kilusi iš C kalbų šeimos, galėtų greitai išmokti programuoti su LaborasLang.
+	•	Statinė tipų sistema. LaborasLang kompiliatorius turi sugebėti statiškai patikrinti tipų naudojimą.
+	•	Funkcijos – pirmos klasės nariai. LaborasLang programavimo kalboje, funkcijas galima naudoti lygiai taip pat, kaip ir bet kurį kitą duomenų tipą.
+	•	Paprastumas. Vienas iš LaborasLang uždavinių – būti kuo įmanoma paprastesnei.
+	•	Vykdymo greitis. LaborasLang kalba parašytos programos turi galėti efektyviai išnaudoti kompiuterio resursus.
+	•	Sąveika su kitomis programavimo kalbomis. LaborasLang kalba parašytos programos turi galėti naudotis bibliotekomis, kurios yra parašytos kitomis .NET programavimo kalbomis. Dėl šios priežasties, LaborasLang programos yra kompiliuojamos į CIL. Taip pat bibliotekos parašytos LaborasLang turi veikti kitose .NET kalbose.
+
+
 1. Apimtis
+
+	Ši specifikacija apibrėžia LaborasLang programavimo kalbą. Tai apima:
+	•	LaborasLang kalbos leksinę ir sintaksinę gramatiką;
+	•	LaborasLang kalbos semantiką;
+	•	LaborasLang kalbos apribojimus.
+	Kartu su specifikacija pateikiamas pavyzdinio LaborasLang kalbos kompiliatoriaus aprašas.
+
 2. LaborasLang apžvalga
 2.1. Pirmoji LaborasLang programa
 2.2. Tipai
@@ -22,27 +64,32 @@ Terminų ir santrumpų žodynas
 2.3.1. Lokalūs kintamieji
 2.3.2. Globalūs kintamieji
 2.4. Išraiškos
-2.4.1. Literalai
-2.4.2. Masyvai
+2.4.1. Literalai ;;include null
+2.4.2. Simboliai
+2.4.2. Indeksavimas
 2.4.3. Funkcijos
 2.4.4. Funkcijos kvietimai
 2.4.5. Priskyrimo operacija
-2.4.6. Vienvietės operacijos
-2.4.6.1. Aritmeninės operacijos
-2.4.6.2. Loginės operacijos
-2.4.6.3. Bitinės operacijos
-2.4.7. Dvivietės operacijos
+2.4.6. Vienanarės operacijos
+;;2.4.6.1. Aritmeninės operacijos
+;;2.4.6.2. Loginės operacijos
+;;2.4.6.3. Bitinės operacijos
+;;Joined
+2.4.7. Dvinarės operacijos
 2.4.7.1. Aritmetinės operacijos
 2.4.7.2. Loginės operacijos
 2.4.7.3. Bitinės operacijos
 2.4.7.4. Stūmimo operacijos
 2.4.8. Objektų kūrimas
-2.4.9. Išraiška "null"
-2.5. Kontrolės blokai
-2.5.1. Kodo blokas
-2.5.2. Sąlygos sakiniai
-2.5.3. Ciklai
-2.5.4. Rezultato gražinimo sakinys
+2.4.9. Klasių nariai
+2.5. Teiginiai
+2.5.1 Deklaracija
+2.5.2 use
+2.5.3 return
+2.6. Kontrolės blokai
+2.6.1. Kodo blokas
+2.6.2. Sąlygos sakiniai
+2.6.3. Ciklai ;;subskyriai ciklams
 3. LaborasLang gramatika
 3.1. Programos apibrėžimas
 3.2. Leksinė gramatika
@@ -62,6 +109,7 @@ Terminų ir santrumpų žodynas
 5.2.3. Kodo generatorius testavimas
 5.2.3.1. CIL kodo palyginimu grįsti testai
 5.2.3.2. Vykdymu grįsti testai
+5.2.4 Kontraktai/statinė analizė
 5.3. Vartotojo dokumentacija
 5.3.1. Išvesties tipai
 5.3.2. Bibliotekų nuorodos
