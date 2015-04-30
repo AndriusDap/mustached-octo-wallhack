@@ -31,6 +31,8 @@ Terminų ir santrumpų žodynas
 	Dantytas masyvas (jagged array) – masyvas sudarytas iš kitų masyvų.
 	Automatinis tipo keitimas (implicit cast) – reikšmės tipas pagal poreikį keičiamas be vartotojo reikalavimo.
 	Nurodomasis tipo keitimas (explicit cast) – reikšmės tipas keičiamas, nes taip nurodė vartotojas.
+	Funkcijos parametras (function parameter) - funkcijos deklaruojamas kintamasis, kuris įgyja funkcijos argumento reikšmę. ;;geriau nemoku parašyti, bet niekas nežino kuo arg nuo param skirias
+	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
 
 
 Įvadas
@@ -54,12 +56,141 @@ Terminų ir santrumpų žodynas
 	Kartu su specifikacija pateikiamas pavyzdinio LaborasLang kalbos kompiliatoriaus aprašas.
 
 2. LaborasLang apžvalga
-2.1. Pirmoji LaborasLang programa
+	LaborasLang yra statiškai tipuojama, procedūrinė, kompiliuojama, bendros paskirties programavimo kalba, turinti funkcinio programavimo elementų. Šis skyrius aprašo pagrindines LaborasLang kalbos savybes.
+
+	2.1. Pirmoji LaborasLang programa
+
+		Pavyzdinė „Hello, world“ programa LaborasLang kalboje gali būti užrašoma taip:
+
+		use          System;         
+
+		entry auto HelloWorld = void()
+		{
+		    Console.WriteLine("Hello, world!");
+		};
+
+		Išnagrinėkime šią programą po eilutę:
+		•	Sakinys  use System; nurodo, jog šiame faile tipai ir vardų grupės iš System vardų grupės pus tiesiogiai pasiekiami.
+		•	entry auto HelloWorld = void() šioje eilutėje yra deklaruojamas kintamasis HelloWorld. Šiam kintamajam yra priskiriama funkcija, kurios tipas – void(). Kadangi kintamojo deklaravimo metu jam yra priskiriama reikšmė, tai jo tipą galima nustatyti automatiškai – tai nurodo specialus tipas auto. Raktinis žodis entry nurodo, jog šis kintamasis yra įeities taškas.
+		•	{ pažymima funkcijos pradžia.
+		•	Console.WriteLine("Hello, world!"); iškviečiama funkcija WriteLine esanti Console tipe. Tai yra standartinė CLI funkcija.
+		•	}; pažymima funkcijos pabaiga ir užbaigiamas priskyrimo sakinys.
+
+
 2.2. Tipai
-2.2.1. Fundamentalieji tipai
-2.2.2. Funkcijų tipai
-2.2.3. Masyvų tipai
-2.2.4. Tipų konvertavimas
+	LaborasLang palaiko dviejų rūšių tipus: vertės tipus ir nuorodinius tipus. Vertės tipai, skiriasi nuo nuorodinių tipų tuo, kad jie savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
+
+	use System;         
+	use System.Runtime.InteropServices.ComTypes;
+	use System.Text;
+
+	entry auto MyFunction = void()
+	{
+	    FILETIME value;
+	    value.dwLowDateTime = 15;
+
+	    auto reference = StringBuilder("Laboras");
+
+	    Console.WriteLine(value.dwLowDateTime);
+	    Console.WriteLine(reference);
+
+	    auto valueCopy = value;
+	    valueCopy.dwLowDateTime = 20;
+
+	    auto referenceCopy = reference;
+	    referenceCopy.Append("Lang");
+
+	    Console.WriteLine(value.dwLowDateTime);
+	    Console.WriteLine(valueCopy.dwLowDateTime);
+
+	    Console.WriteLine(reference);
+	    Console.WriteLine(referenceCopy);
+	};
+
+	Ši programa atspausdina:
+	15
+	Laboras
+	15
+	20
+	LaborasLang
+	LaborasLang
+
+	Visi palaikomi CLI tipai paveldi iš System.Object. Reikšmės tipai paveldi iš System.ValueType, kuris paveldi iš System.Object. LaborasLang taip pat palaiko sąsajos tipus, kurių objektai gali būti vertės arba nuorodiniai tipai, priklausomai nuo realizacijos.
+
+	2.2.1. Fundamentalieji tipai
+
+		LaborasLang turi keletą fundamentaliųjų tipų, kurie atitinka fundamentaliuosius CLI tipus:
+
+		Tipo vardas	     CLI tipo atitikmuo	     Pastabos
+		bool	         System.Boolean	         Loginis tipas, galintis laikyti 2 reikšmes: true ir false.
+		int8	         System.SByte	         1 baito dydžio sveikasis skaičius su ženklu. Galimos reikšmės: [-128; 127].
+		uint8	         System.Byte	         1 baito dydžio sveikasis skaičius be ženklo, Galimos reikšmės: [0; 255].
+		int16	         System.Int16	         2 baitų dydžio sveikasis skaičius su ženklu. Galimos reikšmės: [-32768; 32767].
+		uint16	         System.UInt16	         2 baitų dydžio sveikasis skaičius be ženklo. Galimos reikšmės: [0; 65535].
+		char	         System.Char	         2 baitų dydžio simbolio tipas.
+		int32, int	     System.Int32	         4 baitų dydžio sveikasis skaičius su ženklu. Galimos reikšmės: [-2147483648; 2147483647].
+		uint32, uint	 System.UInt32	         4 baitų dydžio sveikasis skaičius be ženklo. Galimos reikšmės: [0; 4294967295].
+		int64, long	     System.Int64	         8 baitų dydžio sveikasis skaičius su ženklu. Galimos reikšmės:  [–9,223,372,036,854,775,808; 9,223,372,036,854,775,807].
+		uint64, ulong	 System.UInt64	         8 baitų dydžio sveikasis skaičius be ženklo. Galimos reikšmės: [0; 18,446,744,073,709,551,615].
+		float	         System.Single	         4 baitų dydžio slankaus kablelio skaičius, atitinkantis IEC 60559:1989 standartą.
+		double	         System.Double	         8 baitų dydžio slankaus kablelio skaičius, atitinkantis IEC 60559:1989 standartą.
+		void	         System.Void	         Tipas neturintis reikšmės. Naudojamas pažymėti, jog funkcija negražina rezultato.
+		object	         String.Object	         Objektas – fundamentaliausias tipas. Jis gali laikyti bet kurio kito tipo reikšmes.
+		string	         System.String	         Simbolių eilutės tipas.
+
+		Fundamentalieji tipai išskyrus void, object ir string yra taip pat vadinami primityviaisiai tipais. Jie yra naudojami atliekant standartines operacijas ir sudaro kitus CLI tipus. ;;might be BS, bet kažkaip noriu parašyti kad yra primitives. paskui primitives naudoju apie castus rašydamas
+
+		Fundamentaliųjų tipų vardai yra pseudonimai CLI tipams ir jie yra kompiliavimo metu verčiami į tikruosiu tipus.
+		Todėl:
+
+		string foo;
+		ir 
+		System.String foo;
+
+		yra sukompiliuojami į identišką kodą.
+
+	2.2.2. Funkcijų tipai
+
+		LaborasLang kalboje, funkcijų tipus apibrėžia funkcijos gražinamas tipas ir jos priimamų argumentų tipai. Pilna funkcijos tipo sintaksė yra:
+
+		<gražinamas tipas>(<parametrų tipai atskirti kableliais>)
+
+		Ir gražinamas tipas, ir parametrų tipai gali būti bet kokie LaborasLang palaikomi tipai. Keletas funkcijų tipų pavydžių:
+		void() – funkcija negražina rezultato ir nepriima jokių argumentų.
+		void(int, double) nurodo, jog funkcija negražina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
+		string(string, string()) nurodo, jog funkcija gražina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir funkcija, kuri gražina string tipo rezultatą.
+		int[](System.Collections.IList)
+
+		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše reikšdavo nulį parametrų nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
+
+		Kadangi funkcijos yra pirmos klasės nariai, funkcijos taip pat gali gražinti kitas funkcijas. Pavyzdys: 
+
+		string()() - funkcija, kuri gražina string() tipo funkciją ir neima jogių argumentų.
+
+		Funkcijų tipams yra naudojamos kompiliatoriaus generuotos klasės, kurių tiksli realizacija gali priklausyti nuo kompiliatoriaus. Taip funkcijos gali be jokių papildomų išlygų tapti tipų sistemos dalimi.
+
+		;; compiler spece reiktų parašyti tą tikslią realizaciją, tipo jei kas norės su laboraslang interopintis
+
+		;; IMO, čia visai ne į temą. skyrius vadinasi Funkcijų tipai, o rašai apie calls, higer order functions ir panašius dalykus
+		;; galima parašyti "daugiau apie funkcijas ir funkcijų tipus skyriuje Funkcijos"
+
+		Funkcija, kurią laiko funkcijos tipo kintamasis, yra iškviečiama šalia kintamojo parašant skliausteliuose argumentus, atskirtus kableliais. Pavyzdžiui:
+		void(int, double) myVariable = someFunction;
+		myVariable(3, 5.8);
+
+		Funkcijų tipus labai patogu naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms:
+		int(int()) GetFunctionResultPlusOne = int(int() function)
+		{
+		    return function() + 1;
+		};
+
+		void() PrintSix = void()
+		{
+		    Console.WriteLine(GetFunctionResultPlusOne(int() { return 5; }));
+		};
+
+	2.2.3. Masyvų tipai
+	2.2.4. Tipų konvertavimas
 2.3. Kintamieji
 2.3.1. Lokalūs kintamieji
 2.3.2. Globalūs kintamieji
