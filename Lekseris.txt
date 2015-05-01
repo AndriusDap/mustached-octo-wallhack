@@ -1,16 +1,32 @@
-Lekseris
+Lekserio implementacija
+	Apžvalga/aprašas ;;Nežinau kaip šitas turėtų vadintis
+		Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
+		Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
+			1. Išeities kodo skaidymas žetonais (leksemomis)
+			2. Pirminis žetonų formavimas į abstraktų sintaksės medį
+			3. AST medžio apdorojimas baigiamosiomis doroklėmis (post processors)
+		Pirmas žingsnis atliekamas "Tokenizer" komponento, antrasis - "Syntax matcher" modulio, trečiasis "Post processor" modulio. ;;todo išversti šitus žodžius, gal Jusas pasiūlys kokias lietuviškas alternatyvas
 	Komponentai
 		Tokenizer
-		RulePool
+			Šis komponentas iš išeities kodo teksto sugeneruoja sąrašą leksemų kurios turi tam tikrą tipą, turinį, vietą pradiniame išeities kode.
+			RulePool
+			Šis komponentas yra statinis kalbos gramatinių taisyklių sąrašas kuris naudojamas SyntaxMatcher modulio. Šis modulis nusako visą abstraktaus sintaksės medžio struktūrą kuri bus išlaikoma iki apdorojomo baigiamosiomis daryklėmis. Visos aprašytos taisyklės yra bekontekstės, naudojama PEG gramatika. Konteksto nebuvimas apsunkina operatorių analizę, dėl to jų operacijų prioritetą atitinkantis medis yra suformuojamas baigiamosiomis daryklėmis.
 		SyntaxMatcher
+			Šis komponentas analizuoja leksemų sąrašą ir iš jo suformuoja medį pagal RulePool modulyje aprašytas taisykles.
 		PostProcessors
-
+			Šis komponentas leidžia atlikti kontektines operacijas su abstrakčiu sintaksės medžiu. Tai panaudojama atlikti veiksmus kurie yra labai sudėtingi naudojant PEG gramatiką. Šie veiksmai yra:
+				Operatorių prioritetizavimas
+				Funkcijų ir masyvų atskyrimas
+				Neigiamų skaičių atpažinimas
+				Taško operatoriaus apdorojimas
+				Perteklinių medžio šakų minimizavimas
 
 	Tokenizer ("Žetonatorius")
 		Atliekama funkcija
 		Input
 		Output
 		veikimo principas
+			Modulio veikimo principas - iš eilės skaitomas tekstas po vieną simbolį kol nuskaityti simboliai gali būti sujungti į vieną leksemą, pvz tekstas {code}pirmas=antras+trečias;{code} bus pradėtas skaityti, pirmas rastas simbolis yra raidė 'p', iš to galima nuspręsti kad tai bus simbolis. Šis simbolis skaitomas kol bus rasta raidė netinkama simboliams - '=', tada simbolis bus užsaugotas, patikrita ar tai yra vienas iš rezervuotų žodžių tam kad nustatyti teisingą tipą ir pridėtas į leksemų sąrašą. Analogiškai bus apdorojami ir likęs išeities kodas.
 		Testavimas
 
 	RulePool ("Taisyklių sąrašas")
