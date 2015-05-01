@@ -266,11 +266,27 @@ Terminų ir santrumpų žodynas
 
 		2.3.1. Lokalūs kintamieji
 
-			Lokalūs kintamieji yra kintamieji deklaruoti funkcijos viduje. Šių kintamųjų galiojimo sritis yra kodo blokas, kuriame jie buvo deklaruoti, su išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Jeigu kintamojo galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip skaitomą reikšmę.
+			Lokalūs kintamieji yra kintamieji deklaruoti funkcijos viduje. Šių kintamųjų galiojimo sritis yra kodo blokas, kuriame jie buvo deklaruoti, su keliomis išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Jeigu kintamojo galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip skaitomą reikšmę.
 
 		2.3.2. Globalūs kintamieji
+
+			Deklaruojant kintamajį tiesiogiai faile, bus sukuriamas globalus kintamasis. Tokio kintamojo galiojimo sritis yra visas failas, juo galima naudotis anksčiau negu jis yra deklaruotas. Kintamajį, priklausomai nuo deklaracijos, taip pat galima pasiekti iš kitų failų. Plačiau apie tai skyriuje atributai.
+
 		2.3.3. Funkcijų parametrai
 
+			Funkcijos deklaraciją sudaro jos parametrai. Šie parametrai yra kintamieji, kurie įgis funkcijai perduotų argumentų reikšmes. Parametrų galiojimo sritis yra visas funkcijos blokas, bet jų panaudojimas nesiskiria nuo lokalių kintamųjų.
+
+	2.4 Atributai
+
+		Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti konstanta. Deklaracijoje galima pridėti po vieną kiekvienos rūšies atributą. Nepridėjus atributo rūšies bus nustatoma standartinis atributas, kuris priklauso nuo deklracijos.
+
+		2.4.1 Kintamumo atributai
+
+			Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, būtina deklarauotį jį su mutable atributu. Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų.
+
+		2.4.2 Pasiekiamumo atributai
+
+			Pasiekiamumo atributai naudojami apriboti globalių kintamųjų galiojimo sritį. Yra du pasiekiamumo atributai - private ir public. private kintamieji yra pasiekiami tik iš failo kuriame yra deklaruoti, public kintamieji yra pasiekiami iš bet kurio failo. Standartinis atributas yra private. Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
 
 	2.4. Išraiškos
 		2.4.1. Literalai ;;include null
