@@ -147,7 +147,7 @@ Terminų ir santrumpų žodynas
 		ir 
 		System.String foo;
 
-		yra sukompiliuojami į įdentišką kodą.
+		yra sukompiliuojami į identišką kodą.
 
 	2.2.2. Funkcijų tipai
 
