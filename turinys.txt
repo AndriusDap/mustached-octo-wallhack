@@ -62,7 +62,7 @@ Terminų ir santrumpų žodynas
 
 		Pavyzdinė „Hello, world“ programa LaborasLang kalboje gali būti užrašoma taip:
 
-		use          System;         
+		use System;         
 
 		entry auto HelloWorld = void()
 		{
@@ -140,14 +140,14 @@ Terminų ir santrumpų žodynas
 
 		Fundamentalieji tipai išskyrus void, object ir string yra taip pat vadinami primityviaisiai tipais. Jie yra naudojami atliekant standartines operacijas ir sudaro kitus CLI tipus. ;;might be BS, bet kažkaip noriu parašyti kad yra primitives. paskui primitives naudoju apie castus rašydamas
 
-		Fundamentaliųjų tipų vardai yra pseudonimai CLI tipams ir jie yra kompiliavimo metu verčiami į tikruosiu tipus.
+		Fundamentaliųjų tipų vardai yra pseudonimai CLI tipams ir jie yra kompiliavimo metu verčiami į tikruosius tipus.
 		Todėl:
 
 		string foo;
 		ir 
 		System.String foo;
 
-		yra sukompiliuojami į identišką kodą.
+		yra sukompiliuojami į indentišką kodą.
 
 	2.2.2. Funkcijų tipai
 
@@ -157,9 +157,9 @@ Terminų ir santrumpų žodynas
 
 		Ir gražinamas tipas, ir parametrų tipai gali būti bet kokie LaborasLang palaikomi tipai. Keletas funkcijų tipų pavydžių:
 		void() – funkcija negražina rezultato ir nepriima jokių argumentų.
-		void(int, double) nurodo, jog funkcija negražina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
-		string(string, string()) nurodo, jog funkcija gražina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir funkcija, kuri gražina string tipo rezultatą.
-		int[](System.Collections.IList)
+		void(int, double) - funkcija negražina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
+		string(string, string()) - funkcija gražina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir funkcija, kuri gražina string tipo rezultatą.
+		int[](System.Collections.IList) - funkcija gražina masyvą, kurio elemento tipas yra int, ir priima vieną argumentą, kurio tipas yra System.Collections.IList.
 
 		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše reikšdavo nulį parametrų nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
 
@@ -173,6 +173,8 @@ Terminų ir santrumpų žodynas
 
 		;; IMO, čia visai ne į temą. skyrius vadinasi Funkcijų tipai, o rašai apie calls, higer order functions ir panašius dalykus
 		;; galima parašyti "daugiau apie funkcijas ir funkcijų tipus skyriuje Funkcijos"
+
+		;; Aš manau, jog čia tam sakiniui apie implementacija tikrai ne vieta - T.
 
 		Funkcija, kurią laiko funkcijos tipo kintamasis, yra iškviečiama šalia kintamojo parašant skliausteliuose argumentus, atskirtus kableliais. Pavyzdžiui:
 		void(int, double) myVariable = someFunction;
@@ -193,20 +195,20 @@ Terminų ir santrumpų žodynas
 
 		LaborasLang palaiko masyvų kūrimą iš visų palaikomų tipų. Masyvo tipą sudaro elemento tipas ir matmenų skaičius, visi masyvai yra indeksuojami nuo nulio. Tipų sistema nedengia masyvo matmenų ilgio, tik jų skaičių. Skaičius deklaruojamas kableliais tarp laužtinių skliaustų. Gautas masyvas turės vienu matmeniu daugiau negu tipe yra kablelių. 
 
-		Masyvo tipas yra nuorodos tipas, vieno matmens masyvai atitinka CLI vektoriaus specifikaciją, kelių matmenų masyvai (matricos) atitinka CLI masyvo specifikaciją.  Maksimalus masyvo matmenų skaičius yra 32. 
+		Masyvo tipas yra nuorodos tipas, vieno matmens masyvai atitinka CLI vektoriaus specifikaciją, kelių matmenų masyvai (matricos) atitinka CLI masyvo specifikaciją. Maksimalus masyvo matmenų skaičius yra 32. 
 
 		<elemento tipas>[<matmenų skaičiaus deklaracija>]
 
 		Pavyzdžiai:
 		int[] //vienmatis int masyvas
 		float[,] //dvimatis float masyvas
-		System.IO.File[,,] //trimatis failų masyvas
+		System.Version[,,] // Trimatis versijų masyvas
 
 		Taip pat, galima deklaruoti funkcijų masyvus.
 
 		int(int)[]
 
-		Arba masyvus sudarytus iš kitų masyvų, kitaip dantytus masyvus.
+		Arba masyvus sudarytus iš kitų masyvų (t.y. dantytus masyvus).
 
 		int[][]
 
@@ -240,16 +242,13 @@ Terminų ir santrumpų žodynas
 			•	Vienas iš tipų gali būti automatiškai keičiamas kitu;
 			•	Abu tipai yra primityvūs ir nei vienas jų nėra bool.
 
-			Keitimai tarp bool ir kitų primityvių tipų nėra leidžiamas, nes rasta vykdymo greičio ar skaitomumo padidėjimų.
-			;; kažkaip reikia parašyti kodėl bool neleidžiama
-
 	2.2.5 Null reikšmės tipas
 
 		null yra išskirtinė reikšmė tuo, kad ji neturi tipo. Ją gali įgyti bet koks nuorodinio tipo kintamasis.
 
 	2.2.6 Automatinis tipo radimas
 
-		LaborasLang palaiko ribotą automatinį tipų radimą. Deklaruojant kintamuosius galima nurodyti auto tipą. Tokioje deklaracijoje tipas bus randamas automatiškai, bet kintamąjį būtina inicializuoti.  Kompiliavimo metu kintamojo tipas nustatomas toks pat kaip inicializatoriaus. Pavyzdys:
+		LaborasLang palaiko ribotą automatinį tipų radimą. Deklaruojant kintamuosius galima nurodyti auto tipą. Tokioje deklaracijoje tipas bus randamas automatiškai, bet kintamąjį būtina inicializuoti. Kompiliavimo metu kintamojo tipas nustatomas toks pat kaip inicializatoriaus. Pavyzdys:
 
 		auto str = "text";
 
@@ -257,7 +256,7 @@ Terminų ir santrumpų žodynas
 
 		string str = "text";
 
-		Abi deklaracijos sukompiliuojamos į identišką kodą.
+		Abi deklaracijos sukompiliuojamos į indentišką kodą.
 
 	2.3. Kintamieji
 
