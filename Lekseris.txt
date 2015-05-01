@@ -30,6 +30,9 @@ Lekserio implementacija
 			Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu su testų duomenų sąrašu.
 	RulePool ("Taisyklių sąrašas")
 		Atliekama funkcija
+			Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką.
+			Taisyklės yra sudaromos iš terminalinių ir neterminalinių simbolių. Kiekvienam neterminaliniam simboliui yra nurodoma taisyklė kuri jį aprašo terminaliniais ir neterminalianiais simboliais. Vieną neterminalinį simbolį galima aprašyti keliomis skirtingomis taisyklėmis, jos bus taikomos iš eilės pagal deklaravimo tvarką. Taisyklėse naudjoami terminalinių ir neterminalinų leksemų modifikatoriai: 
+				
 		Taisyklės
 		veikimo principas
 		Testavimas
