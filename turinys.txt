@@ -298,6 +298,57 @@ Terminų ir santrumpų žodynas
 		2.6.1. Kodo blokas
 		2.6.2. Sąlygos sakiniai
 		2.6.3. Ciklai ;;subskyriai ciklams
+
+			LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	;; Worde pakeisti kabutes į keyword style
+
+			2.6.3.1. while ciklas
+				
+				while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo teiginio. Ciklas yra vykdomas tol, kol ciklo sąlyga yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
+
+				while (<sąlyga>)
+				    <teiginys>
+
+				Ciklo teiginys yra bet koks LaborasLang kalboje legalus teiginys (kodo blokas, sąlyga, ciklas ir t.t.).
+				
+				Keletas while ciklo pavyzdžių:
+
+				while (foo-- > 0)
+				    Report(foo);
+
+				while (IsValid(bar))
+				{
+					if (bar % 2 == 0)
+						Console.WriteLine(bar);
+
+					bar = Transform(bar);
+				}
+
+			2.6.3.2. C stiliaus for ciklas
+
+				LaborasLang kalba palaiko C stiliaus for ciklą - jis pasiskolintas iš C ir yra palaikomas daugumos C kalbos stiliaus kalbų. Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus for ciklo struktūra yra tokia:
+
+				for (<inicializatorius>; <sąlyga>; <iteratorius>)
+					<teiginys>
+
+				;; Reik tiksliai paaiškinti kas gali būti inicializatoriuje, sąlygoje ir iteratoriuje. Aš nesu visiškai tikras - T.
+
+				Ciklas pradedamas vykdyti įvykdant inicializatorių - jis vykdomas vieną kartą per visą ciklas. Tada, vykdomas pats ciklas: kol sąlyga teisinga, vykdomas teiginys, o jį įvykdžius - iteratorius.
+
+				Kiekvienas iš šio for ciklo atraštės dalių gali būti praleistas. Jei sąlyga praleista, ji pakeičiama "true" išraiška. For ciklo pavyzdžiai:
+
+				// Šis for ciklas spausdina "Spinning infinitely" be galo.
+				for (;;)
+				    Console.WriteLine("Spinning infinitely");
+
+
+				// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
+				for (int i = 0; i < 10; i++)
+				    Console.WriteLine(i);
+
+			2.6.3.3. Kolekcijos iteravimo for ciklas
+
+				;; TO DO
+
 3. LaborasLang gramatika
 	3.1. Programos apibrėžimas
 	3.2. Leksinė gramatika
