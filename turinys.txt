@@ -242,9 +242,6 @@ Terminų ir santrumpų žodynas
 			•	Vienas iš tipų gali būti automatiškai keičiamas kitu;
 			•	Abu tipai yra primityvūs ir nei vienas jų nėra bool.
 
-			Keitimai tarp bool ir kitų primityvių tipų nėra leidžiamas, nes rasta vykdymo greičio ar skaitomumo padidėjimų.
-			;; kažkaip reikia parašyti kodėl bool neleidžiama
-
 	2.2.5 Null reikšmės tipas
 
 		null yra išskirtinė reikšmė tuo, kad ji neturi tipo. Ją gali įgyti bet koks nuorodinio tipo kintamasis.
