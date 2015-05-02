@@ -369,7 +369,7 @@ Terminų ir santrumpų žodynas
 			Inicializuojant deklaraciją, jos tipą galima nustatyti "auto". Tada kintamojo tipas bus toks pat kaip inicializatoriaus išraiškos. 
 
 			auto numbers = int[5];
-			auto sudoku = void(){sudoku();};
+			auto sudoku = void() { sudoku(); };	;; Ar pažiūrėjai, kad buildintųsi? Aš galvojau toks capture neveikia.
 
 			;; čia dubliuojasi su skyriumi Automatinis tipo radimas, galvosiu kaip keisti - D.
 			Deklaruojant "auto" tipą taikomi du apribojimai:
@@ -560,7 +560,7 @@ Terminų ir santrumpų žodynas
 
 				Ciklo iteratorius, jei toks yra, gali būti bet kokia išraiška.
 
-				Ciko teiginys yra bet koks LaborasLang teiginys, išskyrus "use" teiginį.
+				Ciklo teiginys yra bet koks LaborasLang teiginys, išskyrus "use" teiginį.
 
 				Ciklo vykdymo tvaka:
 
@@ -623,14 +623,14 @@ Terminų ir santrumpų žodynas
 				Ciklo pavyzdžiai:
 
 				// iteruojama per masyvą
-				auto arr = int[]{1, 2, 3, 4};
-				for(auto i in arr)
+				auto arr = int[] { 1, 2, 3, 4 };
+				for (auto i in arr)
 					Console.WriteLine(i);
 				// išspausdins skaičius 1 - 4
 
 				// iterauojama per kolekciją
 				ArrayList lst = ...
-				for(object i in lst)
+				for (object i in lst)
 					Console.WriteLine(i.ToString());
 				// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
