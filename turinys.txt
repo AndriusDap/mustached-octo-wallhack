@@ -78,7 +78,9 @@ Terminų ir santrumpų žodynas
 
 
 2.2. Tipai
-	LaborasLang palaiko dviejų rūšių tipus: vertės tipus ir nuorodinius tipus. Vertės tipai, skiriasi nuo nuorodinių tipų tuo, kad jie savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
+	LaborasLang palaiko dviejų rūšių tipus: vertės tipus ir nuorodinius tipus. Vertės tipai, skiriasi nuo nuorodinių tipų tuo, kad jie 
+	savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad 
+	pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
 
 	use System;         
 	use System.Runtime.InteropServices.ComTypes;
@@ -115,7 +117,8 @@ Terminų ir santrumpų žodynas
 	LaborasLang
 	LaborasLang
 
-	Visi palaikomi CLI tipai paveldi iš System.Object. Reikšmės tipai paveldi iš System.ValueType, kuris paveldi iš System.Object. LaborasLang taip pat palaiko sąsajos tipus, kurių objektai gali būti vertės arba nuorodiniai tipai, priklausomai nuo realizacijos.
+	Visi palaikomi CLI tipai paveldi iš System.Object. Reikšmės tipai paveldi iš System.ValueType, kuris paveldi iš System.Object. 
+	LaborasLang taip pat palaiko sąsajos tipus, kurių objektai gali būti vertės arba nuorodiniai tipai, priklausomai nuo realizacijos.
 
 	2.2.1. Fundamentalieji tipai
 
@@ -138,7 +141,9 @@ Terminų ir santrumpų žodynas
 		object	         String.Object	         Objektas – fundamentaliausias tipas. Jis gali laikyti bet kurio kito tipo reikšmes.
 		string	         System.String	         Simbolių eilutės tipas.
 
-		Fundamentalieji tipai išskyrus void, object ir string yra taip pat vadinami primityviaisiai tipais. Jie yra naudojami atliekant standartines operacijas ir sudaro kitus CLI tipus. ;;might be BS, bet kažkaip noriu parašyti kad yra primitives. paskui primitives naudoju apie castus rašydamas
+		Fundamentalieji tipai išskyrus void, object ir string yra taip pat vadinami primityviaisiai tipais. Jie yra naudojami atliekant 
+		standartines operacijas ir sudaro kitus CLI tipus. 
+		;;might be BS, bet kažkaip noriu parašyti kad yra primitives. paskui primitives naudoju apie castus rašydamas
 
 		Fundamentaliųjų tipų vardai yra pseudonimai CLI tipams ir jie yra kompiliavimo metu verčiami į tikruosius tipus.
 		Todėl:
@@ -151,23 +156,32 @@ Terminų ir santrumpų žodynas
 
 	2.2.2. Funkcijų tipai
 
-		LaborasLang kalboje, funkcijų tipus apibrėžia funkcijos gražinamas tipas ir jos priimamų argumentų tipai. Pilna funkcijos tipo sintaksė yra:
+		LaborasLang kalboje, funkcijų tipus apibrėžia funkcijos gražinamas tipas ir jos priimamų argumentų tipai. 
+		Pilna funkcijos tipo sintaksė yra:
 
 		<grąžinamas tipas>(<parametrų tipai atskirti kableliais>)
 
 		Ir grąžinamas tipas, ir parametrų tipai gali būti bet kokie LaborasLang palaikomi tipai. Keletas funkcijų tipų pavydžių:
-		void() – funkcija negrąžina rezultato ir nepriima jokių argumentų.
-		void(int, double) - funkcija negrąžina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
-		string(string, string()) - funkcija grąžina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir funkcija, kuri grąžina string tipo rezultatą.
-		int[](System.Collections.IList) - funkcija grąžina masyvą, kurio elemento tipas yra int, ir priima vieną argumentą, kurio tipas yra System.Collections.IList.
 
-		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše reikšdavo parametrų nebuvimą nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
+		void() – funkcija negrąžina rezultato ir nepriima jokių argumentų.
+
+		void(int, double) - funkcija negrąžina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
+
+		string(string, string()) - funkcija grąžina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir 
+		funkcija, kuri grąžina string tipo rezultatą.
+
+		int[](System.Collections.IList) - funkcija grąžina masyvą, kurio elemento tipas yra int, ir priima vieną argumentą, kurio tipas 
+		yra System.Collections.IList.
+
+		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše 
+		reikšdavo parametrų nebuvimą nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
 
 		Kadangi funkcijos yra pirmos klasės nariai, funkcijos taip pat gali gražinti kitas funkcijas. Pavyzdys: 
 
 		string()() - funkcija, kuri gražina string() tipo funkciją ir neima jokių argumentų.
 
-		Funkcijų tipams yra naudojamos kompiliatoriaus generuotos klasės, kurių tiksli realizacija gali priklausyti nuo kompiliatoriaus. Taip funkcijos gali be jokių papildomų išlygų tapti tipų sistemos dalimi.
+		Funkcijų tipams yra naudojamos kompiliatoriaus generuotos klasės, kurių tiksli realizacija gali priklausyti nuo kompiliatoriaus. Taip 
+		funkcijos gali be jokių papildomų išlygų tapti tipų sistemos dalimi.
 
 		;; compiler spece reiktų parašyti tą tikslią realizaciją, tipo jei kas norės su laboraslang interopintis
 
@@ -193,9 +207,12 @@ Terminų ir santrumpų žodynas
 
 	2.2.3. Masyvų tipai
 
-		LaborasLang palaiko masyvų kūrimą iš visų palaikomų tipų. Masyvo tipą sudaro elemento tipas ir matmenų skaičius, visi masyvai yra indeksuojami nuo nulio. Tipų sistema nedengia masyvo matmenų ilgio, tik jų skaičių. Skaičius deklaruojamas kableliais tarp laužtinių skliaustų. Gautas masyvas turės vienu matmeniu daugiau negu tipe yra kablelių. 
+		LaborasLang palaiko masyvų kūrimą iš visų palaikomų tipų. Masyvo tipą sudaro elemento tipas ir matmenų skaičius, visi masyvai yra 
+		indeksuojami nuo nulio. Tipų sistema nedengia masyvo matmenų ilgio, tik jų skaičių. Skaičius deklaruojamas kableliais tarp laužtinių 
+		skliaustų. Gautas masyvas turės vienu matmeniu daugiau negu tipe yra kablelių. 
 
-		Masyvo tipas yra nuorodos tipas, vieno matmens masyvai atitinka CLI vektoriaus specifikaciją, kelių matmenų masyvai (matricos) atitinka CLI masyvo specifikaciją. Maksimalus masyvo matmenų skaičius yra 32. 
+		Masyvo tipas yra nuorodos tipas, vieno matmens masyvai atitinka CLI vektoriaus specifikaciją, kelių matmenų masyvai (matricos) atitinka 
+		CLI masyvo specifikaciją. Maksimalus masyvo matmenų skaičius yra 32. 
 
 		<elemento tipas>[<matmenų skaičiaus deklaracija>]
 
@@ -212,12 +229,19 @@ Terminų ir santrumpų žodynas
 
 		int[][]
 
-		Kadangi dantytą masyvą sudaro tik nuorodos į kitus masyvus, tokio masyvo matmenų ilgis yra neribojamas. Maksimalus įmanomas matmenų skaičius priklauso nuo kompiliatoriaus realizacijos, taip pat nuo veikimo aplinkos (kompiliatoriaus ir gautos programos).
+		Kadangi dantytą masyvą sudaro tik nuorodos į kitus masyvus, tokio masyvo matmenų ilgis yra neribojamas. Maksimalus įmanomas matmenų 
+		skaičius priklauso nuo kompiliatoriaus realizacijos, taip pat nuo veikimo aplinkos (kompiliatoriaus ir gautos programos).
 
 	2.2.4. Tipų keitimas
 
-		LaborasLang tipų sistema nėra griežta, norint galima keisti reikšmių tipus, bet kompiliatorius užtikrina keitimo korektiškumą jei tai yra įmanoma. Kadangi korektiškumą garantuoti yra įmanoma tik labai retais atvejais ir naudojant sudėtingą statinę analizę, kompiliatorius leidžia tik akivaizdžiai teisingus keitimus.
-		Tipo keitimas yra reikalingas keliose situacijose. Pirma, yra daug sveikųjų skaičių tipų, kurie visi laiko tą pačią informaciją panašiu formatu. Taip galima pasirinkti geriausią tipą, bet gali reikėti keitimų perduodant duomenis. Antra, objektinis programavimas reikalauja keitimų. Su keitimais objektų tipai neturi atitikti kintamųjų tipų, užtenka, kad paveldėtų jų tipus. 
+		LaborasLang tipų sistema nėra griežta, norint galima keisti reikšmių tipus, bet kompiliatorius užtikrina keitimo korektiškumą jei 
+		tai yra įmanoma. Kadangi korektiškumą garantuoti yra įmanoma tik labai retais atvejais ir naudojant sudėtingą statinę analizę, 
+		kompiliatorius leidžia tik akivaizdžiai teisingus keitimus.
+
+		Tipo keitimas yra reikalingas keliose situacijose. Pirma, yra daug sveikųjų skaičių tipų, kurie visi laiko tą pačią informaciją 
+		panašiu formatu. Taip galima pasirinkti geriausią tipą, bet gali reikėti keitimų perduodant duomenis. Antra, objektinis programavimas 
+		reikalauja keitimų. Su keitimais objektų tipai neturi atitikti kintamųjų tipų, užtenka, kad paveldėtų jų tipus. 
+
 		Yra naudojami du keitimų tipai: automatinis keitimas ir nurodomasis keitimas.
 
 		2.2.4.1 Automatinis tipo keitimas
@@ -233,11 +257,14 @@ Terminų ir santrumpų žodynas
 
 			;;čia mano papaišyta nuostabi lentelė "assignment map.jpg"
 
-			Šios taisyklės yra tranzityvios, t.y. jei uint8 galima keisti į int16, o int16 į int32, leidžiama ir uint8 keitimas į int32. Vienintelė išlyga reikalavimui dėl korektiškumo yra sveikųjų skaičių keitimas į realiuosius, nors tai gali neduodi tikslių rezultatų artėjant prie kraštutinių reikšmių, dėl paprastumo šis keitimas leidžiamas.
+			Šios taisyklės yra tranzityvios, t.y. jei uint8 galima keisti į int16, o int16 į int32, leidžiama ir uint8 keitimas į int32. 
+			Vienintelė išlyga reikalavimui dėl korektiškumo yra sveikųjų skaičių keitimas į realiuosius, nors tai gali neduodi tikslių 
+			rezultatų artėjant prie kraštutinių reikšmių, dėl paprastumo šis keitimas leidžiamas.
 
 		2.2.4.2 Nurodomasis tipo keitimas
 
-			Jeigu statiškai neįmanoma įrodyti keitimo korektiškumo, bet vartotojas žino, jog jis bus teisingas, galimas nurodomasis keitimas. Šiame keitime vartotojas nurodo tipą į kurį nori keisti. Kompiliatorius draudžia tik tuos nurodomuosius keitimus, kurie yra garantuotai neteisingi. 
+			Jeigu statiškai neįmanoma įrodyti keitimo korektiškumo, bet vartotojas žino, jog jis bus teisingas, galimas nurodomasis keitimas. 
+			Šiame keitime vartotojas nurodo tipą į kurį nori keisti. Kompiliatorius draudžia tik tuos nurodomuosius keitimus, kurie yra garantuotai neteisingi. 
 			Turi būti patenkinta viena iš sąlygų:
 			•	Vienas iš tipų gali būti automatiškai keičiamas kitu;
 			•	Abu tipai yra primityvūs ir nei vienas jų nėra bool.
@@ -248,7 +275,8 @@ Terminų ir santrumpų žodynas
 
 	2.2.6 Automatinis tipo radimas
 
-		LaborasLang palaiko ribotą automatinį tipų radimą. Deklaruojant kintamuosius galima nurodyti auto tipą. Tokioje deklaracijoje tipas bus randamas automatiškai, bet kintamąjį būtina inicializuoti. Kompiliavimo metu kintamojo tipas nustatomas toks pat kaip inicializatoriaus. Pavyzdys:
+		LaborasLang palaiko ribotą automatinį tipų radimą. Deklaruojant kintamuosius galima nurodyti auto tipą. Tokioje deklaracijoje tipas 
+		bus randamas automatiškai, bet kintamąjį būtina inicializuoti. Kompiliavimo metu kintamojo tipas nustatomas toks pat kaip inicializatoriaus. Pavyzdys:
 
 		auto str = "text";
 
@@ -260,32 +288,48 @@ Terminų ir santrumpų žodynas
 
 	2.3. Kintamieji
 
-		LaborasLang palaiko trijų tipų kintamuosius: lokalius kintamuosius, globalius kintamuosius ir funkcijų parametrus. Pagrindiniai kintamųjų panaudojimo skirtumai yra jų galiojimo sritis.
+		LaborasLang palaiko trijų tipų kintamuosius: lokalius kintamuosius, globalius kintamuosius ir funkcijų parametrus. Pagrindiniai 
+		kintamųjų panaudojimo skirtumai yra jų galiojimo sritis.
 		;; kiti skirtumai yra kur alokuojama, kada dealokuojama, gal šitą kada reikės parašyti
 
 		2.3.1. Lokalūs kintamieji
 
-			Lokalūs kintamieji yra kintamieji deklaruoti funkcijos viduje. Šių kintamųjų galiojimo sritis yra kodo blokas, kuriame jie buvo deklaruoti, su keliomis išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Jeigu kintamojo galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip skaitomą reikšmę.
+			Lokalūs kintamieji yra kintamieji deklaruoti funkcijos viduje. Šių kintamųjų galiojimo sritis yra kodo blokas, kuriame jie buvo 
+			deklaruoti, su keliomis išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Jeigu kintamojo 
+			galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip skaitomą reikšmę.
 
 		2.3.2. Globalūs kintamieji
 
-			Deklaruojant kintamajį tiesiogiai faile, bus sukuriamas globalus kintamasis. Tokio kintamojo galiojimo sritis yra visas failas, juo galima naudotis anksčiau negu jis yra deklaruotas. Kintamajį, priklausomai nuo deklaracijos, taip pat galima pasiekti iš kitų failų. Plačiau apie tai skyriuje "Atributai".
+			Deklaruojant kintamajį tiesiogiai faile, bus sukuriamas globalus kintamasis. Tokio kintamojo galiojimo sritis yra visas failas, 
+			juo galima naudotis anksčiau negu jis yra deklaruotas. Kintamajį, priklausomai nuo deklaracijos, taip pat galima pasiekti iš 
+			kitų failų. Plačiau apie tai skyriuje "Atributai".
 
 		2.3.3. Funkcijų parametrai
 
-			Funkcijos deklaraciją sudaro jos parametrai. Šie parametrai yra kintamieji, kurie įgis funkcijai perduotų argumentų reikšmes. Parametrų galiojimo sritis yra visas funkcijos blokas, bet jų panaudojimas nesiskiria nuo lokalių kintamųjų.
+			Funkcijos deklaraciją sudaro jos parametrai. Šie parametrai yra kintamieji, kurie įgis funkcijai perduotų argumentų reikšmes. 
+			Parametrų galiojimo sritis yra visas funkcijos blokas, bet jų panaudojimas nesiskiria nuo lokalių kintamųjų.
 
 	2.4 Atributai
 
-		Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti konstanta. Deklaracijoje galima pridėti po vieną kiekvienos rūšies atributą. Nepridėjus atributo rūšies bus nustatoma standartinis atributas, kuris priklauso nuo deklracijos.
+		Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - 
+		pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti 
+		konstanta. Deklaracijoje galima pridėti po vieną kiekvienos rūšies atributą. Nepridėjus atributo rūšies bus nustatoma 
+		standartinis atributas, kuris priklauso nuo deklracijos.
 
 		2.4.1 Kintamumo atributai
 
-			Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, būtina deklarauotį jį su mutable atributu. Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. ;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
+			Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, 
+			jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. Standartinis 
+			atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
+			taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
+			būtina deklarauotį jį su mutable atributu. Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. 
+			;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
 
 		2.4.2 Pasiekiamumo atributai
 
-			Pasiekiamumo atributai naudojami apriboti globalių kintamųjų galiojimo sritį. Yra du pasiekiamumo atributai - private ir public. private kintamieji yra pasiekiami tik iš failo kuriame yra deklaruoti, public kintamieji yra pasiekiami iš bet kurio failo. Standartinis atributas yra private. Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
+			Pasiekiamumo atributai naudojami apriboti globalių kintamųjų galiojimo sritį. Yra du pasiekiamumo atributai - private ir public. 
+			private kintamieji yra pasiekiami tik iš failo kuriame yra deklaruoti, public kintamieji yra pasiekiami iš bet kurio failo. 
+			Standartinis atributas yra private. Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
 
 	2.4. Išraiškos
 		2.4.1. Literalai ;;include null
@@ -315,11 +359,13 @@ Terminų ir santrumpų žodynas
 		2.6.2. Sąlygos sakiniai
 		2.6.3. Ciklai ;;subskyriai ciklams
 
-			LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	;; Worde pakeisti kabutes į keyword style
+			LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	
+			;; Worde pakeisti kabutes į keyword style
 
 			2.6.3.1. while ciklas
 				
-				while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo teiginio. Ciklas yra vykdomas tol, kol ciklo sąlyga yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
+				while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo teiginio. Ciklas yra vykdomas tol, kol ciklo sąlyga 
+				yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
 
 				while (<sąlyga>)
 				    <teiginys>
@@ -341,17 +387,21 @@ Terminų ir santrumpų žodynas
 
 			2.6.3.2. C stiliaus for ciklas
 
-				LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C kalbos stiliaus kalbų. Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
+				LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C kalbos stiliaus kalbų. 
+				Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus 
+				for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
 
 				for (<inicializatorius>; <sąlyga>; <iteratorius>)
 					<teiginys>
 
 				;; Reik tiksliai paaiškinti kas gali būti inicializatoriuje, sąlygoje ir iteratoriuje. Aš nesu visiškai tikras - T.
-;; Šitą apimsiu tikslindamas gramatiką lexerio daly. A.
+				;; Šitą apimsiu tikslindamas gramatiką lexerio daly. A.
 
-				Ciklas pradedamas vykdyti įvykdant inicializatorių - jis vykdomas vieną kartą per visą ciklas. Tada, vykdomas pats ciklas: kol sąlyga teisinga, vykdomas teiginys, o jį įvykdžius - iteratorius.
+				Ciklas pradedamas vykdyti įvykdant inicializatorių - jis vykdomas vieną kartą per visą ciklas. Tada, vykdomas pats ciklas: 
+				kol sąlyga teisinga, vykdomas teiginys, o jį įvykdžius - iteratorius.
 
-				Kiekvienas iš šio for ciklo atraštės dalių gali būti praleistas. Jei sąlyga praleista, ji pakeičiama "true" išraiška. For ciklo pavyzdžiai:
+				Kiekvienas iš šio for ciklo atraštės dalių gali būti praleistas. Jei sąlyga praleista, ji pakeičiama "true" išraiška. 
+				For ciklo pavyzdžiai:
 
 				// Šis for ciklas spausdina "Spinning infinitely" be galo.
 				for (;;)
