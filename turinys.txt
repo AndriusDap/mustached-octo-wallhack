@@ -309,28 +309,6 @@ Terminų ir santrumpų žodynas
 			Funkcijos deklaraciją sudaro jos parametrai. Šie parametrai yra kintamieji, kurie įgis funkcijai perduotų argumentų reikšmes. 
 			Parametrų galiojimo sritis yra visas funkcijos blokas, bet jų panaudojimas nesiskiria nuo lokalių kintamųjų.
 
-	2.4 Atributai
-
-		Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - 
-		pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti 
-		konstanta. Deklaracijoje galima pridėti po vieną kiekvienos rūšies atributą. Nepridėjus atributo rūšies bus nustatoma 
-		standartinis atributas, kuris priklauso nuo deklracijos.
-
-		2.4.1 Kintamumo atributai
-
-			Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, 
-			jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. Standartinis 
-			atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
-			taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
-			būtina deklarauotį jį su mutable atributu. Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. 
-			;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
-
-		2.4.2 Pasiekiamumo atributai
-
-			Pasiekiamumo atributai naudojami apriboti globalių kintamųjų galiojimo sritį. Yra du pasiekiamumo atributai - private ir public. 
-			private kintamieji yra pasiekiami tik iš failo kuriame yra deklaruoti, public kintamieji yra pasiekiami iš bet kurio failo. 
-			Standartinis atributas yra private. Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
-
 	2.4. Išraiškos
 		2.4.1. Literalai ;;include null
 		2.4.2. Simboliai
@@ -352,10 +330,125 @@ Terminų ir santrumpų žodynas
 		2.4.9. Masyvų kūrimas
 		2.4.10. Klasių nariai
 	2.5. Teiginiai
+
+		;; kaip parašyti kas yra teiginys - D?
+
 		2.5.1 Deklaracija
+
+			;; Šitas skyrius labai išsipūtė, gal ką praleidau - D.
+
+			Deklaracijos teiginys yra naudojamas deklaruojant kintamajį.
+
+			<atributai> <tipas> <identifikatorius>;
+			<atributai> <tipas> <identifikatorius> = <inicializatorius>;
+
+			Atributai yra sąrašas atributų atskirtų tarpais, palaikomi atributai priklauso nuo kintamojo tipo. Atributus galima praleisti.
+
+			Tipas yra bet koks palaikomas tipas išskyrus "void".
+
+			Identifikatorius yra bet koks legalus simbolis. ;; reiktų kokio link į lexer skyriu kas yra legalus simbolis - D.
+
+			Inicialiatorius yra bet kokia skaitoma išraška.
+
+			Pavyzdžiai:
+
+			int a; // "int" tipo kintamasis be inicializacijos
+			float b = 5; // "float" tipo kintamasis su inicializacija
+			string str = null; // teksto eilutė inicializuojama "null" reikšme.
+
+			int(int) incrementer = int(int num)
+			{
+				return num + 1;
+			};
+			// funkcijos kintamasis su inicializacija
+
+			Verta atkreipti dėmesį, jog po funkcijos bloko uždarymo yra ";". Funkcijos deklracija nėra kontrolės blokas ir jis, kaip visi 
+			įprasti teiginiai yra baigiamas ";".
+			;; pats šitą klaidą padariau ne kartą - D.
+
+			Inicializuojant deklaraciją, jos tipą galima nustatyti "auto". Tada kintamojo tipas bus toks pat kaip inicializatoriaus išraiškos. 
+
+			auto numbers = int[5];
+			auto sudoku = void(){sudoku();};
+
+			;; čia dubliuojasi su skyriumi Automatinis tipo radimas, galvosiu kaip keisti - D.
+			Deklaruojant "auto" tipą taikomi du apribojimai:
+			* Deklaracija privalo būti inicializuota.
+			* Inicializatorius negali būti "null", kadangi "null" neturi tipo.
+
+			Jei nesilaikoma vieno iš šių apribojimų, kintamojo tipo nustatyti neįmanoma ir yra gražinama klaida.
+
+			auto foo; // klaida
+			auto bar = null; // klaida
+
+			Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - 
+			pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti 
+			konstanta. Deklaracijoje galima pridėti po vieną kiekvienos rūšies atributą. Nepridėjus atributo rūšies bus nustatoma 
+			standartinis atributas, kuris priklauso nuo deklracijos.
+
+			2.5.1.1 Kintatumo atributai
+
+				Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, 
+				jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. 
+
+				const int a = 5;
+				a = 6; // klaida, a reikšmę galima tik skaityti
+
+				mutable int b = 7;
+				b = 8; // reikšmę galima ir skaityti ir rašyti
+
+				const int c; // klaida, konstantas būtina inicializuoti
+
+				Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
+				taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
+				būtina deklarauotį jį su mutable atributu. 
+
+				void() foo; // klaida, jei tai globalus kintamasis
+
+				mutable void() foo; // šis kodas veikia
+
+				Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. 
+				;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
+				;; global functors, nes tada kompiliuojam į metodus. greičiau veikia ir galima naudoti overloading - D.
+
+				
+			2.5.1.2 Pasiekiamumo atributai
+
+				Pasiekiamumo atributai naudojami apriboti globalių kintamųjų galiojimo sritį. Yra du pasiekiamumo atributai - private ir public. 
+				private kintamieji yra pasiekiami tik iš failo kuriame yra deklaruoti, public kintamieji yra pasiekiami iš bet kurio failo. 
+				Standartinis atributas yra private. 
+
+				public auto foo = 5;
+				private auto bar = 6;
+
+				Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
+
+			Atributus galima kombinuoti. 
+
+			public const int MAX_COUNT = 200;
+
+			Bet deklaracijoje gali būti tik po vieną atributą iš kiekvieno tipo.
+
+			public private int a; // klaida
+			public public int b; // kompiliatoriui nereikia kartoti dalykų
+
 		2.5.2 use
 		2.5.3 return
+		2.5.4 Tuščias teiginys
+
+			Tuščią teiginį sudaro tik kabliataškis. Toks teiginys nedaro nieko ir gali būti naudojamas ten, kur sintaksė reikalauja teiginio, 
+			bet nenorite nieko dėti.
+
+		2.5.5 Išraiškos teiginys
+
+			<išraiška>;
+
+			Bet kokia išraiška taip pat gali būti panaudota kaip teiginys. Tokia išraiška bus įvykdyta ir jos gražinama reikšmė atmesta.
+
 	2.6. Kontrolės blokai
+
+		Kontrolės blokai yra teiginiai naudojami valdyti programos vykdymo seką. 
+
 		2.6.1. Kodo blokas
 
 			LaborasLang kodo blokai sudaromi iš atidarančių kabučių, sąrašo teiginių ir uždarančių kabučių.
@@ -364,7 +457,7 @@ Terminų ir santrumpų žodynas
 				<teiginių sąrašas>
 			}
 
-			Blokas leidžia įrašyti kelis teiginius, kuri sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys teiginiai yra vykdomi paeiliui.
+			Blokas leidžia įrašyti kelis teiginius, kur sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys teiginiai yra vykdomi paeiliui.
 
 			Kodo bloke deklaruoti kintamieji galioja tik iki blogo galo, todėl blokai taip pat naudojami norint apriboti kintamojo galiojimo sirtį.
 
