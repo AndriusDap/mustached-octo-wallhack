@@ -349,7 +349,8 @@ Terminų ir santrumpų žodynas
 			2.4.7.3. Bitinės operacijos
 			2.4.7.4. Stūmimo operacijos
 		2.4.8. Objektų kūrimas
-		2.4.9. Klasių nariai
+		2.4.9. Masyvų kūrimas
+		2.4.10. Klasių nariai
 	2.5. Teiginiai
 		2.5.1 Deklaracija
 		2.5.2 use
@@ -371,6 +372,8 @@ Terminų ir santrumpų žodynas
 				    <teiginys>
 
 				Ciklo teiginys yra bet koks LaborasLang kalboje legalus teiginys (kodo blokas, sąlyga, ciklas ir t.t.).
+
+				Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
 				
 				Keletas while ciklo pavyzdžių:
 
@@ -450,7 +453,35 @@ Terminų ir santrumpų žodynas
 
 			2.6.3.3. Kolekcijos iteravimo for ciklas
 
-				;; TO DO
+				Iteravimui per reikšmių kolekcijas dažnai naudojamas specialus ciklas, kitose kalbose vadinamas "foreach" ciklu. Šiame 
+				cikle yra deklaruojamas kintamasis, kuris paeiliui įgyja visas rinkinio reikšmes. 
+
+				for(<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
+					<teiginys>
+
+				Pagal kintamojo tipą ir pavadinimą yra deklaruojamas lokalus kintamasis. Šio kintamojo galiojimo sritis yra visas ciklas, 
+				bet jo reikšmę galima tik perskaityti. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
+
+				Kolekcijos gali būti masyvai arba objektai turintys metodą GetEnumerator(). Kolekcijos išraiška bus įvykdyta vieną kartą 
+				ir viso ciklo metu bus naudojamas tas pats enumeratorius. 
+				;; čia gal tik biški BS.
+				;; norėjau parašyti, kad jei iteruosi per call, nebus kviečiama 500 kartų - D.
+
+				Kadangi iš kolekcijos visada galima sužinoti elemento tipą, dažnai deklracijoje naudojamas tipas "auto".
+
+				Ciklo pavyzdžiai:
+
+				// iteruojama per masyvą
+				auto arr = int[]{1, 2, 3, 4};
+				for(auto i in arr)
+					Console.WriteLine(i);
+				// išspausdins skaičius 1 - 4
+
+				// iterauojama per kolekciją
+				ArrayList lst = ...
+				for(object i in lst)
+					Console.WriteLine(i.ToString());
+				// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
 3. LaborasLang gramatika
 	3.1. Programos apibrėžimas
