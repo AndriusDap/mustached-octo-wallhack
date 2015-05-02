@@ -357,8 +357,66 @@ Terminų ir santrumpų žodynas
 		2.5.3 return
 	2.6. Kontrolės blokai
 		2.6.1. Kodo blokas
+
+			LaborasLang kodo blokai sudaromi iš atidarančių kabučių, sąrašo teiginių ir uždarančių kabučių.
+
+			{
+				<teiginių sąrašas>
+			}
+
+			Blokas leidžia įrašyti kelis teiginius, kuri sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys teiginiai yra vykdomi paeiliui.
+
+			Kodo bloke deklaruoti kintamieji galioja tik iki blogo galo, todėl blokai taip pat naudojami norint apriboti kintamojo galiojimo sirtį.
+
+			Pavizdys:
+
+			{
+				int a = 5;
+				a++;
+			}
+
+			Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau gražins klaidą (nebent yra kitų kintamųjų vardu a).
+
+			{
+				int b = 5;
+				{
+					int a = b;
+					b++;
+				}
+
+				Console.WriteLine(b);// išspausdintų 6
+				Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
+			}
+
+			Bloke kintamieji negali turėti to pačio vardo.
+
+			{
+				int a = 5;
+				float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
+			}
+
+			Tačiau, vardas gali būti vėl panaudojamas gilesniame bloke.
+
+			{
+				int a = 5;
+				{
+					Console.WriteLine(a);
+					int a = 16;
+					Console.WriteLine(a);
+				}
+				Console.WriteLine(a);
+			}
+
+			Ši programa išspausdins
+
+			5
+			16
+			5
+
+			Blokas gali būti tuščias. Toks blokas daro tą patį ką tuščias teiginys - visiškai nieko.
+
 		2.6.2. Sąlygos sakiniai
-		2.6.3. Ciklai ;;subskyriai ciklams
+		2.6.3. Ciklai
 
 			LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	
 			;; Worde pakeisti kabutes į keyword style
