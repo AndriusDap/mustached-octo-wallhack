@@ -1,0 +1,13 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: BakalaurasLang
+scopeName: text.bakalauras_lang
+fileTypes: []
+uuid: 649df3f5-3dcc-444e-9f1c-9dd7eb5e094e
+
+patterns:
+- name: comment
+  match: ;;.*
+
+
+...
