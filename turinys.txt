@@ -387,20 +387,47 @@ Terminų ir santrumpų žodynas
 
 			2.6.3.2. C stiliaus for ciklas
 
-				LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C kalbos stiliaus kalbų. 
+				;; Mes teiginiais vadinam use, deklaciją, return, visokie ciklai yra kontrolės blokai. Reikia suvienodinti semantiką ir pataisyti taisyklę - D.
+
+				LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C šeimos kalbų. 
 				Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus 
 				for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
 
 				for (<inicializatorius>; <sąlyga>; <iteratorius>)
 					<teiginys>
 
-				;; Reik tiksliai paaiškinti kas gali būti inicializatoriuje, sąlygoje ir iteratoriuje. Aš nesu visiškai tikras - T.
-				;; Šitą apimsiu tikslindamas gramatiką lexerio daly. A.
+				Kiekviena iš šio for ciklo atraštės dalių gali būti praleista.
 
-				Ciklas pradedamas vykdyti įvykdant inicializatorių - jis vykdomas vieną kartą per visą ciklas. Tada, vykdomas pats ciklas: 
-				kol sąlyga teisinga, vykdomas teiginys, o jį įvykdžius - iteratorius.
+				Ciklo inicializatorius, jei toks yra, privalo būti kintamojo deklaracija arba bet kokia LaborasLang išraiška. 
+				Deklaracija gali būti su inicializacija arba be. Ši deklaracija sukuria lokalų kintamajį, kurio galiojimo sritis apima visą 
+				ciklą.
 
-				Kiekvienas iš šio for ciklo atraštės dalių gali būti praleistas. Jei sąlyga praleista, ji pakeičiama "true" išraiška. 
+				Ciklo sąlyga, jei tokia yra, privalo būti "bool" tipo skaitoma išraiška. Jei sąlygos nėra, ji pakeičiama išraiška "true".
+
+				Ciklo iteratorius, jei toks yra, gali būti bet kokia išraiška.
+
+				Ciko teiginys yra bet koks LaborasLang teiginys, išskyrus "use" teiginį.
+
+				Ciklo vykdymo tvaka:
+
+					1. Jei aprašytas, įvykdomas ciklo inicializatorius.
+					2. Įvykdoma ciklo sąlyga. Jei rezultatas nėra "true", baigiamas ciklo vykdymas.
+					3. Įvykdomas ciklo teiginys. 
+					4. Jei nebuvo išeita iš teiginio (pavyzdžiui "return" sakiniu) ir yra aprašytas iteratorius, jis yra įvykdomas.
+						Vykdymas gražinamas į 2 punktą.
+
+				;; Man šitas padeda suvokti kaip tiksliai vykdomas for - D.
+				Naudojant "while" ciklą, "for" galima aprašyti taip:
+
+				{
+					<inicializatorius>;
+					while (<sąlyga>)
+					{
+						<teiginys>;
+						<iteratorius>;
+					}
+				}
+
 				For ciklo pavyzdžiai:
 
 				// Šis for ciklas spausdina "Spinning infinitely" be galo.
@@ -411,6 +438,15 @@ Terminų ir santrumpų žodynas
 				// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
 				for (int i = 0; i < 10; i++)
 				    Console.WriteLine(i);
+
+
+				// Šis ciklas analogiškas while ciklui
+				for(;i < 10;)
+				{
+					Console.WriteLine(i);
+					i++;
+				}
+
 
 			2.6.3.3. Kolekcijos iteravimo for ciklas
 
