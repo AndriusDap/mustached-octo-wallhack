@@ -13,10 +13,10 @@ Terminų ir santrumpų žodynas
 	Asemblis – failas, kuris yra LaborasLang programos kompiliavimo rezultatas. 
 	CIL (Common Intermediate Language) – kalba, kurią supranta ir geba vykdyti CLI implementacijų vykdymo aplinkos.
 	CLI (Common Language Infrastructure) – tai specifikacija, aprašanti virtualią vykdymo aplinką ir CIL kodą. CLI yra specifikuota ECMA-335 tarptautiniame standarte. Dvi populiariausios CLI implementacijos yra CLR (.NET karkaso dalis) ir Mono Runtime.
-	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie paduodami LaborasLang kompiliatoriui kaip duomenys. 
-	Įeities taškas (entry point)– speciali funkcija, kuri yra iškviečiama paleidus aplikaciją.
-	Išraiška (expression)– kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
-	Skaitoma išraiška (gettable expression, rvalue) – išraiška, kuri garantuotai gražina reikšmę.
+	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie nurodomi LaborasLang kompiliatoriui kaip duomenys. 
+	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus aplikaciją.
+	Išraiška (expression) – kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
+	Skaitoma išraiška (gettable expression, rvalue) – išraiška, kuri garantuotai grąžina reikšmę.
 	Rašoma išraiška (settable expression, lvalue) – išraiška, kuriai galima nustatyti reikšmę.
 	Lokalus kintamasis (local variable) – kintamasis deklaruotas funkcijoje.
 	Globalus kintamasis (global variable) – kintamasis deklaruotas faile.
@@ -43,11 +43,11 @@ Terminų ir santrumpų žodynas
 	•	Statinė tipų sistema. LaborasLang kompiliatorius turi sugebėti statiškai patikrinti tipų naudojimą.
 	•	Funkcijos – pirmos klasės nariai. LaborasLang programavimo kalboje, funkcijas galima naudoti lygiai taip pat, kaip ir bet kurį kitą duomenų tipą.
 	•	Paprastumas. Vienas iš LaborasLang uždavinių – būti kuo įmanoma paprastesnei.
-	•	Vykdymo greitis. LaborasLang kalba parašytos programos turi galėti efektyviai išnaudoti kompiuterio resursus.
+	•	Vykdymo greitis. LaborasLang kalba parašytos programos turi galėti efektyviai išnaudoti kompiuterio resursus. ;;Ar čia kalbos ar implementacijos dalis? A.
 	•	Sąveika su kitomis programavimo kalbomis. LaborasLang kalba parašytos programos turi galėti naudotis bibliotekomis, kurios yra parašytos kitomis .NET programavimo kalbomis. Dėl šios priežasties, LaborasLang programos yra kompiliuojamos į CIL. Taip pat bibliotekos parašytos LaborasLang turi veikti kitose .NET kalbose.
 
 
-1. Apimtis
+1. Apimtis ;;siūlau Specifikacijos apimtis A.
 
 	Ši specifikacija apibrėžia LaborasLang programavimo kalbą. Tai apima:
 	•	LaborasLang kalbos leksinę ir sintaksinę gramatiką;
@@ -70,8 +70,8 @@ Terminų ir santrumpų žodynas
 		};
 
 		Išnagrinėkime šią programą po eilutę:
-		•	Sakinys  use System; nurodo, jog šiame faile tipai ir vardų grupės iš System vardų grupės pus tiesiogiai pasiekiami.
-		•	entry auto HelloWorld = void() šioje eilutėje yra deklaruojamas kintamasis HelloWorld. Šiam kintamajam yra priskiriama funkcija, kurios tipas – void(). Kadangi kintamojo deklaravimo metu jam yra priskiriama reikšmė, tai jo tipą galima nustatyti automatiškai – tai nurodo specialus tipas auto. Raktinis žodis entry nurodo, jog šis kintamasis yra įeities taškas.
+		•	Sakinys  use System; nurodo, jog šiame faile tipai ir vardų grupės iš System vardų grupės bus tiesiogiai pasiekiami.
+		•	entry auto HelloWorld = void() šioje eilutėje yra deklaruojamas kintamasis HelloWorld. Šiam kintamajam yra priskiriama funkcija, kurios tipas – void(). Kadangi kintamojo deklaravimo metu jam yra priskiriama reikšmė, tai jo tipą galima nustatyti automatiškai – tai nurodo specialus tipas auto. Raktinis žodis entry nurodo, jog šis kintamasis yra programos įeities taškas.
 		•	{ pažymima funkcijos pradžia.
 		•	Console.WriteLine("Hello, world!"); iškviečiama funkcija WriteLine esanti Console tipe. Tai yra standartinė CLI funkcija.
 		•	}; pažymima funkcijos pabaiga ir užbaigiamas priskyrimo sakinys.
@@ -153,19 +153,19 @@ Terminų ir santrumpų žodynas
 
 		LaborasLang kalboje, funkcijų tipus apibrėžia funkcijos gražinamas tipas ir jos priimamų argumentų tipai. Pilna funkcijos tipo sintaksė yra:
 
-		<gražinamas tipas>(<parametrų tipai atskirti kableliais>)
+		<grąžinamas tipas>(<parametrų tipai atskirti kableliais>)
 
-		Ir gražinamas tipas, ir parametrų tipai gali būti bet kokie LaborasLang palaikomi tipai. Keletas funkcijų tipų pavydžių:
-		void() – funkcija negražina rezultato ir nepriima jokių argumentų.
-		void(int, double) - funkcija negražina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
-		string(string, string()) - funkcija gražina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir funkcija, kuri gražina string tipo rezultatą.
-		int[](System.Collections.IList) - funkcija gražina masyvą, kurio elemento tipas yra int, ir priima vieną argumentą, kurio tipas yra System.Collections.IList.
+		Ir grąžinamas tipas, ir parametrų tipai gali būti bet kokie LaborasLang palaikomi tipai. Keletas funkcijų tipų pavydžių:
+		void() – funkcija negrąžina rezultato ir nepriima jokių argumentų.
+		void(int, double) - funkcija negrąžina jokio rezultato, ir priima du argumentus, kurių tipai yra int ir double.
+		string(string, string()) - funkcija grąžina rezultatą, kurio tipas yra string, ir priima du argumentus, kurių tipai yra string ir funkcija, kuri grąžina string tipo rezultatą.
+		int[](System.Collections.IList) - funkcija grąžina masyvą, kurio elemento tipas yra int, ir priima vieną argumentą, kurio tipas yra System.Collections.IList.
 
-		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše reikšdavo nulį parametrų nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
+		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše reikšdavo parametrų nebuvimą nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
 
 		Kadangi funkcijos yra pirmos klasės nariai, funkcijos taip pat gali gražinti kitas funkcijas. Pavyzdys: 
 
-		string()() - funkcija, kuri gražina string() tipo funkciją ir neima jogių argumentų.
+		string()() - funkcija, kuri gražina string() tipo funkciją ir neima jokių argumentų.
 
 		Funkcijų tipams yra naudojamos kompiliatoriaus generuotos klasės, kurių tiksli realizacija gali priklausyti nuo kompiliatoriaus. Taip funkcijos gali be jokių papildomų išlygų tapti tipų sistemos dalimi.
 
@@ -180,7 +180,7 @@ Terminų ir santrumpų žodynas
 		void(int, double) myVariable = someFunction;
 		myVariable(3, 5.8);
 
-		Funkcijų tipus labai patogu naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms:
+		Funkcijų tipus galima naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms: ;;Patogu - šališka nuomonė, nėra įrodymo kad patogu ar ne. A.
 		int(int()) GetFunctionResultPlusOne = int(int() function)
 		{
 		    return function() + 1;
@@ -269,7 +269,7 @@ Terminų ir santrumpų žodynas
 
 		2.3.2. Globalūs kintamieji
 
-			Deklaruojant kintamajį tiesiogiai faile, bus sukuriamas globalus kintamasis. Tokio kintamojo galiojimo sritis yra visas failas, juo galima naudotis anksčiau negu jis yra deklaruotas. Kintamajį, priklausomai nuo deklaracijos, taip pat galima pasiekti iš kitų failų. Plačiau apie tai skyriuje atributai.
+			Deklaruojant kintamajį tiesiogiai faile, bus sukuriamas globalus kintamasis. Tokio kintamojo galiojimo sritis yra visas failas, juo galima naudotis anksčiau negu jis yra deklaruotas. Kintamajį, priklausomai nuo deklaracijos, taip pat galima pasiekti iš kitų failų. Plačiau apie tai skyriuje "Atributai".
 
 		2.3.3. Funkcijų parametrai
 
@@ -281,7 +281,7 @@ Terminų ir santrumpų žodynas
 
 		2.4.1 Kintamumo atributai
 
-			Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, būtina deklarauotį jį su mutable atributu. Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų.
+			Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, būtina deklarauotį jį su mutable atributu. Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. ;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
 
 		2.4.2 Pasiekiamumo atributai
 
@@ -341,12 +341,13 @@ Terminų ir santrumpų žodynas
 
 			2.6.3.2. C stiliaus for ciklas
 
-				LaborasLang kalba palaiko C stiliaus for ciklą - jis pasiskolintas iš C ir yra palaikomas daugumos C kalbos stiliaus kalbų. Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus for ciklo struktūra yra tokia:
+				LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C kalbos stiliaus kalbų. Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
 
 				for (<inicializatorius>; <sąlyga>; <iteratorius>)
 					<teiginys>
 
 				;; Reik tiksliai paaiškinti kas gali būti inicializatoriuje, sąlygoje ir iteratoriuje. Aš nesu visiškai tikras - T.
+;; Šitą apimsiu tikslindamas gramatiką lexerio daly. A.
 
 				Ciklas pradedamas vykdyti įvykdant inicializatorių - jis vykdomas vieną kartą per visą ciklas. Tada, vykdomas pats ciklas: kol sąlyga teisinga, vykdomas teiginys, o jį įvykdžius - iteratorius.
 
