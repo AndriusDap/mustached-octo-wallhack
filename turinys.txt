@@ -482,11 +482,91 @@ Terminų ir santrumpų žodynas
 			Kompiliavimo metu importuoti tipai keičiami pilnais tipų vardais. Importavimas, kaip ir tipų pseudonimai, yra pagalbinė kompiliatoriaus funkcija. 
 			Šių sakinių naudojimas visiškai neįtakoja gaunamo kodo veikimo.
 
-		2.5.3 return
+		2.5.3 Grįžimo teiginys
+
+			"return" teiginys naudojamas baigti funkcijos darbą. 
+
+			return;
+			return <reikšmė>;
+
+			"return" sakinio tipas privalo atitikti funkcijos gražinamą tipą. Jei gražinas "void" tipas, leidžiamas tik tuščias "return" sakinys. Toks sakinys naudojamas tik užbaigti funkcijos darbą. "void" tipo funkcijos gali neturėti "return" sakinio, jų darbas bus baigtas pasiekus funkcijos bloko galą. 
+
+			Jei funkcijos tipas nėra "void", ji privalo gražinti reikšmę, todėl privalomas bent vienas "return" sakinys su reikšme. Šios reikšmės tipas turi atitikti funkcijos tipą, arba turi egzistuoti automatinis keitimas iš reikšmės į funkcijos gražinamą tipą.
+
+			Norint užtikrinti, jog funkcija tikrai gražins reikšmę, kompiliatoriuje įvedama gražinančio teiginio sąvoka.
+
+			Teiginys gražina jei:
+			* tai yra "return" teiginys
+			* tai yra kodo blokas ir bent vienas jo teiginių gražina
+			* tai yra sąlygos sakinys, jis turi abi atšakas ir jos abi yra gražinantys blokai
+
+			Jei funkcijos blokas nėra gražinantis blokas, kompiliatorius gražina klaidą.
+
+			Pavyzdžiai:
+
+			void()
+			{
+				int a = 5;
+			}// teisingas kodas, funkcijai nereikalingas return sakinys
+
+			void()
+			{
+				return 5; // klaida, ši funkcija negali gražinti
+			}
+
+			int()
+			{
+				int a = 5;
+			}// klaida, funcija negražina reikšmės
+
+			int()
+			{
+				int a = GetNum();
+				if(a > 6)
+				{
+					return a - 1;
+				}
+				else
+				{
+					return a + 1;
+				}
+			}// teigingas kodas, abi šakos gražina reikšmę
+
+
+			int()
+			{
+				int a = GetNum();
+				if(a > 6)
+				{
+					return a - 1;
+				}
+				else
+				{
+					a++;
+				}
+			}// klaida, viena iš šakų negražina reikšmės
+
+
+			int()
+			{
+				int a = 5;
+				if(a > 0)
+				{
+					return a;
+				}
+				else
+				{
+					a++;
+				}
+			}// klaida, viena iš šakų negražina reikšmės
+
+			Šis kodo fragmentas parodo sistemos trūkumą. Nors jūs esatę įsitikinę, kad funkcija gražins reikšmę, kompiliatorius naudoja 
+			paprastą analizę, kuri negali garantuoti šio fakto. Tokiu atveju tenka naudoti "return" sakinius, kurie niekada nebus įvykdyti.
+
 		2.5.4 Tuščias teiginys
 
 			Tuščią teiginį sudaro tik kabliataškis. Toks teiginys nedaro nieko ir gali būti naudojamas ten, kur sintaksė reikalauja teiginio, 
-			bet nenorite nieko dėti.
+			bet nenorite nieko atlikti.
 
 		2.5.5 Išraiškos teiginys
 
