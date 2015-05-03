@@ -671,10 +671,54 @@ Terminų ir santrumpų žodynas
 
 3. LaborasLang gramatika
 	3.1. Programos apibrėžimas
-	3.2. Leksinė gramatika
-		3.2.1. Komentarai
-		3.2.2. Raktiniai žodžiai
-		3.2.3. Terminaliniai žetonai
+		Programa yra vienas ar daugiau išeities kodo failų.
+	3.2. Dviprasmybės
+		LaborasLang gramatikoje dviprasmybės yra gailimos tik sudarant žetonus. Jos yra sprendžiamos sudarant maksimalaus galimio ilgio
+		žetonus. Tai yra taikoma valdant tokius žetonus kaip "<<", "++", "--", tai reiška kad nors teiginys "i = i--1" galėtų būti 
+		transformuotas į "i = i - (-1)" dėl žetonų ilgio maksimizavimo jis bus suprastas kaip "i = (i--) 1", kas yra nevalidus kodas (
+		nėra jokio operatoriaus tarp dviejų operandų).
+	3.3. Leksinė gramatika
+		3.3.x. Programa leksiniu požiūriu
+			Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
+			* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
+			* Komentarai atitinka C šeimos kalbų komentarus, tai yra galimi vienos eilutės komentarai kurie yra pradedami simboliais "//" bei
+			tęsiami iki eilutės pabaigos simbolio ir bloko tipo komentarai pradedami "/*" simboliu ir baigiami "*/" simboliu. Komentarų
+			turinys kompiliavimo metu yra ignoruojamas
+			* Žetonai yra gaunami sujungiant gretimus simbolius į prasmingas maksimalaus ilgio leksemas, kurios yra toliau analizuojamos
+			kompiliuojant programą. Žetonai yra tokie simboliai kaip
+			"*", "+", "=", ";" bei ilgesni dariniai - "auto", "penki", "+=", "while" bei kiti. Žetonai naudojami sudaryti kalbos
+			struktūras, kurios savo ruožtu sudaro programą.
+
+			Programa leksiniu požiūriu yra kalbos struktūrų rinkinys. Galimos kalbos struktūros yra kodo blokas, ciklas, sąlygos sakinys,
+			sakinys.
+		3.3.X Kalbos struktūros
+			3.3.x.x Sakinys
+				Sakinys yra pagrindinė kalbos struktūra kuri nusako tam tikrą veiksmą. Ši kalbos struktūra yra grupė mažesnių struktūrų kurios turi tam tikras formavimo taisykles:
+				"Use" sakinys
+				Deklaravimo sakinys
+				Reikšmės sakinys
+				Grąžinimo sakinys.
+				3.3.x.x.x. Sakinių leksinė sandara
+					Use sakinys
+					PEG tipo gramatika:
+					UseNode:
+						Use Symbol (Period Symbol)* EndOfLine
+
+					Šį sakinį sudaro dvi dalys: Raktažodis "Use", tekstinis simbolis, nulis ar daigiau taško ir tekstinio simoblio grupių 
+					bei eilutės pabaigos simbolis - kabliataškis.
+					"Use" sakinio pavyzdys:
+						use Foo.Bar;
+					čia use yra "Use" taisykės dalį atitinkantis raktažodis, Foo atitinka pirmąjį simbolį, taško simbolis bei "Bar" yra
+					vienas pasikartojimas "Period" bei "Symbol" grupės o ";" yra "EndOfLine" reiškiantis simbolis. 
+				
+			3.3.x.x Kodo blokas			
+			3.3.x.x Sąlygos sakinys
+			3.3.x.x Ciklas
+
+
+		3.3.1. Komentarai
+		3.3.2. Raktiniai žodžiai
+		3.3.3. Terminaliniai žetonai
 	3.3. Sintaksinė gramatika
 4. LaborasLang programų pavyzdžiai
 5. Pavyzdinis kompiliatorius
