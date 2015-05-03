@@ -688,9 +688,38 @@ Terminų ir santrumpų žodynas
 			kompiliuojant programą. Žetonai yra tokie simboliai kaip
 			"*", "+", "=", ";" bei ilgesni dariniai - "auto", "penki", "+=", "while" bei kiti. Žetonai naudojami sudaryti kalbos
 			struktūras, kurios savo ruožtu sudaro programą.
+			
+			Galimi žetonai:
+			;; Tik terminal tokens čia turi būti minimi. Visi kiti yra implementacijos detalė - A.
+				Tiesioginės reikšmės
+					Sveikieji skaičiai
+					Slankaus kablelio skaičiai
+					Simbolių eilutės
+				Operatoriai
+				Eilutės pabaigos simbolis
+				Skliaustai
+					()
+					{}
+					[]
+				Raktažodžiai
+					entry, auto ...
+				Simboliai
+					Foo, Bar
+
 
 			Programa leksiniu požiūriu yra kalbos struktūrų rinkinys. Galimos kalbos struktūros yra kodo blokas, ciklas, sąlygos sakinys,
-			sakinys.
+			sakinys: ;; Šitą reikia perfrazuot, dabartinis sakinys per arti implementacijos - A.
+			CodeConstruct:
+				CodeBlockNode,
+
+				WhileLoop,
+				ForLoop,
+				ForEachLoop,
+				
+				ConditionalSentence,
+				
+				StatementWithEndOfLine
+
 		3.3.X Kalbos struktūros
 			3.3.x.x Sakinys
 				Sakinys yra pagrindinė kalbos struktūra kuri nusako tam tikrą veiksmą. Ši kalbos struktūra yra grupė mažesnių struktūrų kurios turi tam tikras formavimo taisykles:
@@ -710,15 +739,17 @@ Terminų ir santrumpų žodynas
 						use Foo.Bar;
 					čia use yra "Use" taisykės dalį atitinkantis raktažodis, Foo atitinka pirmąjį simbolį, taško simbolis bei "Bar" yra
 					vienas pasikartojimas "Period" bei "Symbol" grupės o ";" yra "EndOfLine" reiškiantis simbolis. 
+
+					Deklaravimo sakinys
+					PEG tipo gramatika:
+					DeclarationNode:
+						VariableModifier* Type Symbol Assignment Value
+						VariableModifier* Type Symbol
 				
 			3.3.x.x Kodo blokas			
 			3.3.x.x Sąlygos sakinys
 			3.3.x.x Ciklas
 
-
-		3.3.1. Komentarai
-		3.3.2. Raktiniai žodžiai
-		3.3.3. Terminaliniai žetonai
 	3.3. Sintaksinė gramatika
 4. LaborasLang programų pavyzdžiai
 5. Pavyzdinis kompiliatorius
