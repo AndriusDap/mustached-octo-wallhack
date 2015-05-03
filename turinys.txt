@@ -33,6 +33,7 @@ Terminų ir santrumpų žodynas
 	Nurodomasis tipo keitimas (explicit cast) – reikšmės tipas keičiamas, nes taip nurodė vartotojas.
 	Funkcijos parametras (function parameter) - funkcijos deklaruojamas kintamasis, kuris įgyja funkcijos argumento reikšmę. ;;geriau nemoku parašyti, bet niekas nežino kuo arg nuo param skirias
 	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
+	Vardų grupė (namespace) - ;; dunno, lol - D.
 
 
 Įvadas
@@ -369,7 +370,9 @@ Terminų ir santrumpų žodynas
 			Inicializuojant deklaraciją, jos tipą galima nustatyti "auto". Tada kintamojo tipas bus toks pat kaip inicializatoriaus išraiškos. 
 
 			auto numbers = int[5];
-			auto sudoku = void() { sudoku(); };	;; Ar pažiūrėjai, kad buildintųsi? Aš galvojau toks capture neveikia.
+			auto sudoku = void() { sudoku(); };	
+			;; Ar pažiūrėjai, kad buildintųsi? Aš galvojau toks capture neveikia.
+			;; yes, jei tai global var. O jei ir ne, šitas spece tinka, nes pagal spec veikia capture - D.
 
 			;; čia dubliuojasi su skyriumi Automatinis tipo radimas, galvosiu kaip keisti - D.
 			Deklaruojant "auto" tipą taikomi du apribojimai:
@@ -432,7 +435,39 @@ Terminų ir santrumpų žodynas
 			public private int a; // klaida
 			public public int b; // kompiliatoriui nereikia kartoti dalykų
 
-		2.5.2 use
+		2.5.2 Vardų grupės importavimo ;; Gal kas geriau sugalvosit - D.
+
+			Importavimo teiginys naudojamas į failo galiojimo sritį įterptį vardų grupes ir tipus iš kitos vardų grupės.
+
+			use <vardų grupė>;
+
+			Vardų grupė privalo būti pilna vardų grupė iš naudojamų asemblių.
+
+			Po šio teiginio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant pačios grupės.
+
+			use System;
+
+			String a;
+			Collections.ArrayList lst;
+
+			yra analogiška
+
+			System.String a;
+			System.Collections.ArrayList lst;
+
+			Importavimo teiginiai leidžiami tik faile. ;; Kaip kitaip parašyti - D?
+			Faile gali būti neribotas skaičius importavimo teiginių.
+
+			Nors teiginys importuoja ir vardų grupes, importavimo teiginyje privaloma rašyti pilną vardų grupę, net jei ji pasiekiama trumpiau per kitą teiginį.
+
+			use System;
+			use Collections; // klaida, nėra tokios vardų grupės
+			use System.Collections; // Toks teiginys veikia
+
+			Kompiliavimo metu importuoti tipai keičiami pilnais tipų vardais. Importavimas, kaip ir tipų pseudonimai, yra pagalbinė kompiliatoriaus funkcija. 
+			Šių sakinių naudojimas visiškai neįtakoja gaunamo kodo veikimo.
+
+
 		2.5.3 return
 		2.5.4 Tuščias teiginys
 
