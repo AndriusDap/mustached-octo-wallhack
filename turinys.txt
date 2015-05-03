@@ -34,6 +34,7 @@ Terminų ir santrumpų žodynas
 	Funkcijos parametras (function parameter) - funkcijos deklaruojamas kintamasis, kuris įgyja funkcijos argumento reikšmę. ;;geriau nemoku parašyti, bet niekas nežino kuo arg nuo param skirias
 	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
 	Vardų grupė (namespace) - ;; dunno, lol - D.
+	PEG - parsing expression grammar ;; jei ką čia žemaitiškai o ne angliškai - A.
 
 
 Įvadas
