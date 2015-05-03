@@ -80,6 +80,7 @@ Terminų ir santrumpų žodynas
 
 
 2.2. Tipai
+
 	LaborasLang palaiko dviejų rūšių tipus: vertės tipus ir nuorodinius tipus. Vertės tipai, skiriasi nuo nuorodinių tipų tuo, kad jie 
 	savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad 
 	pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
@@ -155,6 +156,19 @@ Terminų ir santrumpų žodynas
 		System.String foo;
 
 		yra sukompiliuojami į identišką kodą.
+
+	2.2.2 Vardų erdvė ir pilnas vardas
+
+		Tipo pilnas vardas yra sudaromas iš jo vardų grupės ir vardo atskirtu tašku. Pavyzdžiai:
+
+			Pilnas vardas                  Vardų grupė          Vardas
+			System.Collections.ArrayList   System.Collections   ArrayList
+			System.String                  System               String
+			System.IO.File                 System.IO            File
+
+		Vardų grupės turi dvi funkcijas: suskirstyti tipus pagal paskirtį ir leisti keliem tipam turėti tą patį vardą. Kadangi 
+		tipo identifikatorius yra jo pilnas vardas, keli tipai gali turėti tą patį vardą, kol jų vardų grupės skiriasi. Sakoma, 
+		kad tipas String priklauso vardų grupei System. Taip pat vardų grupė Collections priklauso vardų grupei System.
 
 	2.2.2. Funkcijų tipai
 
@@ -444,7 +458,7 @@ Terminų ir santrumpų žodynas
 
 			Vardų grupė privalo būti pilna vardų grupė iš naudojamų asemblių.
 
-			Po šio teiginio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant pačios grupės.
+			Po šio teiginio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant importuotos grupės.
 
 			use System;
 
@@ -467,7 +481,6 @@ Terminų ir santrumpų žodynas
 
 			Kompiliavimo metu importuoti tipai keičiami pilnais tipų vardais. Importavimas, kaip ir tipų pseudonimai, yra pagalbinė kompiliatoriaus funkcija. 
 			Šių sakinių naudojimas visiškai neįtakoja gaunamo kodo veikimo.
-
 
 		2.5.3 return
 		2.5.4 Tuščias teiginys
