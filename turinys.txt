@@ -366,6 +366,21 @@ Terminų ir santrumpų žodynas
 				Bus iškviesta pirmoji funkcija. Norint iškviesti antrają, reikia rašyti 
 
 				foo((long)5);
+
+			2.4.1.3 Realiųjų skaičių literalai
+
+				Realieji skaičiai gali įgyti tipus "float" ir "double". Įgyjamas tipas priklauso nuo skaičiaus užrašymo.
+				;; turbūt prie gramatikos reiktų specifikuoti - D.
+
+			2.4.1.4 Tekstiniai literalai
+
+				Tekstiniai literalai turi du tipus - "string" ir "char". Įgyjamas tipas priklauso nuo naudojamų kabučių.
+				;; taip pat mažoka, bet gramatikoj bus aprašyta - D.
+
+			2.4.1.5 Null literalas
+
+				"null" reikšmė taip pat laikoma literalu. Šis literalas tipo neturi ir gali įgyti bet kokį nuorodinį tipą.
+				;; C# daro kažkoius hackus, kad Nullable veiktų? Mes juos palaikom? - D
 				
 		2.4.2. Simboliai
 		2.4.2. Indeksavimas
