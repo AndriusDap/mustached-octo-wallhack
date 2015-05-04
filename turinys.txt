@@ -326,7 +326,22 @@ Terminų ir santrumpų žodynas
 			Parametrų galiojimo sritis yra visas funkcijos blokas, bet jų panaudojimas nesiskiria nuo lokalių kintamųjų.
 
 	2.4. Išraiškos
-		2.4.1. Literalai ;;include null
+
+		;; man dabar skaitoma/rašoma išraiška nepatinka. gal kas sugalvosit geriau - D.
+		Išraiška yra kodo framgentas, kurios gali gražinti reikšmę, arba priimti reikšmę. Išraiškos, kurios gražina reikšmę, dar vadinamos 
+		skaitomomis išraiškomis. Dauguma išraiškų yra skaitomos. Išraiškos, kurios gali priimti reikšmę vadinamos rašomomis išraiškomis. 
+		Rašomomis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra skaitoma arba rašoma priklauso nuo 
+		išraiškos. Šios taisyklės tiksliai aprašomos prie kiekvieno išraiškos tipo.
+
+		2.4.1. Literalai
+
+			Literalai yra reikšmės įrašytos kode. Literalai yra tik skaitomos išraiškos.
+
+			2.4.1.1 Loginiai literalai
+
+				Reikšmės "true" ir "false" yra loginiai literalai. Jie gali būti naudojami kaip "bool" tipo skaitomos išraiškos.
+
+				
 		2.4.2. Simboliai
 		2.4.2. Indeksavimas
 		2.4.3. Funkcijos
@@ -344,7 +359,7 @@ Terminų ir santrumpų žodynas
 			2.4.7.4. Stūmimo operacijos
 		2.4.8. Objektų kūrimas
 		2.4.9. Masyvų kūrimas
-		2.4.10. Klasių nariai
+		2.4.10. Klasių nariai ;; C# vadina member-access
 	2.5. Teiginiai
 
 		;; kaip parašyti kas yra teiginys - D?
