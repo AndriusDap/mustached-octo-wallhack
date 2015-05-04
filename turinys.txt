@@ -576,7 +576,7 @@ Terminų ir santrumpų žodynas
 
 	2.6. Kontrolės blokai
 
-		Kontrolės blokai yra teiginiai naudojami valdyti programos vykdymo seką. 
+		Kontrolės blokai yra teiginiai naudojami valdyti programos vykdymo seką. Kontrolės blokai gali būti panaudoti tik kodo bloko viduje.
 
 		2.6.1. Kodo blokas
 
@@ -637,7 +637,58 @@ Terminų ir santrumpų žodynas
 
 			Blokas gali būti tuščias. Toks blokas daro tą patį ką tuščias teiginys - visiškai nieko.
 
-		2.6.2. Sąlygos sakiniai
+		2.6.2. Sąlygos sakinys
+
+			Sąlygos sakinys naudojamas parinkti vykdomą teiginį pagal sąlygą.
+
+			if(<sąlyga>)
+				<teigiamas teiginys>
+			
+			if(<sąlyga>)
+				<teigiamas teiginys>
+			else
+				<neigiamas teiginys>
+
+			Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
+
+			Jei sąlygos reikšmė yra "true", bus vykdomas tegiamas teiginys, jei "false" - neigiamas.
+
+			"else" ir neigiamas teiginys gali būti praleisti.
+			Pavyzdžiai:
+
+			int num = GetNum();
+			if(num >= 0)
+				Console.WriteLine("Tegiamas skaičius");
+			else
+				Console.WriteLine("Neigiamas skaičius");
+
+			num++;
+
+			if(num < 0)
+				return;
+
+			"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
+
+			int num = GetNum();
+			if(num >= 0)
+				if(num == 0)
+					Console.WriteLine("Nulis");
+			else
+				Console.WriteLine("Neigiamas skaičius");
+
+			Ši programa išspausdins "Neigiamas skaičius" visiems teigiamiems nenuliniams skaičiams, kadangi "else" yra grupuojamas su 
+			artimiausiu "if". Pataisyta programa:
+
+			int num = GetNum();
+			if(num >= 0)
+			{
+				if(num == 0)
+					Console.WriteLine("Nulis");
+			}
+			else
+				Console.WriteLine("Neigiamas skaičius");
+
+
 		2.6.3. Ciklai
 
 			LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	
