@@ -127,6 +127,7 @@ Terminų ir santrumpų žodynas
 
 		LaborasLang turi keletą fundamentaliųjų tipų, kurie atitinka fundamentaliuosius CLI tipus:
 
+		;; c# ref rašo .NET Framework type, ne CLI type - D.
 		Tipo vardas	     CLI tipo atitikmuo	     Pastabos
 		bool	         System.Boolean	         Loginis tipas, galintis laikyti 2 reikšmes: true ir false.
 		int8	         System.SByte	         1 baito dydžio sveikasis skaičius su ženklu. Galimos reikšmės: [-128; 127].
@@ -341,6 +342,30 @@ Terminų ir santrumpų žodynas
 
 				Reikšmės "true" ir "false" yra loginiai literalai. Jie gali būti naudojami kaip "bool" tipo skaitomos išraiškos.
 
+			2.4.1.2 Sveikųjų skaičių literalai.
+
+				;; gal reikia užsimint apie visokius u, l. visa informacija apie tai ką lexer 
+				;; laiko sveikuoju skaičiumi eina į lexer dalį, bet čia reikia parašyti, kad tipą gali pakeisti - D.
+				Sveikųjų skaičių literalo įgyjamas tipas priklauso nuo skaičiaus dydžio ir jo ženklo. 
+
+				uint8 a = 5;
+				int16 b = -20000;
+				uint16 c = 70000;// klaida, skaičius netelpa į uint16
+
+				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių. Šias reikšmes galima apskaičiuoti arba 
+				gauti iš tipų sąvybių MinValue ir MaxValue.
+
+				Standarinis tipas yra "int". Šis tipas yra naudojamas jei nėra žinomas reikalingas tipas. Tipas 
+				nėra žinomas dviem atvejais - jei naudojama deklaracija su inicializacija ir jei kviečiama perdengta funkcija.
+
+				auto foo = void(int a){};
+				auto foo = void(long a){};
+
+				foo(5);
+
+				Bus iškviesta pirmoji funkcija. Norint iškviesti antrają, reikia rašyti 
+
+				foo((long)5);
 				
 		2.4.2. Simboliai
 		2.4.2. Indeksavimas
