@@ -7,7 +7,6 @@ Autentiškumo patvirtinimas
 Santrauka
 Summary
 Lentelių sąrašas
-Paveikslų sąrašas
 Terminų ir santrumpų žodynas
 
 	Asemblis – failas, kuris yra LaborasLang programos kompiliavimo rezultatas. 
@@ -381,6 +380,7 @@ Terminų ir santrumpų žodynas
 
 				"null" reikšmė taip pat laikoma literalu. Šis literalas tipo neturi ir gali įgyti bet kokį nuorodinį tipą.
 				;; C# daro kažkoius hackus, kad Nullable veiktų? Mes juos palaikom? - D
+				;; Nedaro jokiu hackų. Nullable<T> yra generic type. Mes jų nepalaikom - T.
 				
 		2.4.2. Simboliai
 		2.4.2. Indeksavimas
@@ -1041,31 +1041,31 @@ Terminų ir santrumpų žodynas
 				Atliekama funkcija
 					Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
 				veikimo principas
-					Syntax matcher nauoja taisyklių sąrašą kad sugeneruoti teisiną ast iš rule poo'lo. Viskas pradedama nuo pagrindinės taisyklės
-					 kuri nusako programos struktūrą, tai yra abiė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
-					 tiasuuklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimųš tinka tai ji pridedama į ast, jei ne
-					  - nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena netermianlinė taisyklė yra išskleidžiama iki 
-					  terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisuklė netiko laikoma kad išeities kodas yra 
-					  nekorektiškas, tačiau dėl geresnės statinės analizės kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
-					  galėtų vėl pradėti analize, tam naudoja ; ar { simbolius. Simbiliai kurie nėra pridėti į ast ir yra iki to recovery point 
-					  pridedami pire ast kaip Unkown node. tai leidžia pranešti daugiua nei vieną klaidą kompiliaciojs metu. Syntax matcher 
-					  taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma kad pirma tikusi 
-					  taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo travka nurodo prioritetą, dėl to išvengiama vietų 
-					  kur gali būti pritaikyta daiugiau nei viena taiskylė. 
-						Toks syntax matcher veikimo algoritmas yra tragiškas atminties naudojimo atžvilgiu nes pastoviai deklaruojama labai daug 
-						ast nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų 
-						tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant ast 
-						naudojamas rankinis atminties valdymas. Aprašyta RootNode kuri atitinka atminties valdymo objektą kuris suteikia 
-						resursus, Tai liedžia pranešti kad tam tikra medžiop šaka nebus naudojama ir ją galima perpanaudoti tolimesniam medžio 
+					Syntax matcher nauoja taisyklių sąrašą kad sugeneruoti teisiną ast iš rule pool'o. Viskas pradedama nuo pagrindinės taisyklės
+					 kuri nusako programos struktūrą, tai yra aibė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
+					 taisyklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimų tinka tai ji pridedama į AST, jei ne
+					  - nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena neterminalinė taisyklė yra išskleidžiama iki 
+					  terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisyklė netiko, laikoma, kad išeities kodas yra 
+					  su klaidomis, tačiau kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
+					  galėtų vėl pradėti analizę, ieškodamas simbolių ';' ir '{'. Simboliai kurie nėra pridėti į AST ir yra iki to recovery point ;; Sugalvok kaip recovery point išverst - T.
+					  pridedami prie AST kaip Unknown node. Tai leidžia pranešti daugiau nei vieną klaidą kompiliacijos metu. Syntax matcher 
+					  taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma, kad pirma tikusi 
+					  taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo tvarka nurodo prioritetą, dėl to išvengiama vietų 
+					  kur gali būti pritaikyta daugiau nei viena taiskylė. 
+						Toks syntax matcher veikimo algoritmas yra prastas atminties naudojimo atžvilgiu, nes pastoviai deklaruojama labai daug 
+						AST nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų ;; "sufailino"? Seriously? - T.
+						tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
+						naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
+						resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
 						formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.
 
-					Galima teigti kad šis modulis yra bekontekstis lexeris, nes nėra saugoma jokia globali būsena kuri naudojama tikrinti 
+					Galima teigti, kad šis modulis yra bekontekstis lexeris, nes nėra saugoma jokia globali būsena kuri naudojama tikrinti ;; Ištrinčiau "Galima teigti, kad", nes lexeris toks ir yra - T.
 					leksemų sąrašui, jis yra lyginamas tik su taisyklių sąrašu. Tai leidžia naudoti metaprogramą - taisyklių sąrašą ir jo 
-					interpretatorių - SyntaxMatcher. Taip labai lengvai atskirtas taisykjlės nu o jų pritaikymo logikos, tas leido RulePool 
-					naudoti kaip dalinę ast dokumentaciją
+					interpretatorių - SyntaxMatcher. Taip labai lengvai atskirtas taisyklės nuo jų pritaikymo logikos, tas leido RulePool ;; I can't comprehend that again'
+					naudoti kaip dalinę AST dokumentaciją.
 
-						Šio modulio sugeneruotas ast yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
-						jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu jis tampa sudėtingu kai reikia naudoti 
+						Šio modulio sugeneruotas AST yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
+						jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu, jis tampa sudėtingu, kai reikia naudoti 
 						post procesorius. Dėl to po syntax matcher praleidimo jis yra keičiamas paprastu adt-ish medžiu.
 				Testavimas
 					SyntaxMatcher testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami ast kurie yra lyginami 
@@ -1086,7 +1086,7 @@ Terminų ir santrumpų žodynas
 						Perteklinių medžio šakų minimizavimas
 
 					Operatorių prioritetizavimas:
-					Naudojamas Dijkstros Shunting yard algoritmas infix notacijos vertimui į medžio formos postfix notaciją. Toks metodas parinktas 
+					Naudojamas Dijkstros Shunting yard algoritmas infix notacijos vertimui į medžio formos postfix notaciją. Toks metodas parinktas ;; wtf yra infix? Paaiškink, nes aš pats nesuprantu - T.
 					dėl sudėtingumo išreikšiant operatorius per rule pool - jį sudėtinga debuginti, sudėtinga nustatyti okie pakitimai sulaužys 
 					kitas taisykles. Po perėjimo prie psot'o pastebėtas ir gana žymus pagreitėjimas - taip nutiko dėl to kad kiekvienas value 
 					eidavo per 10 bereikalingų taisykjlių lygių, tą panaikinus dabar eina tik per tris, tai reiškia kad kiekviena vertė, reiškėm, 
