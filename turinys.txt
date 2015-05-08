@@ -386,6 +386,9 @@ Terminų ir santrumpų žodynas
 		2.4.2. Indeksavimas
 		2.4.3. Funkcijos
 		2.4.4. Funkcijos kvietimai
+
+		;; Čia reikia nepamiršti paminėti tail calls
+
 		2.4.5. Priskyrimo operacija
 		2.4.6. Vienanarės operacijos
 			;;2.4.6.1. Aritmeninės operacijos
@@ -951,7 +954,365 @@ Terminų ir santrumpų žodynas
 			3.3.x.x Ciklas
 
 	3.3. Sintaksinė gramatika
-4. LaborasLang programų pavyzdžiai
+
+4. LaborasLang programų pavyzdžiai	;; TODO: make sure everything builds and actually works
+
+	4.1. Hello world
+
+		Tradicinė programa, atspausdinanti "Hello, world!".
+
+			use System;
+
+			entry auto Main = void()
+			{
+				Console.WriteLine("Hello, world!");
+			};
+
+	4.2. Begalinė rekursija
+
+		Ši programa demonstruoja LaborasLang galinę rekursiją. Nors šioje programoje yra begalinė rekursija, ji niekada neperpildys dėklo, todėl programa veiks amžinai.
+
+			auto IsEven = bool(int number)
+			{
+				return number % 2 == 0;
+			};
+
+			auto Func = void(int i)
+			{
+				if (IsEven(i))
+				{
+					System.Console.WriteLine("{0} is even", i);
+					Func(i + 3);
+				}
+				else
+				{
+					System.Console.WriteLine("{0} is odd", i);
+					Func(i + 5);
+				}
+			};
+
+			entry auto Recursion = int()
+			{
+				Func(0);
+				return 0;
+			};
+
+	4.3. Dainelė apie alaus butelius
+
+		Ši programa atspausdina dainelės apie alaus butelius tekstą.
+
+			use System;
+
+			entry auto BeerBottleSong = int()
+			{
+				auto count = 99;
+				Console.WriteLine("{0} on the wall, {0}.", Bottles(count));
+
+				while ((count -= 1) >= 0)
+				{
+					Console.WriteLine("Take one down and pass it around, {0} on the wall.", Bottles(count));
+					Console.WriteLine();
+					Console.WriteLine("{0} on the wall, {0}.", Bottles(count));
+				}
+	
+				Console.WriteLine("Go to the store and buy some more, {0} on the wall.", Bottles(99));
+				Console.ReadKey();
+				return 0;
+			};
+
+			auto Bottles = string(int count)
+			{
+				string ret;
+
+				if (count > 0)
+				{
+					ret += count;
+
+					if (count > 1)
+					{
+						ret += " bottles ";
+					}
+					else
+					{
+						ret += " bottle ";
+					}
+				}
+				else
+				{
+					ret += "no more bottles ";
+				}
+
+				ret += "of beer";
+				return ret;
+			};
+
+	4.4. Pirminiai skaičiai
+
+		Ši programa spausdina, ar įvesti skaičiai yra pirminiai. Programa baigia darbą, kai įvedamas 0.
+
+		use System;
+
+		entry auto Main = void()
+		{
+			auto quit = false;
+			Console.WriteLine("Enter 0 at any time to quit.");
+
+			while (!quit)
+			{
+				int value;
+				string line = Console.ReadLine();
+
+				if (int.TryParse(line, value))
+				{
+					if (value == 0)
+					{
+						quit = true;
+					}
+					else
+					{
+						if (IsPrime(value))
+						{
+							Console.WriteLine("{0} is a prime number", value);
+						}
+						else
+						{
+							Console.WriteLine("{0} is not a prime number", value);
+						}
+					}
+				}
+				else
+				{
+					Console.WriteLine("Entered value is not a number!");
+				}
+			}
+		};
+
+		auto IsPrime = bool(int value)
+		{
+			if (value < 2)
+				return false;
+	
+			auto isDivisor = bool(int value, int divisor) { return value % divisor == 0 && divisor < value; };
+
+			auto isPrime = true;
+			auto divisor = (int)Math.Sqrt(value) + 2;
+
+			while (--divisor >= 2)
+			{
+				if (isDivisor(value, divisor))
+					return false;
+			}
+
+			return true;
+		};
+
+	4.5. Interneto svetainės pavadinimas
+
+		Pateikta programa iš įvestos interneto svetainės parsiunčia jos pavadinimą.
+
+			use System;
+			use System.IO;
+			use System.Net;
+
+			entry auto Main = int()
+			{
+				auto website = Console.ReadLine();
+				auto webResponse = WebRequest.Create(website).GetResponse();
+				auto reader = StreamReader(webResponse.GetResponseStream());
+				auto html = reader.ReadToEnd();
+
+				reader.Close();
+				webResponse.Close();
+	
+				const auto titleOpeningTag = "<title>";
+				const auto titleClosingTag = "</title>";
+				auto titleStartIndex = html.IndexOf(titleOpeningTag, StringComparison.InvariantCultureIgnoreCase) + titleOpeningTag.Length;
+				auto titleEndIndex = html.IndexOf(titleClosingTag, titleStartIndex, StringComparison.InvariantCultureIgnoreCase);
+				auto pageTitle = html.Substring(titleStartIndex, titleEndIndex - titleStartIndex);
+
+				Console.WriteLine(pageTitle);
+				Console.ReadKey();
+				return 0;
+			};
+
+	4.6. Paprastas skaičiuotuvas
+
+		Ši programa yra paprastas skaičiuotuvas, galintis atlikti keturias aritmetines operacijas: sudėti, atimti, dauginti ir dalinti.
+		Ji grafinei sąsajai naudoja Windows Forms karkasą.
+
+			use System;
+			use System.Drawing;
+			use System.Globalization;
+			use System.Text;
+			use System.Windows.Forms;
+
+			TextBox firstNumberTextBox;
+			TextBox secondNumberTextBox;
+			ComboBox operationComboBox;
+			TextBox resultTextBox;
+
+			Button calculateButton;
+
+			const string kAdd = "Add";
+			const string kSubtract = "Subtract";
+			const string kMultiply = "Multiply";
+			const string kDivide = "Divide";
+
+			auto ValidateTextBox = void(object sender, EventArgs e)
+			{
+				auto textBox = (TextBox)sender;
+				int decimalCount = 0;
+				bool hasErrors = false;
+				auto caretPosition = textBox.SelectionStart;
+
+				for (int i = 0; i < textBox.Text.Length && !hasErrors; i++)
+				{
+					auto c = textBox.Text[i];
+
+					if (c == '.')
+					{
+						decimalCount++;
+
+						if (decimalCount > 1 || i == 0)
+						{
+							hasErrors = true;
+						}
+					}
+					else if (c < '0' || c > '9')
+					{
+						hasErrors = true;
+					}
+				}
+	
+				if (!hasErrors)
+					return;
+
+				auto builder = StringBuilder();
+				builder.Capacity = textBox.Text.Length;
+				decimalCount = 0;
+	
+				for (int i = 0; i < textBox.Text.Length; i++)
+				{
+					auto c = textBox.Text[i];
+		
+					if (c >= '0' && c <= '9')
+					{
+						builder.Append(c);
+					}
+					else if (c == '.' && decimalCount == 0 && i > 0)
+					{
+						builder.Append(c);
+						decimalCount++;
+					}
+					else if (i < caretPosition)
+					{
+						caretPosition--;
+					}
+				}
+
+				textBox.Text = builder.ToString();
+				textBox.Select(caretPosition, 0);
+			};
+
+			entry auto Main = void()
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+
+				const auto boxSize = Size(136, 20);
+				const auto labelSize = Size(60, 20);
+				const auto windowSize = Size(300, 350);
+
+				const auto kControlCount = 4;
+				const auto xPositions = { 20, 100 };
+				const auto yPositions = { 30, 90, 150, 210, 270 };
+		
+				auto labels = Label[kControlCount];
+				auto labelTexts = { "Number 1", "Operation", "Number 2", "Result" };
+				auto controls =
+				{
+					firstNumberTextBox = TextBox(),
+					operationComboBox = ComboBox(),
+					secondNumberTextBox = TextBox(),
+					resultTextBox = TextBox()
+				};
+
+				for (int i = 0; i < kControlCount; i++)
+				{
+					auto label = labels[i] = Label();
+					label.Text = labelTexts[i];
+					label.Location = Point(xPositions[0], yPositions[i]);
+					label.Size = labelSize;
+					label.TextAlign = ContentAlignment.MiddleRight;
+
+					auto control = controls[i];
+					control.Location = Point(xPositions[1], yPositions[i]);
+					control.Size = boxSize;
+					control.TabIndex = i;
+				}
+	
+				firstNumberTextBox.add_TextChanged(ValidateTextBox);
+				secondNumberTextBox.add_TextChanged(ValidateTextBox);
+
+				operationComboBox.Items.AddRange({ kAdd, kSubtract, kMultiply, kDivide });
+				operationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+				operationComboBox.SelectedIndex = 0;
+				resultTextBox.ReadOnly = true;
+
+				calculateButton = Button();
+				calculateButton.Size = Size(75, 25);
+				calculateButton.TabIndex = 4;
+				calculateButton.Text = "Calculate";
+				calculateButton.Location = Point(xPositions[1], yPositions[4]);
+				calculateButton.UseVisualStyleBackColor = true;
+				calculateButton.add_Click(void(object sender, EventArgs e)
+				{
+					auto leftText = firstNumberTextBox.Text;
+					auto rightText = secondNumberTextBox.Text;
+		
+					if (leftText[leftText.Length - 1] == '.')
+						leftText += '0';
+
+					if (rightText[rightText.Length - 1] == '.')
+						rightText += '0';
+
+					auto leftOperand = double.Parse(leftText, CultureInfo.InvariantCulture);
+					auto rightOperand = double.Parse(rightText, CultureInfo.InvariantCulture);
+					auto operation = operationComboBox.SelectedItem;
+					double result;
+
+					if (operation == kAdd)
+					{
+						result = leftOperand + rightOperand;
+					}
+					else if (operation == kSubtract)
+					{
+						result = leftOperand - rightOperand;
+					}
+					else if (operation == kMultiply)
+					{
+						result = leftOperand * rightOperand;
+					}
+					else
+					{
+						result = leftOperand / rightOperand;
+					}
+
+					resultTextBox.Text = result.ToString(CultureInfo.InvariantCulture);
+				});
+
+				auto window = Form();
+				window.Controls.AddRange(labels);
+				window.Controls.AddRange(controls);
+				window.Controls.Add(calculateButton);
+				window.MinimumSize = windowSize;
+				window.MaximumSize = windowSize;
+				window.MaximizeBox = false;
+				window.Text = "Simple Calculator";
+
+				Application.Run(window);
+			};
+
 5. Pavyzdinis kompiliatorius
 	5.1. Komponentai
 		5.1.1. Lekseris
