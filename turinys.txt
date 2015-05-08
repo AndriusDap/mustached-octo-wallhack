@@ -1057,7 +1057,7 @@ Terminų ir santrumpų žodynas
 						tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
 						naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
 						resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
-						formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.
+						formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.											 ;; Gal būtų verta plačiau aprašyt apie jo veikimą? - T.
 
 					Galima teigti, kad šis modulis yra bekontekstis lexeris, nes nėra saugoma jokia globali būsena kuri naudojama tikrinti ;; Ištrinčiau "Galima teigti, kad", nes lexeris toks ir yra - T.
 					leksemų sąrašui, jis yra lyginamas tik su taisyklių sąrašu. Tai leidžia naudoti metaprogramą - taisyklių sąrašą ir jo 
@@ -1112,8 +1112,58 @@ Terminų ir santrumpų žodynas
 					serializavimo dėl mažesnio postų sudėtingumo nei syntax matcherio ir sudėtingo analizavimo, nelabai aišku kaip medis geras ar 
 					ne, jei jis formuotas rankomis tai galima nustatyti nesudėtingai. Šis metodas gali būti naudojamas ir paprasto lexerio 
 					testavime, bet tai neturi įeiti į šią ataskaitą.
+		
 		5.1.2. Parseris
 		5.1.3. Kodo generatorius
+			
+			Kodo generatorius yra kompiliatoriaus dalis, kuri tiesiogiai manipuliuoja CIL kodu ir metaduomenimis. Jį sudaro keletas subkomponentų:
+				* Assembly Registry
+				* Metadata Helpers
+				* Assembly Emitter
+				* Type Emitter
+				* Method Emitter
+				* Functor Emitter
+				* Method Body Optimzers
+			
+			5.1.3.1. Assembly Registry
+				 
+				 Tai yra asemblių registras - jis užkrauna bibliotekas ir saugoja jų metaduomnis. Jo paskirtis yra suteikti kompiliatoriui
+				 žinias apie egzistuojančius tipus, metodus, laukus ir t.t. ir juos pateikti patogiu formatu. Kompiliavimo pradžioje, ši klasė
+				 užkrauna visas vartotojo nurodytas bibliotekas - t.y. jų asemblius. Tai padaręs, asemblių registras sužino visus užkrautuose
+				 asembliuose esančius tipus ir jų vidurius. Asemblių registras gali:
+
+					* Pasakyti, ar tam tikra vardų grupė egzistuoja;
+					* Surasti tipą pagal jo vardą;
+					* Surasti tipe esančius metodus pagal vardą;
+					* Surasti tipe esantį metodą, kuris labiausiai tinka iškviesti su pateiktais argumentų tipais;
+					* Surasti tipe esantį lauką pagal vardą;
+					* Surasti tipe esančią sąvybę pagal vardą;
+					* Surasti tipe esantį indekso operatoriaus sąvybę pagal argumentų tipus;
+					* Surasti funkcijos tipą pagal jos grąžinamą tipą ir argumentų tipus;
+					* Sukurti masyvo tipą pagal jo elemento tipą ir matmenų skaičių;
+					* Surasti specialius kolekcijos tipo metodus įgalinančius jos iteravimą.
+
+			5.1.3.2. Metadata Helpers
+
+				Metadata Helpers - tai rinkinys funkcijų, skirtų padėti manipuliuoti metaduomenimis ir sužinoti jų sąvybes. Pagrindiniai Metadata Helpers
+
+					* Pasakyti, ar tipas yra primityvus tipas, sveikasis skaičiaus tipas, slankiojančio kablelio skaičiaus tipas, funkcijos tipas ir t.t.;
+					* Suskaičiuoti tipo dydį;
+					* Nustatyti, ar vieno tipo kintamąjį galima priskirti kito tipo kintamajam;
+					* Nustatyti, ar tipas paveldi kitą tipą visoje paveldimumo grandinėje;
+					* Surasti tipo bazinį tipą;
+					* Surasti visas sąsajas, kurias implementuoja tam tikras tipas;
+					* Surasti nurodyto metodą deklaruojantį tipą;
+					* Surasti nurodyto metodo grąžinamos reikšmės ir parametrų tipus;
+					* Nustatyti, ar metodą galimą iškviesti su nurodytų tipų parametrais;
+					* Nustatyti, ar tam tikras tipas, metodas ar laukas yra prieinami iš nurodyto tipo;
+					* Importuoti kitą iš kito asemblio;
+					* Nustatyti, ar per kolekciją galima iteruoti su kolekcijos iteravimo for ciklu.
+
+				Assembly Registry ir Metadata Helpers subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
+				LaborasLang programos atliekamus veiksmus.
+
+
 	5.2. Testavimas
 		5.2.1. Lekserio testavimas
 		5.2.2. Parserio testavimas
