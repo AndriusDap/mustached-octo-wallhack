@@ -1723,7 +1723,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kiekvienas funkcijos tipas LaborasLang kalboje atitinka vieną bazinį funktorių. Bazinis funktoriaus tipas yra abstrakti klasė, turinti du metodus:
 					1. Invoke(), kuris priima savyje laikomos funkcijos parametrus ir grąžina funkcijos gražinamą reikšmę;
-					2. AsDelegate(), kuris funktorių paverčia į CLI specifikaciją atitinkantį "delegate" objektą ([1], I.8.9.3. Delegates). Šio gražinamo delegate objekto tipas yra
+					2. AsDelegate(), kuris funktorių paverčia į CLI specifikaciją atitinkantį "delegate" objektą ([1], §I.8.9.3. Delegates). Šio gražinamo delegate objekto tipas yra
 					deklaruotas kaip vidinis bazinio funktoriaus tipas.
 
 				Funktoriaus implementacijos tipas paveldi iš atitinkančio bazinio tipo. Šis tipas yra sukuriamas, kai funkcijos tipo kintamajam yra priskiriama tam tikra funkcija.
@@ -1734,7 +1734,55 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.3.6. Method Body Optimizers
 			
+				Method Body Optimizers - metodų optimizatoriai - yra kodo generatoriaus dalis, kuri analizuoja ir optimizuoja Method Emitter sugeneruotą CIL kodą. Nors Method 
+				Emitter stengiasi sugeneruotikuo efektyvesnį kodą, tai nėra visada įmanoma padaryti pereinant visą parserio medį tik vieną kartą. Dėl šios priežasties, metodų 
+				optimizatoriai buvo pridėti į kodo generatorių.
 
+				Šiuo metu, kompiliatoriuje yra keturi metodų optimizatorai. Iš jų kiekvienas yra pritaikytas optimizuoti skirtingus scenarijus.
+
+				5.1.3.6.1. „nop“ instrukcijų šalinimas
+
+					„nop“ instrukcija yra CIL instrukcija, kuri nieko nedaro. Ji naudojama kaip šuolių taikinys. Pavyzdžiui, jei sąlygos sakinyje sąlyga nėra išpildoma, tai vykdomas
+					šuolis į „nop“ instrukciją, kuri įdedama po sąlygos kodo bloko. Šis optimizatorius iš metodo pašalina visas „nop“ instrukcijas, ir atnaujina visus šuolius, kad jų
+					taikinys būtų sekanti instrukcija po pašalintosios.
+
+				5.1.3.6.2. Perteklinių šuolių šalinimas
+
+					Šis optimizatorius aptinka situaciją, kai vykdomas šuolis į instrukciją, kuri grįžta iš metodo. Aptikęs tokią situaciją, jis pakeičia šuolio instrukciją į grįžimo
+					instrukciją. Šis optimizatorius padeda padidinti galinių kvietimų optimizacijos efektyvumą (žr. 5.1.3.6.4.). Pavyzdžiui, šis optimizatorius būtų vykdoma tokiai LaborasLang
+					funkcijai:					
+
+						auto Func = void(int i)
+						{
+							if (IsEven(i))
+							{
+								System.Console.WriteLine("{0} is even", i);
+								Func(i + 3);	// Po šito, vyksta šuolis į funkcijos pabaigą. Šis optimizatorius padaro, kad vietoj šuolio, funkcija grįžtų.
+							}
+							else
+							{
+								System.Console.WriteLine("{0} is odd", i);
+								Func(i + 5);
+							}
+						};
+
+				5.1.3.6.3. Negyvo kodo šalinimas
+
+					Šis optimizatorius pašalina visą kodą, kuriam gali įrodyt, kad jis niekada nebus pasiektas. Tai pagreita JIT kompiliavimą ir sumažina atminties naudojimą bei asemblio dydį.
+					Optimizatorius visą metodą paverčia vienkrypčiu grafu: kiekviena instrukcija tampa viršūne, kurios kaimynės yra sekanti instrukcija, šuolio taikinys arba abu, jei šuolis yra
+					sąlyginis. Sudarius grafą, vykdoma paieška gylyn ir pažymimos aplankytos viršūnės. Paieškos gale neaplankytos instrukcijos yra pašalinamos.
+
+				5.1.3.6.4. Galinis metodo kvietimas
+
+					Galinis metodo kvietimas - tai toks kvietimas, kuris neišsaugo dabartinės instrukcijų rodyklės adreso ir nepadidina vykdymo dėklo - tai yra pernaudoja 
+					dėklo vietą, skirtą kviečiančiajam metodui. CLI specifikacija sako, jog galinis metodo kvietimas yra validus tik tada, jei po kvietimo iš kart grįžtama
+					iš kviečiančiojo metodo ([1], §I.12.4.1.2 Calling instructions). Šis reikalavimas yra natūralus: kadangi instrukcijos rodyklė nėra įrašoma į dėklą, grįžtant
+					iš iškviesto metodo yra grįžtama į praeitą metodą kvietimų dėkle, o ne šį dėklą. Jei po tokio kvietimoreiktų atlikti kokią nors kitą operaciją, ji niekada 
+					nebūtų atlikta.
+
+					Šis optimizatorius suranda visus metodų kvietimus, kuriuos gali paversti galiniai metodų kvietimais ir taip padaro. Dėl CLI reikalavimo, kad galinis metodo
+					kvietimas gali būti atliekamas tik prieš grįžimo instrukciją, perteklinių šuolių optimizatorius turi galimybę smarkiai padidinti metodų kvietimų kiekį, kuriems
+					atliema ši optimizacija.
 
 	5.2. Komponentų integracija
 	5.3. Testavimas
