@@ -1697,6 +1697,28 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, Method Emitter kartais reikšmes turi saugoti laikinuosiuose kintamuosiuose.
 				Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose 
 				laikomos reikšmės nebereikės.
+			
+			5.1.3.5. Functor Emitter
+				
+				LaborasLang kalba palaiko tipus, kurių kintamiesiems galima priskirti funkcijas. Kodo generatorius šiuos tipus vadinas funktoriais. Functor Emitter tikslas yra
+				surformuoti šiuos tipus.
+
+				Functor Emitter formuoja dviejų tipų funktorius: bazinius funktorius ir implementacijos funktorius.
+
+				Kiekvienas funkcijos tipas LaborasLang kalboje atitinka vieną bazinį funktorių. Bazinis funktoriaus tipas yra abstrakti klasė, turinti du metodus:
+					1. Invoke(), kuris priima savyje laikomos funkcijos parametrus ir grąžina funkcijos gražinamą reikšmę;
+					2. AsDelegate(), kuris funktorių paverčia į CLI specifikaciją atitinkantį "delegate" objektą ([1], I.8.9.3. Delegates). Šio gražinamo delegate objekto tipas yra
+					deklaruotas kaip vidinis bazinio funktoriaus tipas.
+
+				Funktoriaus implementacijos tipas paveldi iš atitinkančio bazinio tipo. Šis tipas yra sukuriamas, kai funkcijos tipo kintamajam yra priskiriama tam tikra funkcija.
+				Šio tipo Invoke() metodas iškvies priskirtą funkciją, o AsDelegate() metodas sukurs delegate objektą kviečiamai funkcijai. Jei priskiriama funkcija nėra statinė, tai
+				funktorius savyje taip pat laikys objektą, ant kurio ši funkcija turi būti iškviesta.
+
+				Kai LaborasLang kalboje yra kviečiamas kintamasis, kuris yra funkcija, tai atitinka funktoriaus Invoke() metodo kvietimą.
+
+			5.1.3.6. Method Body Optimizers
+			
+
 
 	5.2. Komponentų integracija
 	5.3. Testavimas
