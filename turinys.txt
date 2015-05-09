@@ -899,15 +899,26 @@ Terminų ir santrumpų žodynas
 					// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
 3. LaborasLang gramatika
+
+	;; Truksta ivadinio sakinio
+
 	3.1. Programos apibrėžimas
+
 		Programa yra vienas ar daugiau išeities kodo failų.
+
 	3.2. Dviprasmybės
+
 		LaborasLang gramatikoje dviprasmybės yra gailimos tik sudarant žetonus. Jos yra sprendžiamos sudarant maksimalaus galimio ilgio
 		žetonus. Tai yra taikoma valdant tokius žetonus kaip "<<", "++", "--", tai reiška kad nors teiginys "i = i--1" galėtų būti 
 		transformuotas į "i = i - (-1)" dėl žetonų ilgio maksimizavimo jis bus suprastas kaip "i = (i--) 1", kas yra nevalidus kodas (
 		nėra jokio operatoriaus tarp dviejų operandų).
+
 	3.3. Leksinė gramatika
+
+		;; Truksta ivadinio sakinio
+
 		3.3.x. Programa leksiniu požiūriu
+
 			Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
 			* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
 			* Komentarai atitinka C šeimos kalbų komentarus, tai yra galimi vienos eilutės komentarai kurie yra pradedami simboliais "//" bei
@@ -950,13 +961,19 @@ Terminų ir santrumpų žodynas
 				StatementWithEndOfLine
 
 		3.3.X Kalbos struktūros
+			
+			;; Truksta ivadinio sakinio
+
 			3.3.x.x Sakinys
+
 				Sakinys yra pagrindinė kalbos struktūra kuri nusako tam tikrą veiksmą. Ši kalbos struktūra yra grupė mažesnių struktūrų kurios turi tam tikras formavimo taisykles:
 				"Use" sakinys
 				Deklaravimo sakinys
 				Reikšmės sakinys
 				Grąžinimo sakinys.
+
 				3.3.x.x.x. Sakinių leksinė sandara
+
 					Use sakinys
 					PEG tipo gramatika:
 					UseNode:
@@ -982,6 +999,8 @@ Terminų ir santrumpų žodynas
 	3.3. Sintaksinė gramatika
 
 4. LaborasLang programų pavyzdžiai	;; TODO: make sure everything builds and actually works
+
+	;; Truksta ivadinio sakinio
 
 	4.1. Hello world
 
@@ -1340,121 +1359,141 @@ Terminų ir santrumpų žodynas
 			};
 
 5. Pavyzdinis kompiliatorius
-	5.1. Komponentai
-		5.1.1. Lekseris
-			Apžvalga/aprašas ;;Nežinau kaip šitas turėtų vadintis
-				Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
-				Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
-					1. Išeities kodo skaidymas žetonais (leksemomis)
-					2. Pirminis žetonų formavimas į abstraktų sintaksės medį
-					3. AST medžio apdorojimas baigiamosiomis doroklėmis (post processors)
-				Pirmas žingsnis atliekamas "Tokenizer" komponento, antrasis - "Syntax matcher" modulio, trečiasis "Post processor" modulio. 
-				;;todo išversti šitus žodžius, gal Jusas pasiūlys kokias lietuviškas alternatyvas
-			Komponentai
-				Tokenizer
-					Šis komponentas iš išeities kodo teksto sugeneruoja sąrašą leksemų kurios turi tam tikrą tipą, turinį, vietą pradiniame
-					išeities kode.
-					RulePool
-					Šis komponentas yra statinis kalbos gramatinių taisyklių sąrašas kuris naudojamas SyntaxMatcher modulio. Šis modulis
-					nusako visą abstraktaus sintaksės medžio struktūrą kuri bus išlaikoma iki apdorojomo baigiamosiomis daryklėmis. Visos 
-					aprašytos taisyklės yra bekontekstės, naudojama PEG gramatika. Konteksto nebuvimas apsunkina operatorių analizę, dėl to
-					 jų operacijų prioritetą atitinkantis medis yra suformuojamas baigiamosiomis daryklėmis.
-				SyntaxMatcher
-					Šis komponentas analizuoja leksemų sąrašą ir iš jo suformuoja medį pagal RulePool modulyje aprašytas taisykles.
-				PostProcessors
-					Šis komponentas leidžia atlikti kontektines operacijas su abstrakčiu sintaksės medžiu. Tai panaudojama atlikti veiksmus kurie
-					yra labai sudėtingi naudojant PEG gramatiką. Šie veiksmai yra:
-						Operatorių prioritetizavimas
-						Funkcijų ir masyvų atskyrimas
-						Neigiamų skaičių atpažinimas
-						Taško operatoriaus apdorojimas
-						Perteklinių medžio šakų minimizavimas
 
-			Tokenizer ("Žetonatorius")
-				Atliekama funkcija
-					Išeiteis kodas suskaidomas į leksemas. Leksema yra sudaryta iš jos turinio, tipo, vietos išeities kode.
-				veikimo principas
+	;; Truksta ivadinio sakinio
+
+	5.1. Komponentai
+	
+		;; Truksta ivadinio sakinio
+		5.1.1. Lekseris
+
+			Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
+			Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
+				1. Išeities kodo skaidymas žetonais (leksemomis)
+				2. Pirminis žetonų formavimas į abstraktų sintaksės medį
+				3. AST medžio apdorojimas baigiamosiomis doroklėmis (post processors)
+			Pirmas žingsnis atliekamas "Tokenizer" komponento, antrasis - "Syntax matcher" modulio, trečiasis "Post processor" modulio. 
+				;;todo išversti šitus žodžius, gal Jusas pasiūlys kokias lietuviškas alternatyvas
+				;; Jusas sakė neversti - T.
+				
+			Lekserį sudaro šie komponentai:
+
+			Tokenizer
+				Šis komponentas iš išeities kodo teksto sugeneruoja sąrašą leksemų kurios turi tam tikrą tipą, turinį, vietą pradiniame
+				išeities kode.
+				RulePool
+				Šis komponentas yra statinis kalbos gramatinių taisyklių sąrašas kuris naudojamas SyntaxMatcher modulio. Šis modulis
+				nusako visą abstraktaus sintaksės medžio struktūrą kuri bus išlaikoma iki apdorojomo baigiamosiomis daryklėmis. Visos 
+				aprašytos taisyklės yra bekontekstės, naudojama PEG gramatika. Konteksto nebuvimas apsunkina operatorių analizę, dėl to
+					jų operacijų prioritetą atitinkantis medis yra suformuojamas baigiamosiomis daryklėmis.
+			SyntaxMatcher
+				Šis komponentas analizuoja leksemų sąrašą ir iš jo suformuoja medį pagal RulePool modulyje aprašytas taisykles.
+			PostProcessors
+				Šis komponentas leidžia atlikti kontektines operacijas su abstrakčiu sintaksės medžiu. Tai panaudojama atlikti veiksmus kurie
+				yra labai sudėtingi naudojant PEG gramatiką. Šie veiksmai yra:
+					Operatorių prioritetizavimas
+					Funkcijų ir masyvų atskyrimas
+					Neigiamų skaičių atpažinimas
+					Taško operatoriaus apdorojimas
+					Perteklinių medžio šakų minimizavimas
+
+			5.1.1.1. Tokenizer ("Žetonatorius")
+
+				Išeiteis kodas suskaidomas į leksemas. Leksema yra sudaryta iš jos turinio, tipo, vietos išeities kode.
+
+				5.1.1.1.1. veikimo principas
+
 					Modulio veikimo principas - iš eilės skaitomas tekstas po vieną simbolį kol nuskaityti simboliai gali būti sujungti į vieną 
 					leksemą, pvz tekstas {code}pirmas=antras+trečias;{code} bus pradėtas skaityti, pirmas rastas simbolis yra raidė 'p', iš to 
 					galima nuspręsti kad tai bus simbolis. Šis simbolis skaitomas kol bus rasta raidė netinkama simboliams - '=', tada simbolis 
 					bus užsaugotas, patikrita ar tai yra vienas iš rezervuotų žodžių tam kad nustatyti teisingą tipą ir pridėtas į leksemų sąrašą. 
 					Analogiškai bus apdorojamas ir likęs išeities kodas.
-				Testavimas
+
+				5.1.1.1.2. Testavimas
+
 					Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. 
 					Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai 
 					nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka 
 					rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
 					su testų duomenų sąrašu.
-			RulePool ("Taisyklių sąrašas")
-				Atliekama funkcija
-					Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką.
-					Taisyklės yra sudaromos iš terminalinių ir neterminalinių žetonų. Kiekvienam neterminaliniam žetonui yra nurodoma taisyklė 
-					kuri jį aprašo terminaliniais ir neterminalianiais žetonais. Vieną neterminalinį žetoną galima aprašyti keliomis skirtingomis 
-					taisyklėmis, jos bus taikomos iš eilės pagal deklaravimo tvarką. Taisyklėse naudjoami terminalinių ir neterminalinų žetonų 
-					modifikatoriai: 
-						* Vienas arba daugiau
-						* nulis arba daugiau
-						* neprivalomas galas
-						* neprivalomas
-					Modifikatorius "Vienas arba daugiau"
-						Naudojamas nurodyti kad šis elementas gali kartotis vieną arba daugiau kartų
-					Modifikatorius "Nulis arba daugiau"
-						Naudojamas nurodyti kad šis elementas gali kartotis nulį arba daugiau kartų. Gramatikoje naudojamas nurodyti neprivalomus 
-						deklaracijos modifikatorius, vienanarius operatorius. 
-					Modifikatorius "Neprivalomas galas"
-						Šis modifikatorius naudojamas deklaracijose, juo nurodoma kad deklaracijose reikšmės priskyrimas nėra privalomas. Šis 
-						operatorius gali būti pakeistas rekursiniu kreipiniu, tačiau toks kreipinys nėra optimalus dėklo naudojimo požiūriu bei 
-						taisyklių skaitomumo atžvilgiu.
-					Modifikatorius "Neprivalomas"
-						Šis modifikatorius naudojamas nurodant neprivalomus žetonus. Šio modifikatoriaus naudojimo galima išvengti aprašant 
-						alternatyvias taisykles.
 
-					Taip pat taisyklės gali būti apibrėžtos kaip:
-						* Taisyklė
-						* Minimizuojama taisyklė
-						* Visada minimizuojama taisyklė
-					Minimizuojama ir visada minimizuojama taisyklės yra naudojamos tarpinių abstraktaus sintaksės medžio narių aprašymui kurie 
-					turi prasmę tik leksikografinėje analizėje, tokie kaip "Kablelis ir reikšmė".
+			5.1.1.2. RulePool ("Taisyklių sąrašas")
 
-					Taisyklės palaiko ribotą rekursiją. Jos apribojimas yra tai kad rekursinis kreipinys privalo turėti bent vieną nerekursinį 
-					kreipinį prieš rekursinį taisyklės panaudojimą. Nepaisant to tiesioginė rekursija taisyklių sąraše yra nenaudojama.
-				Testavimas
+				Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką.
+				Taisyklės yra sudaromos iš terminalinių ir neterminalinių žetonų. Kiekvienam neterminaliniam žetonui yra nurodoma taisyklė 
+				kuri jį aprašo terminaliniais ir neterminalianiais žetonais. Vieną neterminalinį žetoną galima aprašyti keliomis skirtingomis 
+				taisyklėmis, jos bus taikomos iš eilės pagal deklaravimo tvarką. Taisyklėse naudjoami terminalinių ir neterminalinų žetonų 
+				modifikatoriai: 
+					* Vienas arba daugiau
+					* nulis arba daugiau
+					* neprivalomas galas
+					* neprivalomas
+
+				Modifikatorius "Vienas arba daugiau"
+					Naudojamas nurodyti kad šis elementas gali kartotis vieną arba daugiau kartų
+				Modifikatorius "Nulis arba daugiau"
+					Naudojamas nurodyti kad šis elementas gali kartotis nulį arba daugiau kartų. Gramatikoje naudojamas nurodyti neprivalomus 
+					deklaracijos modifikatorius, vienanarius operatorius. 
+				Modifikatorius "Neprivalomas galas"
+					Šis modifikatorius naudojamas deklaracijose, juo nurodoma kad deklaracijose reikšmės priskyrimas nėra privalomas. Šis 
+					operatorius gali būti pakeistas rekursiniu kreipiniu, tačiau toks kreipinys nėra optimalus dėklo naudojimo požiūriu bei 
+					taisyklių skaitomumo atžvilgiu.
+				Modifikatorius "Neprivalomas"
+					Šis modifikatorius naudojamas nurodant neprivalomus žetonus. Šio modifikatoriaus naudojimo galima išvengti aprašant 
+					alternatyvias taisykles.
+
+				Taip pat taisyklės gali būti apibrėžtos kaip:
+					* Taisyklė
+					* Minimizuojama taisyklė
+					* Visada minimizuojama taisyklė
+				Minimizuojama ir visada minimizuojama taisyklės yra naudojamos tarpinių abstraktaus sintaksės medžio narių aprašymui kurie 
+				turi prasmę tik leksikografinėje analizėje, tokie kaip "Kablelis ir reikšmė".
+
+				Taisyklės palaiko ribotą rekursiją. Jos apribojimas yra tai kad rekursinis kreipinys privalo turėti bent vieną nerekursinį 
+				kreipinį prieš rekursinį taisyklės panaudojimą. Nepaisant to tiesioginė rekursija taisyklių sąraše yra nenaudojama.
+
+				5.1.1.2.1. Testavimas
+
 					Taisyklių sąrašas testuotas jį naudojant sintaksės atpažinimo modulyje bei atliekant taisyklių analizę:
 						Tikrinama ar nėra nenaudojamų taisyklių
 						Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
 						Tikrinama ar nėra begalinės rekursijos taisyklėse 
 
-			SyntaxMatcher ("Sintaksės atpažinimo sistema")
-				Atliekama funkcija
-					Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
-				veikimo principas
+			5.1.1.3. SyntaxMatcher ("Sintaksės atpažinimo sistema")
+			
+				Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
+
+				5.1.1.3.1. veikimo principas
+
 					Syntax matcher nauoja taisyklių sąrašą kad sugeneruoti teisiną ast iš rule pool'o. Viskas pradedama nuo pagrindinės taisyklės
-					 kuri nusako programos struktūrą, tai yra aibė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
-					 taisyklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimų tinka tai ji pridedama į AST, jei ne
-					  - nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena neterminalinė taisyklė yra išskleidžiama iki 
-					  terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisyklė netiko, laikoma, kad išeities kodas yra 
-					  su klaidomis, tačiau kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
-					  galėtų vėl pradėti analizę, ieškodamas simbolių ';' ir '{'. Simboliai kurie nėra pridėti į AST ir yra iki to recovery point ;; Sugalvok kaip recovery point išverst - T.
-					  pridedami prie AST kaip Unknown node. Tai leidžia pranešti daugiau nei vieną klaidą kompiliacijos metu. Syntax matcher 
-					  taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma, kad pirma tikusi 
-					  taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo tvarka nurodo prioritetą, dėl to išvengiama vietų 
-					  kur gali būti pritaikyta daugiau nei viena taiskylė. 
-						Toks syntax matcher veikimo algoritmas yra prastas atminties naudojimo atžvilgiu, nes pastoviai deklaruojama labai daug 
-						AST nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų ;; "sufailino"? Seriously? - T.
-						tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
-						naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
-						resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
-						formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.											 ;; Gal būtų verta plačiau aprašyt apie jo veikimą? - T.
+					kuri nusako programos struktūrą, tai yra aibė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
+					taisyklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimų tinka tai ji pridedama į AST, jei ne
+					- nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena neterminalinė taisyklė yra išskleidžiama iki 
+					terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisyklė netiko, laikoma, kad išeities kodas yra 
+					su klaidomis, tačiau kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
+					galėtų vėl pradėti analizę, ieškodamas simbolių ';' ir '{'. Simboliai kurie nėra pridėti į AST ir yra iki to recovery point ;; Sugalvok kaip recovery point išverst - T.
+					pridedami prie AST kaip Unknown node. Tai leidžia pranešti daugiau nei vieną klaidą kompiliacijos metu. Syntax matcher 
+					taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma, kad pirma tikusi 
+					taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo tvarka nurodo prioritetą, dėl to išvengiama vietų 
+					kur gali būti pritaikyta daugiau nei viena taiskylė. 
+					Toks syntax matcher veikimo algoritmas yra prastas atminties naudojimo atžvilgiu, nes pastoviai deklaruojama labai daug 
+					AST nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų ;; "sufailino"? Seriously? - T.
+					tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
+					naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
+					resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
+					formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.											 ;; Gal būtų verta plačiau aprašyt apie jo veikimą? - T.
 
 					Galima teigti, kad šis modulis yra bekontekstis lexeris, nes nėra saugoma jokia globali būsena kuri naudojama tikrinti ;; Ištrinčiau "Galima teigti, kad", nes lexeris toks ir yra - T.
 					leksemų sąrašui, jis yra lyginamas tik su taisyklių sąrašu. Tai leidžia naudoti metaprogramą - taisyklių sąrašą ir jo 
 					interpretatorių - SyntaxMatcher. Taip labai lengvai atskirtas taisyklės nuo jų pritaikymo logikos, tas leido RulePool ;; I can't comprehend that again'
 					naudoti kaip dalinę AST dokumentaciją.
 
-						Šio modulio sugeneruotas AST yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
-						jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu, jis tampa sudėtingu, kai reikia naudoti 
-						post procesorius. Dėl to po syntax matcher praleidimo jis yra keičiamas paprastu adt-ish medžiu.
-				Testavimas
+					Šio modulio sugeneruotas AST yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
+					jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu, jis tampa sudėtingu, kai reikia naudoti 
+					post procesorius. Dėl to po syntax matcher praleidimo jis yra keičiamas paprastu adt-ish medžiu.
+
+				5.1.1.3.2. Testavimas
+
 					SyntaxMatcher testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami ast kurie yra lyginami 
 					su modifikuoto rulePool ast. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo gabaliuką ir peržiūrėti 
 					sugeneruotą AST dėl korektiškuom. Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei 
@@ -1462,39 +1501,48 @@ Terminų ir santrumpų žodynas
 					Testuose taip pat tikrinama kad medžiuose nėra nei vieno UnknownNode kuris rieškia kad neišėjo pritaikyti nei vienos taisyklės 
 					šiam kodo blokui.
 
-			PostProcesorius
-				Atliekama funkcija
-					PostProcesoirius yra hackas skirtas pridėti kontekstą į bekontekstinį lexerį. Post procesoriai vykdomi iteruojant per ast ir 
-					tikrinant kuris simbolis rastas, jie gali būti keičiami, restrukūtrizuojami, pašalinami. Aktyvšs post'ai:
-						Operatorių prioritetizavimas
-						Funkcijų ir masyvų atskyrimas
-						Neigiamų skaičių atpažinimas
-						Taško operatoriaus apdorojimas
-						Perteklinių medžio šakų minimizavimas
+			5.1.1.4. PostProcesorius
 
-					Operatorių prioritetizavimas:
+				PostProcesoirius yra hackas skirtas pridėti kontekstą į bekontekstinį lexerį. Post procesoriai vykdomi iteruojant per ast ir 
+				tikrinant kuris simbolis rastas, jie gali būti keičiami, restrukūtrizuojami, pašalinami. Aktyvšs post'ai:
+					Operatorių prioritetizavimas
+					Funkcijų ir masyvų atskyrimas
+					Neigiamų skaičių atpažinimas
+					Taško operatoriaus apdorojimas
+					Perteklinių medžio šakų minimizavimas
+
+				5.1.1.4.1. Operatorių prioritetizavimas
+
 					Naudojamas Dijkstros Shunting yard algoritmas infix notacijos vertimui į medžio formos postfix notaciją. Toks metodas parinktas ;; wtf yra infix? Paaiškink, nes aš pats nesuprantu - T.
 					dėl sudėtingumo išreikšiant operatorius per rule pool - jį sudėtinga debuginti, sudėtinga nustatyti okie pakitimai sulaužys 
 					kitas taisykles. Po perėjimo prie psot'o pastebėtas ir gana žymus pagreitėjimas - taip nutiko dėl to kad kiekvienas value 
 					eidavo per 10 bereikalingų taisykjlių lygių, tą panaikinus dabar eina tik per tris, tai reiškia kad kiekviena vertė, reiškėm, 
 					function call yra išleksinami žymiai greičiau.
-					Funkcijų ir masyvų atskyrimas:
-						Kalbos gramatika nėra context free. function call ir tipai atrodo identiškai. Kadangi lexeris yra pritaikytas cfg 
-						gramatikai funkcijų tipus teko analizuoti kontekstą turinčioje dalyje. Šis postas atpažysta ar tai yra funkcija ar taipas 
-						ar masyvas. 
-					Neigiamų skaičių atpažinimas:
-						Parseriui netiko kai minusas yra unary operatorius, reikia kad kai pirmas narys yra skaičius jis būtų neigiamas skaičius o 
-						ne skaičius plius unary operatorius. Tai išsprendžiama šio post'o
-					Taško opreratoriaus apdorojimas:
-						Taškas yra įterpiamas trarp simbolių. Taip gaunamas sąrašįas kurio kas antras narys yra taškas. Tokį parseriui apdoroti 
-						sunkiau, jis performuojamas į medį kuris sudarytas iš kairės, taško, dešinės - taškas tampa paprastu dvinariu operatoriumi.
 
-					perteklinių medžio šakų minimizavimas
-						Kai kurie nodes yra nereikalingi - jie neturi jokio turinio, trukdo parseriui dirbti, dėl to jei jie yra tušti jie yra 
-						collapsinami į. Taip gunamas mažesnis ir prpaastesnis medis. vėliau yra tikimasi panaikinti ir kitus nereikalingus 
-						operatorius kaip taškas, kabliataškus, priskyrimas ar kita.
+				5.1.1.4.2. Funkcijų ir masyvų atskyrimas:
+
+					Kalbos gramatika nėra context free. function call ir tipai atrodo identiškai. Kadangi lexeris yra pritaikytas cfg 
+					gramatikai funkcijų tipus teko analizuoti kontekstą turinčioje dalyje. Šis postas atpažysta ar tai yra funkcija ar taipas 
+					ar masyvas.
+
+				5.1.1.4.3. Neigiamų skaičių atpažinimas:
 				
-				Testavimas
+					Parseriui netiko kai minusas yra unary operatorius, reikia kad kai pirmas narys yra skaičius jis būtų neigiamas skaičius o 
+					ne skaičius plius unary operatorius. Tai išsprendžiama šio post'o
+
+				5.1.1.4.4. Taško opreratoriaus apdorojimas:
+
+					Taškas yra įterpiamas trarp simbolių. Taip gaunamas sąrašįas kurio kas antras narys yra taškas. Tokį parseriui apdoroti 
+					sunkiau, jis performuojamas į medį kuris sudarytas iš kairės, taško, dešinės - taškas tampa paprastu dvinariu operatoriumi.
+
+				5.1.1.4.5. Perteklinių medžio šakų minimizavimas
+
+					Kai kurie nodes yra nereikalingi - jie neturi jokio turinio, trukdo parseriui dirbti, dėl to jei jie yra tušti jie yra 
+					collapsinami į. Taip gunamas mažesnis ir prpaastesnis medis. vėliau yra tikimasi panaikinti ir kitus nereikalingus 
+					operatorius kaip taškas, kabliataškus, priskyrimas ar kita.
+				
+				5.1.1.4.6. Testavimas
+
 					Rankomis suformuojamas siekiamas medžio snippet'as kuris yra lyginamas su gautu medžiu. Toks testavimo būdas parinktas vietoje 
 					serializavimo dėl mažesnio postų sudėtingumo nei syntax matcherio ir sudėtingo analizavimo, nelabai aišku kaip medis geras ar 
 					ne, jei jis formuotas rankomis tai galima nustatyti nesudėtingai. Šis metodas gali būti naudojamas ir paprasto lexerio 
