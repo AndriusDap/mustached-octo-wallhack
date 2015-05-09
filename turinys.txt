@@ -63,11 +63,11 @@ Terminų ir santrumpų žodynas
 
 		Pavyzdinė „Hello, world“ programa LaborasLang kalboje gali būti užrašoma taip:
 
-		use System;         
+		use System;
 
 		entry auto HelloWorld = void()
 		{
-		    Console.WriteLine("Hello, world!");
+			Console.WriteLine("Hello, world!");
 		};
 
 		Išnagrinėkime šią programą po eilutę:
@@ -84,31 +84,31 @@ Terminų ir santrumpų žodynas
 	savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad 
 	pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
 
-	use System;         
+	use System;
 	use System.Runtime.InteropServices.ComTypes;
 	use System.Text;
 
 	entry auto MyFunction = void()
 	{
-	    FILETIME value;
-	    value.dwLowDateTime = 15;
+		FILETIME value;
+		value.dwLowDateTime = 15;
 
-	    auto reference = StringBuilder("Laboras");
+		auto reference = StringBuilder("Laboras");
 
-	    Console.WriteLine(value.dwLowDateTime);
-	    Console.WriteLine(reference);
+		Console.WriteLine(value.dwLowDateTime);
+		Console.WriteLine(reference);
 
-	    auto valueCopy = value;
-	    valueCopy.dwLowDateTime = 20;
+		auto valueCopy = value;
+		valueCopy.dwLowDateTime = 20;
 
-	    auto referenceCopy = reference;
-	    referenceCopy.Append("Lang");
+		auto referenceCopy = reference;
+		referenceCopy.Append("Lang");
 
-	    Console.WriteLine(value.dwLowDateTime);
-	    Console.WriteLine(valueCopy.dwLowDateTime);
+		Console.WriteLine(value.dwLowDateTime);
+		Console.WriteLine(valueCopy.dwLowDateTime);
 
-	    Console.WriteLine(reference);
-	    Console.WriteLine(referenceCopy);
+		Console.WriteLine(reference);
+		Console.WriteLine(referenceCopy);
 	};
 
 	Ši programa atspausdina:
@@ -775,7 +775,7 @@ Terminų ir santrumpų žodynas
 				yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
 
 				while (<sąlyga>)
-				    <teiginys>
+					<teiginys>
 
 				Ciklo teiginys yra bet koks LaborasLang kalboje legalus teiginys (kodo blokas, sąlyga, ciklas ir t.t.).
 
@@ -784,7 +784,7 @@ Terminų ir santrumpų žodynas
 				Keletas while ciklo pavyzdžių:
 
 				while (foo-- > 0)
-				    Report(foo);
+					Report(foo);
 
 				while (IsValid(bar))
 				{
@@ -841,12 +841,12 @@ Terminų ir santrumpų žodynas
 
 				// Šis for ciklas spausdina "Spinning infinitely" be galo.
 				for (;;)
-				    Console.WriteLine("Spinning infinitely");
+					Console.WriteLine("Spinning infinitely");
 
 
 				// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
 				for (int i = 0; i < 10; i++)
-				    Console.WriteLine(i);
+					Console.WriteLine(i);
 
 
 				// Šis ciklas analogiškas while ciklui
