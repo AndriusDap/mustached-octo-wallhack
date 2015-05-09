@@ -1592,7 +1592,7 @@ Terminų ir santrumpų žodynas
 					* Surasti nurodyto metodo grąžinamos reikšmės ir parametrų tipus;
 					* Nustatyti, ar metodą galimą iškviesti su nurodytų tipų parametrais;
 					* Nustatyti, ar tam tikras tipas, metodas ar laukas yra prieinami iš nurodyto tipo;
-					* Importuoti kitą iš kito asemblio;
+					* Importuoti tipą iš kito asemblio;
 					* Nustatyti, ar per kolekciją galima iteruoti su kolekcijos iteravimo for ciklu.
 
 				Assembly Registry ir Metadata Helpers subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
