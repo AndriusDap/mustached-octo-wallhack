@@ -388,13 +388,28 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				;; C# daro kažkoius hackus, kad Nullable veiktų? Mes juos palaikom? - D
 				;; Nedaro jokiu hackų. Nullable<T> yra generic type. Mes jų nepalaikom - T.
 				;; Gal ne taip supratau, bet mačiau apie tai ECMA-334 13.7.2 skyriuje kažką - D.
+
+		2.4.2 Nario išraiška
+
+			Išraiška naudojama pasiekti vardų grupės ar tipo narį. 
+
+			<pagrindinė išraiška>.<identifikatorius>
+
+			Šios išraiškos rezultatu laikomas tipo arba vardų grupės narys, kurio vardas atitinka nurodytą identifikatorių. Yra trys šios išraiškos apdorojimo variantai:
+
+				* pagrindinė išraiška yra vardų grupė. Šioje grupėje ieškoma tipo arba grupės, kurie atitinka identifikatorių.
+				* pagrindinė išraiška yra tipas. Tipe ieškoma statinių narių, kurie atitinka identifikatorių.
+				* pagrindinė išraiška yra reikšmė. Reikšmės tipe ieškoma nestatinių narių, kurie atitinka identifikatorių.
+
+			Jei tipo narys turi apribotą pasiekiamumą ir nėra pasiekiamas iš failo, kuriame rašoma išraiška, gražinama klaida.
+			;; kažkur gal reikia parašyti apie visus access apribojimus, gal prie tipų sistemos - D.
 				
-		2.4.2. Identifikatoriai
+		2.4.3. Identifikatoriai
 
 			;; gramatikoj turėtų būti specifikuota kas yra identifikatorius - D.
 			LaborasLang turi du būdus pasiekti identifikatorius - kaip tipo arba vardų grupės narį ar kaip pavienį identifikatorių.
-			Pavienio identifikatoriaus paieškai naudojama galiojimo 
-			sritis, ieškomi identifikatoriai šia tvarka:
+			Pavienio identifikatoriaus paieškai naudojama galiojimo sritis, ieškomi identifikatoriai šia tvarka:
+
 				1. Jei identifikatorius nėra funkcijoje einama į punktą 4
 				2. Ieškoma tarp lokalių kintamųjų. Kodo bloke neradus identifikatoriaus, paieška tesiama aukštesniame bloke kol pasiekiamas 
 				aukščiausias funkcijos blokas. Šiame žingsnyje taip pat apimami "for" ciklų kintamieji.
@@ -417,7 +432,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.2.x Globalūs kintamieji			
 
 				Globalius kintamuosius galima pasiekti kaip pavienius identifikatorius iš to pačio failo, taip pat kaip statinius tipų laukus iš kitų failų, 
-				jei jie deklaruoti su atributu "private". Jiems galioja tos pačios taisyklės kaip laukams.
+				jei jie deklaruoti su atributu "public". Jiems galioja tos pačios taisyklės kaip laukams.
 
 			2.4.2.x Laukai
 
@@ -445,6 +460,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Taip pat, kaip pavienį identifikatorių pasiekti galima, jei tipo vardų sritis yra importuota "use" teiginiu. Tipo išraiška 
 				yra speciali išraiška, kurią galima panaudoti tik tam tikrais atvejais:
 
+					* pagrindinė nario išraiška
 					* deklaracijose
 					* objekto kūrime
 					* masyvo kūrime
@@ -457,29 +473,29 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Vardų grupės veikimu beveik nesiskiria nuo tipų. Skirtumai yra panaudojime - vardų grupės galima naudoti tik kaip pagrindinę išraišką 
 				nario išraiškoje arba kaip importuojąmą grupę "use" teiginyje.
 
-		2.4.2. Indeksavimas
+		2.4.4. Indeksavimas
 			2.4.2.x Masyvo indeksavimas
 			2.4.2.x Indekso operatorius
-		2.4.3. Funkcijos
-		2.4.4. Funkcijos kvietimai
+		2.4.5. Funkcijos
+		2.4.6. Funkcijos kvietimai
 			2.4.4.x Funkcijos objekto kvietimas ;; LL functors, Func
 			2.4.4.x Metodo kvietimas
 
 		;; Čia reikia nepamiršti paminėti tail calls
 
-		2.4.5. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
-		2.4.6. Vienanarės operacijos
+		2.4.7. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
+		2.4.8. Vienanarės operacijos
 			;;2.4.6.1. Aritmeninės operacijos
 			;;2.4.6.2. Loginės operacijos
 			;;2.4.6.3. Bitinės operacijos
 			;;Joined
-		2.4.7. Dvinarės operacijos
+		2.4.9. Dvinarės operacijos
 			2.4.7.1. Aritmetinės operacijos
 			2.4.7.2. Loginės operacijos
 			2.4.7.3. Bitinės operacijos
 			2.4.7.4. Stūmimo operacijos
-		2.4.8. Objektų kūrimas
-		2.4.9. Masyvų kūrimas
+		2.4.10. Objektų kūrimas
+		2.4.11. Masyvų kūrimas
 	2.5. Teiginiai
 
 		;; kaip parašyti kas yra teiginys - D?
