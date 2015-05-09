@@ -7,13 +7,13 @@ Autentiškumo patvirtinimas
 Santrauka
 Summary
 Lentelių sąrašas
-Terminų ir santrumpų žodynas
+Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	Asemblis – failas, kuris yra LaborasLang programos kompiliavimo rezultatas. 
 	CIL (Common Intermediate Language) – kalba, kurią supranta ir geba vykdyti CLI implementacijų vykdymo aplinkos.
 	CLI (Common Language Infrastructure) – tai specifikacija, aprašanti virtualią vykdymo aplinką ir CIL kodą. CLI yra specifikuota ECMA-335 tarptautiniame standarte. Dvi populiariausios CLI implementacijos yra CLR (.NET karkaso dalis) ir Mono Runtime.
 	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie nurodomi LaborasLang kompiliatoriui kaip duomenys. 
-	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus aplikaciją.
+	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus vykdomąjį failą.
 	Išraiška (expression) – kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
 	Skaitoma išraiška (gettable expression, rvalue) – išraiška, kuri garantuotai grąžina reikšmę.
 	Rašoma išraiška (settable expression, lvalue) – išraiška, kuriai galima nustatyti reikšmę.
@@ -34,7 +34,7 @@ Terminų ir santrumpų žodynas
 	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
 	Vardų grupė (namespace) - ;; dunno, lol - D.
 	PEG - parsing expression grammar ;; jei ką čia žemaitiškai o ne angliškai - A.
-
+	Metaduomenys - 
 
 Įvadas
 
@@ -1562,7 +1562,7 @@ Terminų ir santrumpų žodynas
 			
 			5.1.3.1. Assembly Registry
 				 
-				 Tai yra asemblių registras - jis užkrauna bibliotekas ir saugoja jų metaduomnis. Jo paskirtis yra suteikti kompiliatoriui
+				 Tai yra asemblių registras - jis užkrauna bibliotekas ir saugoja jų metaduomenis. Jo paskirtis yra suteikti kompiliatoriui
 				 žinias apie egzistuojančius tipus, metodus, laukus ir t.t. ir juos pateikti patogiu formatu. Kompiliavimo pradžioje, ši klasė
 				 užkrauna visas vartotojo nurodytas bibliotekas - t.y. jų asemblius. Tai padaręs, asemblių registras sužino visus užkrautuose
 				 asembliuose esančius tipus ir jų vidurius. Asemblių registras gali:
@@ -1598,6 +1598,24 @@ Terminų ir santrumpų žodynas
 				Assembly Registry ir Metadata Helpers subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
 				LaborasLang programos atliekamus veiksmus.
 
+			5.1.3.3. Assembly Emitter
+
+				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis yra objektas, simbolizuojantis
+				kompiliavimo rezultatą. Kiekvieną asemblį iš esmės yra tipų konteineris ir dėl to, Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
+				
+				Kita svarbi Assembly Emitter funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, Assembly Emitter atlieka keletą validacijos žingsnių:
+					
+					1. Patikrinti, ar asemblio tipuose nėra metodų su vienodais parametrų tipais. Tai yra geriausia vietą šiai validacijai atlikti, nes visi metodai tuo
+					metu yra galutinai sukurti. Ši validacija reikalinga, nes CLI specifikacija reikalauja, jog viename tipe nebūtų daugiau, nei vieno metodo, turinčio
+					tą patį vardą, tokį patį parametrų skaičių ir tokius pačius parametrų tipus ([1], I.10.2 Overloading).
+
+					2. Atmesti visus programoje nenaudojamus funkcijų tipus. Kadangi šiuo metu programa jau yra sukompiliuota, Assembly Emitter geba surasti ir išmesti visus
+					funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada nepanaudoti (pavyzdžiui, buvo deklaruota funkcija, kurios tipas void(), tačiau ji niekada
+					niekam nebuvo priskirta).
+
+					3. Jeigu asemblio tipas yra vykdomasis failas, patikrinti, ar yra metodas, esantis vykdomojo failo įeities taškas.
+
+				Jei visi šie validacijos žingsniai pavyko, AssemblyEmitter gali saugiai išsaugoti asemblį diske.
 
 	5.2. Testavimas
 		5.2.1. Lekserio testavimas
@@ -1606,9 +1624,14 @@ Terminų ir santrumpų žodynas
 			5.2.3.1. CIL kodo palyginimu grįsti testai
 			5.2.3.2. Vykdymu grįsti testai
 		5.2.4 Kontraktai/statinė analizė
-	5.3. Vartotojo dokumentacija
-		5.3.1. Išvesties tipai
-		5.3.2. Bibliotekų nuorodos
-		5.3.3. Šakninės direktorijos
+
+	5.3. Naudotos bibliotekos
+
+	5.4. Vartotojo dokumentacija
+		5.4.1. Išvesties tipai
+		5.4.2. Bibliotekų nuorodos
+		5.4.3. Šakninės direktorijos
 6. Išvados
 7. Literatūra
+
+[1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
