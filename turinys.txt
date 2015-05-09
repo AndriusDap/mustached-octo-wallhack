@@ -1639,21 +1639,22 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose 
 				laikomos reikšmės nebereikės.
 
-	5.2. Testavimas
-		5.2.1. Lekserio testavimas
-		5.2.2. Parserio testavimas
-		5.2.3. Kodo generatorius testavimas
-			5.2.3.1. CIL kodo palyginimu grįsti testai
-			5.2.3.2. Vykdymu grįsti testai
-		5.2.4. Integracijos testavimas
-		5.2.5. Kontraktai/statinė analizė
+	5.2. Komponentų integracija
+	5.3. Testavimas
+		5.3.1. Lekserio testavimas
+		5.3.2. Parserio testavimas
+		5.3.3. Kodo generatorius testavimas
+			5.3.3.1. CIL kodo palyginimu grįsti testai
+			5.3.3.2. Vykdymu grįsti testai
+		5.3.4. Integracijos testavimas
+		5.3.5. Kontraktai/statinė analizė
 
-	5.3. Naudotos bibliotekos
+	5.4. Naudotos bibliotekos
 
-	5.4. Vartotojo dokumentacija
-		5.4.1. Išvesties tipai
-		5.4.2. Bibliotekų nuorodos
-		5.4.3. Šakninės direktorijos
+	5.5. Vartotojo dokumentacija
+		5.5.1. Išvesties tipai
+		5.5.2. Bibliotekų nuorodos
+		5.5.3. Šakninės direktorijos
 6. Išvados
 7. Literatūra
 
