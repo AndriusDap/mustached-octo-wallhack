@@ -211,15 +211,18 @@ Terminų ir santrumpų žodynas
 		myVariable(3, 5.8);
 
 		Funkcijų tipus galima naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms: ;;Patogu - šališka nuomonė, nėra įrodymo kad patogu ar ne. A.
-		int(int()) GetFunctionResultPlusOne = int(int() function)
-		{
-		    return function() + 1;
-		};
 
-		void() PrintSix = void()
-		{
-		    Console.WriteLine(GetFunctionResultPlusOne(int() { return 5; }));
-		};
+			int(int()) GetFunctionResultPlusOne = int(int() function)
+			{
+				return function() + 1;
+			};
+
+			void() PrintSix = void()
+			{
+				Console.WriteLine(GetFunctionResultPlusOne(int() { return 5; }));
+			};
+
+		;; TO DO: Parašyti, kad funkcijos tipas kitose CLI kalbose turi "Invoke" metodą, kuris iškviečia funkciją, grąžino jos grąžinamą reikšmę ir priima tokius pačius argumentus.
 
 	2.2.3. Masyvų tipai
 
@@ -351,8 +354,10 @@ Terminų ir santrumpų žodynas
 				int16 b = -20000;
 				uint16 c = 70000;// klaida, skaičius netelpa į uint16
 
-				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių. Šias reikšmes galima apskaičiuoti arba 
+				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių (žr. sk. $2.2.1). Šias reikšmes galima apskaičiuoti arba 
 				gauti iš tipų sąvybių MinValue ir MaxValue.
+
+				;; Dariau, gal gali aprašyt tiksliai kaip tai veiks? Būtų gerai atitikti parserio implementaciją - T.
 
 				Standarinis tipas yra "int". Šis tipas yra naudojamas jei nėra žinomas reikalingas tipas. Tipas 
 				nėra žinomas dviem atvejais - jei naudojama deklaracija su inicializacija ir jei kviečiama perdengta funkcija.
@@ -660,7 +665,7 @@ Terminų ir santrumpų žodynas
 
 			Kodo bloke deklaruoti kintamieji galioja tik iki blogo galo, todėl blokai taip pat naudojami norint apriboti kintamojo galiojimo sirtį.
 
-			Pavizdys:
+			Pavyzdys:
 
 			{
 				int a = 5;
