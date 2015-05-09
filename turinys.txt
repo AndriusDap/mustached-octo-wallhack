@@ -297,11 +297,11 @@ Terminų ir santrumpų žodynas
 		LaborasLang palaiko ribotą automatinį tipų radimą. Deklaruojant kintamuosius galima nurodyti auto tipą. Tokioje deklaracijoje tipas 
 		bus randamas automatiškai, bet kintamąjį būtina inicializuoti. Kompiliavimo metu kintamojo tipas nustatomas toks pat kaip inicializatoriaus. Pavyzdys:
 
-		auto str = "text";
+			auto str = "text";
 
 		ir
 
-		string str = "text";
+			string str = "text";
 
 		Abi deklaracijos sukompiliuojamos į identišką kodą.
 
@@ -350,9 +350,9 @@ Terminų ir santrumpų žodynas
 				;; laiko sveikuoju skaičiumi eina į lexer dalį, bet čia reikia parašyti, kad tipą gali pakeisti - D.
 				Sveikųjų skaičių literalo įgyjamas tipas priklauso nuo skaičiaus dydžio ir jo ženklo. 
 
-				uint8 a = 5;
-				int16 b = -20000;
-				uint16 c = 70000;// klaida, skaičius netelpa į uint16
+					uint8 a = 5;
+					int16 b = -20000;
+					uint16 c = 70000;// klaida, skaičius netelpa į uint16
 
 				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių (žr. sk. $2.2.1). Šias reikšmes galima apskaičiuoti arba 
 				gauti iš tipų sąvybių MinValue ir MaxValue.
@@ -362,14 +362,14 @@ Terminų ir santrumpų žodynas
 				Standarinis tipas yra "int". Šis tipas yra naudojamas jei nėra žinomas reikalingas tipas. Tipas 
 				nėra žinomas dviem atvejais - jei naudojama deklaracija su inicializacija ir jei kviečiama perdengta funkcija.
 
-				auto foo = void(int a){};
-				auto foo = void(long a){};
+					auto foo = void(int a){};
+					auto foo = void(long a){};
 
-				foo(5);
+					foo(5);
 
 				Bus iškviesta pirmoji funkcija. Norint iškviesti antrają, reikia rašyti 
 
-				foo((long)5);
+					foo((long)5);
 
 			2.4.1.3 Realiųjų skaičių literalai
 
@@ -430,8 +430,8 @@ Terminų ir santrumpų žodynas
 
 			Deklaracijos teiginys yra naudojamas deklaruojant kintamajį.
 
-			<atributai> <tipas> <identifikatorius>;
-			<atributai> <tipas> <identifikatorius> = <inicializatorius>;
+				<atributai> <tipas> <identifikatorius>;
+				<atributai> <tipas> <identifikatorius> = <inicializatorius>;
 
 			Atributai yra sąrašas atributų atskirtų tarpais, palaikomi atributai priklauso nuo kintamojo tipo. Atributus galima praleisti.
 
@@ -443,15 +443,15 @@ Terminų ir santrumpų žodynas
 
 			Pavyzdžiai:
 
-			int a; // "int" tipo kintamasis be inicializacijos
-			float b = 5; // "float" tipo kintamasis su inicializacija
-			string str = null; // teksto eilutė inicializuojama "null" reikšme.
-
-			int(int) incrementer = int(int num)
-			{
-				return num + 1;
-			};
-			// funkcijos kintamasis su inicializacija
+				int a; // "int" tipo kintamasis be inicializacijos
+				float b = 5; // "float" tipo kintamasis su inicializacija
+				string str = null; // teksto eilutė inicializuojama "null" reikšme.
+			
+				// funkcijos kintamasis su inicializacija
+				int(int) incrementer = int(int num)	
+				{
+					return num + 1;
+				};
 
 			Verta atkreipti dėmesį, jog po funkcijos bloko uždarymo yra ";". Funkcijos deklracija nėra kontrolės blokas ir jis, kaip visi 
 			įprasti teiginiai yra baigiamas ";".
@@ -471,8 +471,8 @@ Terminų ir santrumpų žodynas
 
 			Jei nesilaikoma vieno iš šių apribojimų, kintamojo tipo nustatyti neįmanoma ir yra gražinama klaida.
 
-			auto foo; // klaida
-			auto bar = null; // klaida
+				auto foo; // klaida
+				auto bar = null; // klaida
 
 			Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - 
 			pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti 
@@ -484,21 +484,21 @@ Terminų ir santrumpų žodynas
 				Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, 
 				jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. 
 
-				const int a = 5;
-				a = 6; // klaida, a reikšmę galima tik skaityti
+					const int a = 5;
+					a = 6; // klaida, a reikšmę galima tik skaityti
 
-				mutable int b = 7;
-				b = 8; // reikšmę galima ir skaityti ir rašyti
+					mutable int b = 7;
+					b = 8; // reikšmę galima ir skaityti ir rašyti
 
-				const int c; // klaida, konstantas būtina inicializuoti
+					const int c; // klaida, konstantas būtina inicializuoti
 
 				Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
 				taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
 				būtina deklarauotį jį su mutable atributu. 
 
-				void() foo; // klaida, jei tai globalus kintamasis
+					void() foo; // klaida, jei tai globalus kintamasis
 
-				mutable void() foo; // šis kodas veikia
+					mutable void() foo; // šis kodas veikia
 
 				Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. 
 				;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
@@ -516,43 +516,45 @@ Terminų ir santrumpų žodynas
 
 				Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
 
-			Atributus galima kombinuoti. 
+			2.5.1.3. Atributų kombinavimas
 
-			public const int MAX_COUNT = 200;
+				Atributus galima kombinuoti. 
 
-			Bet deklaracijoje gali būti tik po vieną atributą iš kiekvieno tipo.
+					public const int MAX_COUNT = 200;
 
-			public private int a; // klaida
-			public public int b; // kompiliatoriui nereikia kartoti dalykų
+				Bet deklaracijoje gali būti tik po vieną atributą iš kiekvieno tipo.
+
+					public private int a; // klaida
+					public public int b; // kompiliatoriui nereikia kartoti dalykų
 
 		2.5.2 Vardų grupės importavimo ;; Gal kas geriau sugalvosit - D.
 
 			Importavimo teiginys naudojamas į failo galiojimo sritį įterptį vardų grupes ir tipus iš kitos vardų grupės.
 
-			use <vardų grupė>;
+				use <vardų grupė>;
 
 			Vardų grupė privalo būti pilna vardų grupė iš naudojamų asemblių.
 
 			Po šio teiginio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant importuotos grupės.
 
-			use System;
+				use System;
 
-			String a;
-			Collections.ArrayList lst;
+				String a;
+				Collections.ArrayList lst;
 
 			yra analogiška
 
-			System.String a;
-			System.Collections.ArrayList lst;
+				System.String a;
+				System.Collections.ArrayList lst;
 
 			Importavimo teiginiai leidžiami tik faile. ;; Kaip kitaip parašyti - D?
 			Faile gali būti neribotas skaičius importavimo teiginių.
 
 			Nors teiginys importuoja ir vardų grupes, importavimo teiginyje privaloma rašyti pilną vardų grupę, net jei ji pasiekiama trumpiau per kitą teiginį.
 
-			use System;
-			use Collections; // klaida, nėra tokios vardų grupės
-			use System.Collections; // Toks teiginys veikia
+				use System;
+				use Collections; // klaida, nėra tokios vardų grupės
+				use System.Collections; // Toks teiginys veikia
 
 			Kompiliavimo metu importuoti tipai keičiami pilnais tipų vardais. Importavimas, kaip ir tipų pseudonimai, yra pagalbinė kompiliatoriaus funkcija. 
 			Šių sakinių naudojimas visiškai neįtakoja gaunamo kodo veikimo.
@@ -561,8 +563,8 @@ Terminų ir santrumpų žodynas
 
 			"return" teiginys naudojamas baigti funkcijos darbą. 
 
-			return;
-			return <reikšmė>;
+				return;
+				return <reikšmė>;
 
 			"return" sakinio tipas privalo atitikti funkcijos gražinamą tipą. Jei gražinas "void" tipas, leidžiamas tik tuščias "return" sakinys. Toks sakinys naudojamas tik užbaigti funkcijos darbą. "void" tipo funkcijos gali neturėti "return" sakinio, jų darbas bus baigtas pasiekus funkcijos bloko galą. 
 
@@ -579,61 +581,65 @@ Terminų ir santrumpų žodynas
 
 			Pavyzdžiai:
 
-			void()
-			{
-				int a = 5;
-			}// teisingas kodas, funkcijai nereikalingas return sakinys
-
-			void()
-			{
-				return 5; // klaida, ši funkcija negali gražinti
-			}
-
-			int()
-			{
-				int a = 5;
-			}// klaida, funcija negražina reikšmės
-
-			int()
-			{
-				int a = GetNum();
-				if(a > 6)
+				// teisingas kodas, funkcijai nereikalingas return sakinys
+				void()
 				{
-					return a - 1;
+					int a = 5;
 				}
-				else
-				{
-					return a + 1;
-				}
-			}// teigingas kodas, abi šakos gražina reikšmę
 
+				// klaida, ši funkcija negali gražinti
+				void()
+				{
+					return 5;
+				}
 
-			int()
-			{
-				int a = GetNum();
-				if(a > 6)
+				// klaida, funcija negražina reikšmės
+				int()
 				{
-					return a - 1;
+					int a = 5;
 				}
-				else
-				{
-					a++;
-				}
-			}// klaida, viena iš šakų negražina reikšmės
 
+				// teigingas kodas, abi šakos gražina reikšmę
+				int()
+				{
+					int a = GetNum();
+					if(a > 6)
+					{
+						return a - 1;
+					}
+					else
+					{
+						return a + 1;
+					}
+				}
 
-			int()
-			{
-				int a = 5;
-				if(a > 0)
+				// klaida, viena iš šakų negražina reikšmės
+				int()
 				{
-					return a;
+					int a = GetNum();
+					if(a > 6)
+					{
+						return a - 1;
+					}
+					else
+					{
+						a++;
+					}
 				}
-				else
+
+				// klaida, viena iš šakų negražina reikšmės
+				int()
 				{
-					a++;
+					int a = 5;
+					if(a > 0)
+					{
+						return a;
+					}
+					else
+					{
+						a++;
+					}
 				}
-			}// klaida, viena iš šakų negražina reikšmės
 
 			Šis kodo fragmentas parodo sistemos trūkumą. Nors jūs esatę įsitikinę, kad funkcija gražins reikšmę, kompiliatorius naudoja 
 			paprastą analizę, kuri negali garantuoti šio fakto. Tokiu atveju tenka naudoti "return" sakinius, kurie niekada nebus įvykdyti.
@@ -645,7 +651,9 @@ Terminų ir santrumpų žodynas
 
 		2.5.5 Išraiškos teiginys
 
-			<išraiška>;
+			Išraiškos teiginį sudaro pati išraikša ir kabliataškis:
+
+				<išraiška>;
 
 			Bet kokia išraiška taip pat gali būti panaudota kaip teiginys. Tokia išraiška bus įvykdyta ir jos gražinama reikšmė atmesta.
 
@@ -657,9 +665,9 @@ Terminų ir santrumpų žodynas
 
 			LaborasLang kodo blokai sudaromi iš atidarančių kabučių, sąrašo teiginių ir uždarančių kabučių.
 
-			{
-				<teiginių sąrašas>
-			}
+				{
+					<teiginių sąrašas>
+				}
 
 			Blokas leidžia įrašyti kelis teiginius, kur sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys teiginiai yra vykdomi paeiliui.
 
@@ -667,48 +675,48 @@ Terminų ir santrumpų žodynas
 
 			Pavyzdys:
 
-			{
-				int a = 5;
-				a++;
-			}
+				{
+					int a = 5;
+					a++;
+				}
 
 			Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau gražins klaidą (nebent yra kitų kintamųjų vardu a).
 
-			{
-				int b = 5;
 				{
-					int a = b;
-					b++;
-				}
+					int b = 5;
+					{
+						int a = b;
+						b++;
+					}
 
-				Console.WriteLine(b);// išspausdintų 6
-				Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
-			}
+					Console.WriteLine(b);// išspausdintų 6
+					Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
+				}
 
 			Bloke kintamieji negali turėti to pačio vardo.
 
-			{
-				int a = 5;
-				float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
-			}
+				{
+					int a = 5;
+					float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
+				}
 
 			Tačiau, vardas gali būti vėl panaudojamas gilesniame bloke.
 
-			{
-				int a = 5;
 				{
-					Console.WriteLine(a);
-					int a = 16;
+					int a = 5;
+					{
+						Console.WriteLine(a);
+						int a = 16;
+						Console.WriteLine(a);
+					}
 					Console.WriteLine(a);
 				}
-				Console.WriteLine(a);
-			}
 
 			Ši programa išspausdins
 
-			5
-			16
-			5
+				5
+				16
+				5
 
 			Blokas gali būti tuščias. Toks blokas daro tą patį ką tuščias teiginys - visiškai nieko.
 
@@ -716,13 +724,13 @@ Terminų ir santrumpų žodynas
 
 			Sąlygos sakinys naudojamas parinkti vykdomą teiginį pagal sąlygą.
 
-			if(<sąlyga>)
-				<teigiamas teiginys>
+				if (<sąlyga>)
+					<teigiamas teiginys>
 			
-			if(<sąlyga>)
-				<teigiamas teiginys>
-			else
-				<neigiamas teiginys>
+				if (<sąlyga>)
+					<teigiamas teiginys>
+				else
+					<neigiamas teiginys>
 
 			Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
 
@@ -731,37 +739,37 @@ Terminų ir santrumpų žodynas
 			"else" ir neigiamas teiginys gali būti praleisti.
 			Pavyzdžiai:
 
-			int num = GetNum();
-			if(num >= 0)
-				Console.WriteLine("Tegiamas skaičius");
-			else
-				Console.WriteLine("Neigiamas skaičius");
+				int num = GetNum();
+				if (num >= 0)
+					Console.WriteLine("Tegiamas skaičius");
+				else
+					Console.WriteLine("Neigiamas skaičius");
 
-			num++;
+				num++;
 
-			if(num < 0)
-				return;
+				if(num < 0)
+					return;
 
 			"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
 
-			int num = GetNum();
-			if(num >= 0)
-				if(num == 0)
-					Console.WriteLine("Nulis");
-			else
-				Console.WriteLine("Neigiamas skaičius");
+				int num = GetNum();
+				if (num >= 0)
+					if (num == 0)
+						Console.WriteLine("Nulis");
+				else
+					Console.WriteLine("Neigiamas skaičius");
 
 			Ši programa išspausdins "Neigiamas skaičius" visiems teigiamiems nenuliniams skaičiams, kadangi "else" yra grupuojamas su 
 			artimiausiu "if". Pataisyta programa:
 
-			int num = GetNum();
-			if(num >= 0)
-			{
-				if(num == 0)
-					Console.WriteLine("Nulis");
-			}
-			else
-				Console.WriteLine("Neigiamas skaičius");
+				int num = GetNum();
+				if (num >= 0)
+				{
+					if (num == 0)
+						Console.WriteLine("Nulis");
+				}
+				else
+					Console.WriteLine("Neigiamas skaičius");
 
 
 		2.6.3. Ciklai
@@ -774,8 +782,8 @@ Terminų ir santrumpų žodynas
 				while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo teiginio. Ciklas yra vykdomas tol, kol ciklo sąlyga 
 				yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
 
-				while (<sąlyga>)
-					<teiginys>
+					while (<sąlyga>)
+						<teiginys>
 
 				Ciklo teiginys yra bet koks LaborasLang kalboje legalus teiginys (kodo blokas, sąlyga, ciklas ir t.t.).
 
@@ -783,16 +791,16 @@ Terminų ir santrumpų žodynas
 				
 				Keletas while ciklo pavyzdžių:
 
-				while (foo-- > 0)
-					Report(foo);
+					while (foo-- > 0)
+						Report(foo);
 
-				while (IsValid(bar))
-				{
-					if (bar % 2 == 0)
-						Console.WriteLine(bar);
+					while (IsValid(bar))
+					{
+						if (bar % 2 == 0)
+							Console.WriteLine(bar);
 
-					bar = Transform(bar);
-				}
+						bar = Transform(bar);
+					}
 
 			2.6.3.2. C stiliaus for ciklas
 
@@ -802,8 +810,8 @@ Terminų ir santrumpų žodynas
 				Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus 
 				for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
 
-				for (<inicializatorius>; <sąlyga>; <iteratorius>)
-					<teiginys>
+					for (<inicializatorius>; <sąlyga>; <iteratorius>)
+						<teiginys>
 
 				Kiekviena iš šio for ciklo atraštės dalių gali būti praleista.
 
@@ -828,33 +836,33 @@ Terminų ir santrumpų žodynas
 				;; Man šitas padeda suvokti kaip tiksliai vykdomas for - D.
 				Naudojant "while" ciklą, "for" galima aprašyti taip:
 
-				{
-					<inicializatorius>;
-					while (<sąlyga>)
 					{
-						<teiginys>;
-						<iteratorius>;
+						<inicializatorius>;
+						while (<sąlyga>)
+						{
+							<teiginys>;
+							<iteratorius>;
+						}
 					}
-				}
 
 				For ciklo pavyzdžiai:
 
-				// Šis for ciklas spausdina "Spinning infinitely" be galo.
-				for (;;)
-					Console.WriteLine("Spinning infinitely");
+					// Šis for ciklas spausdina "Spinning infinitely" be galo.
+					for (;;)
+						Console.WriteLine("Spinning infinitely");
 
 
-				// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
-				for (int i = 0; i < 10; i++)
-					Console.WriteLine(i);
+					// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
+					for (int i = 0; i < 10; i++)
+						Console.WriteLine(i);
 
 
-				// Šis ciklas analogiškas while ciklui
-				for(;i < 10;)
-				{
-					Console.WriteLine(i);
-					i++;
-				}
+					// Šis ciklas analogiškas while ciklui
+					for (; i < 10;)
+					{
+						Console.WriteLine(i);
+						i++;
+					}
 
 
 			2.6.3.3. Kolekcijos iteravimo for ciklas
@@ -862,8 +870,8 @@ Terminų ir santrumpų žodynas
 				Iteravimui per reikšmių kolekcijas dažnai naudojamas specialus ciklas, kitose kalbose vadinamas "foreach" ciklu. Šiame 
 				cikle yra deklaruojamas kintamasis, kuris paeiliui įgyja visas rinkinio reikšmes. 
 
-				for(<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
-					<teiginys>
+					for (<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
+						<teiginys>
 
 				Pagal kintamojo tipą ir pavadinimą yra deklaruojamas lokalus kintamasis. Šio kintamojo galiojimo sritis yra visas ciklas, 
 				bet jo reikšmę galima tik perskaityti. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
@@ -877,17 +885,17 @@ Terminų ir santrumpų žodynas
 
 				Ciklo pavyzdžiai:
 
-				// iteruojama per masyvą
-				auto arr = int[] { 1, 2, 3, 4 };
-				for (auto i in arr)
-					Console.WriteLine(i);
-				// išspausdins skaičius 1 - 4
+					// iteruojama per masyvą
+					auto arr = int[] { 1, 2, 3, 4 };
+					for (auto i in arr)
+						Console.WriteLine(i);
+					// išspausdins skaičius 1 - 4
 
-				// iterauojama per kolekciją
-				ArrayList lst = ...
-				for (object i in lst)
-					Console.WriteLine(i.ToString());
-				// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
+					// iterauojama per kolekciją
+					ArrayList lst = ...
+					for (object i in lst)
+						Console.WriteLine(i.ToString());
+					// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
 3. LaborasLang gramatika
 	3.1. Programos apibrėžimas
@@ -1067,61 +1075,61 @@ Terminų ir santrumpų žodynas
 
 		Ši programa spausdina, ar įvesti skaičiai yra pirminiai. Programa baigia darbą, kai įvedamas 0.
 
-		use System;
+			use System;
 
-		entry auto Main = void()
-		{
-			auto quit = false;
-			Console.WriteLine("Enter 0 at any time to quit.");
-
-			while (!quit)
+			entry auto Main = void()
 			{
-				int value;
-				string line = Console.ReadLine();
+				auto quit = false;
+				Console.WriteLine("Enter 0 at any time to quit.");
 
-				if (int.TryParse(line, value))
+				while (!quit)
 				{
-					if (value == 0)
+					int value;
+					string line = Console.ReadLine();
+
+					if (int.TryParse(line, value))
 					{
-						quit = true;
-					}
-					else
-					{
-						if (IsPrime(value))
+						if (value == 0)
 						{
-							Console.WriteLine("{0} is a prime number", value);
+							quit = true;
 						}
 						else
 						{
-							Console.WriteLine("{0} is not a prime number", value);
+							if (IsPrime(value))
+							{
+								Console.WriteLine("{0} is a prime number", value);
+							}
+							else
+							{
+								Console.WriteLine("{0} is not a prime number", value);
+							}
 						}
 					}
+					else
+					{
+						Console.WriteLine("Entered value is not a number!");
+					}
 				}
-				else
-				{
-					Console.WriteLine("Entered value is not a number!");
-				}
-			}
-		};
+			};
 
-		auto IsPrime = bool(int value)
-		{
-			if (value < 2)
-				return false;
-	
-			auto isDivisor = bool(int value, int divisor) { return value % divisor == 0 && divisor < value; };
-
-			auto isPrime = true;
-			auto divisor = (int)Math.Sqrt(value) + 2;
-
-			while (--divisor >= 2)
+			auto IsPrime = bool(int value)
 			{
-				if (isDivisor(value, divisor))
+				if (value < 2)
 					return false;
-			}
+	
+				auto isDivisor = bool(int value, int divisor) { return value % divisor == 0 && divisor < value; };
 
-			return true;
-		};
+				auto isPrime = true;
+				auto divisor = (int)Math.Sqrt(value) + 2;
+
+				while (--divisor >= 2)
+				{
+					if (isDivisor(value, divisor))
+						return false;
+				}
+
+				return true;
+			};
 
 	4.5. Interneto svetainės pavadinimas
 
