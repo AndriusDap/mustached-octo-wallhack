@@ -748,7 +748,7 @@ Terminų ir santrumpų žodynas
 
 				num++;
 
-				if(num < 0)
+				if (num < 0)
 					return;
 
 			"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
