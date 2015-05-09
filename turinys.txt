@@ -7,13 +7,13 @@ Autentiškumo patvirtinimas
 Santrauka
 Summary
 Lentelių sąrašas
-Terminų ir santrumpų žodynas
+Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	Asemblis – failas, kuris yra LaborasLang programos kompiliavimo rezultatas. 
 	CIL (Common Intermediate Language) – kalba, kurią supranta ir geba vykdyti CLI implementacijų vykdymo aplinkos.
 	CLI (Common Language Infrastructure) – tai specifikacija, aprašanti virtualią vykdymo aplinką ir CIL kodą. CLI yra specifikuota ECMA-335 tarptautiniame standarte. Dvi populiariausios CLI implementacijos yra CLR (.NET karkaso dalis) ir Mono Runtime.
 	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie nurodomi LaborasLang kompiliatoriui kaip duomenys. 
-	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus aplikaciją.
+	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus vykdomąjį failą.
 	Išraiška (expression) – kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
 	Skaitoma išraiška (gettable expression, rvalue) – išraiška, kuri garantuotai grąžina reikšmę.
 	Rašoma išraiška (settable expression, lvalue) – išraiška, kuriai galima nustatyti reikšmę.
@@ -34,7 +34,7 @@ Terminų ir santrumpų žodynas
 	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
 	Vardų grupė (namespace) - ;; dunno, lol - D.
 	PEG - parsing expression grammar ;; jei ką čia žemaitiškai o ne angliškai - A.
-
+	Metaduomenys - 
 
 Įvadas
 
@@ -63,12 +63,12 @@ Terminų ir santrumpų žodynas
 
 		Pavyzdinė „Hello, world“ programa LaborasLang kalboje gali būti užrašoma taip:
 
-		use System;         
+			use System;
 
-		entry auto HelloWorld = void()
-		{
-		    Console.WriteLine("Hello, world!");
-		};
+			entry auto HelloWorld = void()
+			{
+				Console.WriteLine("Hello, world!");
+			};
 
 		Išnagrinėkime šią programą po eilutę:
 		•	Sakinys  use System; nurodo, jog šiame faile tipai ir vardų grupės iš System vardų grupės bus tiesiogiai pasiekiami.
@@ -84,40 +84,41 @@ Terminų ir santrumpų žodynas
 	savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad 
 	pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
 
-	use System;         
-	use System.Runtime.InteropServices.ComTypes;
-	use System.Text;
+		use System;
+		use System.Runtime.InteropServices.ComTypes;
+		use System.Text;
 
-	entry auto MyFunction = void()
-	{
-	    FILETIME value;
-	    value.dwLowDateTime = 15;
+		entry auto MyFunction = void()
+		{
+			FILETIME value;
+			value.dwLowDateTime = 15;
 
-	    auto reference = StringBuilder("Laboras");
+			auto reference = StringBuilder("Laboras");
 
-	    Console.WriteLine(value.dwLowDateTime);
-	    Console.WriteLine(reference);
+			Console.WriteLine(value.dwLowDateTime);
+			Console.WriteLine(reference);
 
-	    auto valueCopy = value;
-	    valueCopy.dwLowDateTime = 20;
+			auto valueCopy = value;
+			valueCopy.dwLowDateTime = 20;
 
-	    auto referenceCopy = reference;
-	    referenceCopy.Append("Lang");
+			auto referenceCopy = reference;
+			referenceCopy.Append("Lang");
 
-	    Console.WriteLine(value.dwLowDateTime);
-	    Console.WriteLine(valueCopy.dwLowDateTime);
+			Console.WriteLine(value.dwLowDateTime);
+			Console.WriteLine(valueCopy.dwLowDateTime);
 
-	    Console.WriteLine(reference);
-	    Console.WriteLine(referenceCopy);
-	};
+			Console.WriteLine(reference);
+			Console.WriteLine(referenceCopy);
+		};
 
 	Ši programa atspausdina:
-	15
-	Laboras
-	15
-	20
-	LaborasLang
-	LaborasLang
+
+		15
+		Laboras
+		15
+		20
+		LaborasLang
+		LaborasLang
 
 	Visi palaikomi CLI tipai paveldi iš System.Object. Reikšmės tipai paveldi iš System.ValueType, kuris paveldi iš System.Object. 
 	LaborasLang taip pat palaiko sąsajos tipus, kurių objektai gali būti vertės arba nuorodiniai tipai, priklausomai nuo realizacijos.
@@ -211,15 +212,18 @@ Terminų ir santrumpų žodynas
 		myVariable(3, 5.8);
 
 		Funkcijų tipus galima naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms: ;;Patogu - šališka nuomonė, nėra įrodymo kad patogu ar ne. A.
-		int(int()) GetFunctionResultPlusOne = int(int() function)
-		{
-		    return function() + 1;
-		};
 
-		void() PrintSix = void()
-		{
-		    Console.WriteLine(GetFunctionResultPlusOne(int() { return 5; }));
-		};
+			int(int()) GetFunctionResultPlusOne = int(int() function)
+			{
+				return function() + 1;
+			};
+
+			void() PrintSix = void()
+			{
+				Console.WriteLine(GetFunctionResultPlusOne(int() { return 5; }));
+			};
+
+		;; TO DO: Parašyti, kad funkcijos tipas kitose CLI kalbose turi "Invoke" metodą, kuris iškviečia funkciją, grąžino jos grąžinamą reikšmę ir priima tokius pačius argumentus.
 
 	2.2.3. Masyvų tipai
 
@@ -294,11 +298,11 @@ Terminų ir santrumpų žodynas
 		LaborasLang palaiko ribotą automatinį tipų radimą. Deklaruojant kintamuosius galima nurodyti auto tipą. Tokioje deklaracijoje tipas 
 		bus randamas automatiškai, bet kintamąjį būtina inicializuoti. Kompiliavimo metu kintamojo tipas nustatomas toks pat kaip inicializatoriaus. Pavyzdys:
 
-		auto str = "text";
+			auto str = "text";
 
 		ir
 
-		string str = "text";
+			string str = "text";
 
 		Abi deklaracijos sukompiliuojamos į identišką kodą.
 
@@ -347,24 +351,26 @@ Terminų ir santrumpų žodynas
 				;; laiko sveikuoju skaičiumi eina į lexer dalį, bet čia reikia parašyti, kad tipą gali pakeisti - D.
 				Sveikųjų skaičių literalo įgyjamas tipas priklauso nuo skaičiaus dydžio ir jo ženklo. 
 
-				uint8 a = 5;
-				int16 b = -20000;
-				uint16 c = 70000;// klaida, skaičius netelpa į uint16
+					uint8 a = 5;
+					int16 b = -20000;
+					uint16 c = 70000;// klaida, skaičius netelpa į uint16
 
-				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių. Šias reikšmes galima apskaičiuoti arba 
+				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių (žr. sk. $2.2.1). Šias reikšmes galima apskaičiuoti arba 
 				gauti iš tipų sąvybių MinValue ir MaxValue.
+
+				;; Dariau, gal gali aprašyt tiksliai kaip tai veiks? Būtų gerai atitikti parserio implementaciją - T.
 
 				Standarinis tipas yra "int". Šis tipas yra naudojamas jei nėra žinomas reikalingas tipas. Tipas 
 				nėra žinomas dviem atvejais - jei naudojama deklaracija su inicializacija ir jei kviečiama perdengta funkcija.
 
-				auto foo = void(int a){};
-				auto foo = void(long a){};
+					auto foo = void(int a){};
+					auto foo = void(long a){};
 
-				foo(5);
+					foo(5);
 
 				Bus iškviesta pirmoji funkcija. Norint iškviesti antrają, reikia rašyti 
 
-				foo((long)5);
+					foo((long)5);
 
 			2.4.1.3 Realiųjų skaičių literalai
 
@@ -484,8 +490,8 @@ Terminų ir santrumpų žodynas
 
 			Deklaracijos teiginys yra naudojamas deklaruojant kintamajį.
 
-			<atributai> <tipas> <identifikatorius>;
-			<atributai> <tipas> <identifikatorius> = <inicializatorius>;
+				<atributai> <tipas> <identifikatorius>;
+				<atributai> <tipas> <identifikatorius> = <inicializatorius>;
 
 			Atributai yra sąrašas atributų atskirtų tarpais, palaikomi atributai priklauso nuo kintamojo tipo. Atributus galima praleisti.
 
@@ -497,15 +503,15 @@ Terminų ir santrumpų žodynas
 
 			Pavyzdžiai:
 
-			int a; // "int" tipo kintamasis be inicializacijos
-			float b = 5; // "float" tipo kintamasis su inicializacija
-			string str = null; // teksto eilutė inicializuojama "null" reikšme.
-
-			int(int) incrementer = int(int num)
-			{
-				return num + 1;
-			};
-			// funkcijos kintamasis su inicializacija
+				int a; // "int" tipo kintamasis be inicializacijos
+				float b = 5; // "float" tipo kintamasis su inicializacija
+				string str = null; // teksto eilutė inicializuojama "null" reikšme.
+			
+				// funkcijos kintamasis su inicializacija
+				int(int) incrementer = int(int num)	
+				{
+					return num + 1;
+				};
 
 			Verta atkreipti dėmesį, jog po funkcijos bloko uždarymo yra ";". Funkcijos deklracija nėra kontrolės blokas ir jis, kaip visi 
 			įprasti teiginiai yra baigiamas ";".
@@ -525,8 +531,8 @@ Terminų ir santrumpų žodynas
 
 			Jei nesilaikoma vieno iš šių apribojimų, kintamojo tipo nustatyti neįmanoma ir yra gražinama klaida.
 
-			auto foo; // klaida
-			auto bar = null; // klaida
+				auto foo; // klaida
+				auto bar = null; // klaida
 
 			Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - 
 			pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti 
@@ -538,21 +544,21 @@ Terminų ir santrumpų žodynas
 				Yra du priešingi kintamumo atributai: const ir mutable. const padaro kintamajį konstanta, o mutable atvirkščiai - pažymi, 
 				jog kintamajo reikšmė gali kisti. Konstantoms negalima priskirti reikšmės ir jas būtina inicializuoti. 
 
-				const int a = 5;
-				a = 6; // klaida, a reikšmę galima tik skaityti
+					const int a = 5;
+					a = 6; // klaida, a reikšmę galima tik skaityti
 
-				mutable int b = 7;
-				b = 8; // reikšmę galima ir skaityti ir rašyti
+					mutable int b = 7;
+					b = 8; // reikšmę galima ir skaityti ir rašyti
 
-				const int c; // klaida, konstantas būtina inicializuoti
+					const int c; // klaida, konstantas būtina inicializuoti
 
 				Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
 				taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
 				būtina deklarauotį jį su mutable atributu. 
 
-				void() foo; // klaida, jei tai globalus kintamasis
+					void() foo; // klaida, jei tai globalus kintamasis
 
-				mutable void() foo; // šis kodas veikia
+					mutable void() foo; // šis kodas veikia
 
 				Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. 
 				;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
@@ -570,43 +576,45 @@ Terminų ir santrumpų žodynas
 
 				Pasiekiamumo atributai leidžiami tik globaliems kintamiesiems.
 
-			Atributus galima kombinuoti. 
+			2.5.1.3. Atributų kombinavimas
 
-			public const int MAX_COUNT = 200;
+				Atributus galima kombinuoti. 
 
-			Bet deklaracijoje gali būti tik po vieną atributą iš kiekvieno tipo.
+					public const int MAX_COUNT = 200;
 
-			public private int a; // klaida
-			public public int b; // kompiliatoriui nereikia kartoti dalykų
+				Bet deklaracijoje gali būti tik po vieną atributą iš kiekvieno tipo.
+
+					public private int a; // klaida
+					public public int b; // kompiliatoriui nereikia kartoti dalykų
 
 		2.5.2 Vardų grupės importavimo ;; Gal kas geriau sugalvosit - D.
 
 			Importavimo teiginys naudojamas į failo galiojimo sritį įterptį vardų grupes ir tipus iš kitos vardų grupės.
 
-			use <vardų grupė>;
+				use <vardų grupė>;
 
 			Vardų grupė privalo būti pilna vardų grupė iš naudojamų asemblių.
 
 			Po šio teiginio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant importuotos grupės.
 
-			use System;
+				use System;
 
-			String a;
-			Collections.ArrayList lst;
+				String a;
+				Collections.ArrayList lst;
 
 			yra analogiška
 
-			System.String a;
-			System.Collections.ArrayList lst;
+				System.String a;
+				System.Collections.ArrayList lst;
 
 			Importavimo teiginiai leidžiami tik faile. ;; Kaip kitaip parašyti - D?
 			Faile gali būti neribotas skaičius importavimo teiginių.
 
 			Nors teiginys importuoja ir vardų grupes, importavimo teiginyje privaloma rašyti pilną vardų grupę, net jei ji pasiekiama trumpiau per kitą teiginį.
 
-			use System;
-			use Collections; // klaida, nėra tokios vardų grupės
-			use System.Collections; // Toks teiginys veikia
+				use System;
+				use Collections; // klaida, nėra tokios vardų grupės
+				use System.Collections; // Toks teiginys veikia
 
 			Kompiliavimo metu importuoti tipai keičiami pilnais tipų vardais. Importavimas, kaip ir tipų pseudonimai, yra pagalbinė kompiliatoriaus funkcija. 
 			Šių sakinių naudojimas visiškai neįtakoja gaunamo kodo veikimo.
@@ -615,8 +623,8 @@ Terminų ir santrumpų žodynas
 
 			"return" teiginys naudojamas baigti funkcijos darbą. 
 
-			return;
-			return <reikšmė>;
+				return;
+				return <reikšmė>;
 
 			"return" sakinio tipas privalo atitikti funkcijos gražinamą tipą. Jei gražinas "void" tipas, leidžiamas tik tuščias "return" sakinys. Toks sakinys naudojamas tik užbaigti funkcijos darbą. "void" tipo funkcijos gali neturėti "return" sakinio, jų darbas bus baigtas pasiekus funkcijos bloko galą. 
 
@@ -633,61 +641,65 @@ Terminų ir santrumpų žodynas
 
 			Pavyzdžiai:
 
-			void()
-			{
-				int a = 5;
-			}// teisingas kodas, funkcijai nereikalingas return sakinys
-
-			void()
-			{
-				return 5; // klaida, ši funkcija negali gražinti
-			}
-
-			int()
-			{
-				int a = 5;
-			}// klaida, funcija negražina reikšmės
-
-			int()
-			{
-				int a = GetNum();
-				if(a > 6)
+				// teisingas kodas, funkcijai nereikalingas return sakinys
+				void()
 				{
-					return a - 1;
+					int a = 5;
 				}
-				else
-				{
-					return a + 1;
-				}
-			}// teigingas kodas, abi šakos gražina reikšmę
 
+				// klaida, ši funkcija negali gražinti
+				void()
+				{
+					return 5;
+				}
 
-			int()
-			{
-				int a = GetNum();
-				if(a > 6)
+				// klaida, funcija negražina reikšmės
+				int()
 				{
-					return a - 1;
+					int a = 5;
 				}
-				else
-				{
-					a++;
-				}
-			}// klaida, viena iš šakų negražina reikšmės
 
+				// teigingas kodas, abi šakos gražina reikšmę
+				int()
+				{
+					int a = GetNum();
+					if (a > 6)
+					{
+						return a - 1;
+					}
+					else
+					{
+						return a + 1;
+					}
+				}
 
-			int()
-			{
-				int a = 5;
-				if(a > 0)
+				// klaida, viena iš šakų negražina reikšmės
+				int()
 				{
-					return a;
+					int a = GetNum();
+					if (a > 6)
+					{
+						return a - 1;
+					}
+					else
+					{
+						a++;
+					}
 				}
-				else
+
+				// klaida, viena iš šakų negražina reikšmės
+				int()
 				{
-					a++;
+					int a = 5;
+					if (a > 0)
+					{
+						return a;
+					}
+					else
+					{
+						a++;
+					}
 				}
-			}// klaida, viena iš šakų negražina reikšmės
 
 			Šis kodo fragmentas parodo sistemos trūkumą. Nors jūs esatę įsitikinę, kad funkcija gražins reikšmę, kompiliatorius naudoja 
 			paprastą analizę, kuri negali garantuoti šio fakto. Tokiu atveju tenka naudoti "return" sakinius, kurie niekada nebus įvykdyti.
@@ -699,7 +711,9 @@ Terminų ir santrumpų žodynas
 
 		2.5.5 Išraiškos teiginys
 
-			<išraiška>;
+			Išraiškos teiginį sudaro pati išraikša ir kabliataškis:
+
+				<išraiška>;
 
 			Bet kokia išraiška taip pat gali būti panaudota kaip teiginys. Tokia išraiška bus įvykdyta ir jos gražinama reikšmė atmesta.
 
@@ -711,58 +725,58 @@ Terminų ir santrumpų žodynas
 
 			LaborasLang kodo blokai sudaromi iš atidarančių kabučių, sąrašo teiginių ir uždarančių kabučių.
 
-			{
-				<teiginių sąrašas>
-			}
+				{
+					<teiginių sąrašas>
+				}
 
 			Blokas leidžia įrašyti kelis teiginius, kur sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys teiginiai yra vykdomi paeiliui.
 
 			Kodo bloke deklaruoti kintamieji galioja tik iki blogo galo, todėl blokai taip pat naudojami norint apriboti kintamojo galiojimo sirtį.
 
-			Pavizdys:
+			Pavyzdys:
 
-			{
-				int a = 5;
-				a++;
-			}
+				{
+					int a = 5;
+					a++;
+				}
 
 			Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau gražins klaidą (nebent yra kitų kintamųjų vardu a).
 
-			{
-				int b = 5;
 				{
-					int a = b;
-					b++;
-				}
+					int b = 5;
+					{
+						int a = b;
+						b++;
+					}
 
-				Console.WriteLine(b);// išspausdintų 6
-				Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
-			}
+					Console.WriteLine(b);// išspausdintų 6
+					Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
+				}
 
 			Bloke kintamieji negali turėti to pačio vardo.
 
-			{
-				int a = 5;
-				float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
-			}
+				{
+					int a = 5;
+					float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
+				}
 
 			Tačiau, vardas gali būti vėl panaudojamas gilesniame bloke.
 
-			{
-				int a = 5;
 				{
-					Console.WriteLine(a);
-					int a = 16;
+					int a = 5;
+					{
+						Console.WriteLine(a);
+						int a = 16;
+						Console.WriteLine(a);
+					}
 					Console.WriteLine(a);
 				}
-				Console.WriteLine(a);
-			}
 
 			Ši programa išspausdins
 
-			5
-			16
-			5
+				5
+				16
+				5
 
 			Blokas gali būti tuščias. Toks blokas daro tą patį ką tuščias teiginys - visiškai nieko.
 
@@ -770,13 +784,13 @@ Terminų ir santrumpų žodynas
 
 			Sąlygos sakinys naudojamas parinkti vykdomą teiginį pagal sąlygą.
 
-			if(<sąlyga>)
-				<teigiamas teiginys>
+				if (<sąlyga>)
+					<teigiamas teiginys>
 			
-			if(<sąlyga>)
-				<teigiamas teiginys>
-			else
-				<neigiamas teiginys>
+				if (<sąlyga>)
+					<teigiamas teiginys>
+				else
+					<neigiamas teiginys>
 
 			Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
 
@@ -785,37 +799,37 @@ Terminų ir santrumpų žodynas
 			"else" ir neigiamas teiginys gali būti praleisti.
 			Pavyzdžiai:
 
-			int num = GetNum();
-			if(num >= 0)
-				Console.WriteLine("Tegiamas skaičius");
-			else
-				Console.WriteLine("Neigiamas skaičius");
+				int num = GetNum();
+				if (num >= 0)
+					Console.WriteLine("Tegiamas skaičius");
+				else
+					Console.WriteLine("Neigiamas skaičius");
 
-			num++;
+				num++;
 
-			if(num < 0)
-				return;
+				if (num < 0)
+					return;
 
 			"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
 
-			int num = GetNum();
-			if(num >= 0)
-				if(num == 0)
-					Console.WriteLine("Nulis");
-			else
-				Console.WriteLine("Neigiamas skaičius");
+				int num = GetNum();
+				if (num >= 0)
+					if (num == 0)
+						Console.WriteLine("Nulis");
+				else
+					Console.WriteLine("Neigiamas skaičius");
 
 			Ši programa išspausdins "Neigiamas skaičius" visiems teigiamiems nenuliniams skaičiams, kadangi "else" yra grupuojamas su 
 			artimiausiu "if". Pataisyta programa:
 
-			int num = GetNum();
-			if(num >= 0)
-			{
-				if(num == 0)
-					Console.WriteLine("Nulis");
-			}
-			else
-				Console.WriteLine("Neigiamas skaičius");
+				int num = GetNum();
+				if (num >= 0)
+				{
+					if (num == 0)
+						Console.WriteLine("Nulis");
+				}
+				else
+					Console.WriteLine("Neigiamas skaičius");
 
 
 		2.6.3. Ciklai
@@ -828,8 +842,8 @@ Terminų ir santrumpų žodynas
 				while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo teiginio. Ciklas yra vykdomas tol, kol ciklo sąlyga 
 				yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
 
-				while (<sąlyga>)
-				    <teiginys>
+					while (<sąlyga>)
+						<teiginys>
 
 				Ciklo teiginys yra bet koks LaborasLang kalboje legalus teiginys (kodo blokas, sąlyga, ciklas ir t.t.).
 
@@ -837,16 +851,16 @@ Terminų ir santrumpų žodynas
 				
 				Keletas while ciklo pavyzdžių:
 
-				while (foo-- > 0)
-				    Report(foo);
+					while (foo-- > 0)
+						Report(foo);
 
-				while (IsValid(bar))
-				{
-					if (bar % 2 == 0)
-						Console.WriteLine(bar);
+					while (IsValid(bar))
+					{
+						if (bar % 2 == 0)
+							Console.WriteLine(bar);
 
-					bar = Transform(bar);
-				}
+						bar = Transform(bar);
+					}
 
 			2.6.3.2. C stiliaus for ciklas
 
@@ -856,8 +870,8 @@ Terminų ir santrumpų žodynas
 				Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus 
 				for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
 
-				for (<inicializatorius>; <sąlyga>; <iteratorius>)
-					<teiginys>
+					for (<inicializatorius>; <sąlyga>; <iteratorius>)
+						<teiginys>
 
 				Kiekviena iš šio for ciklo atraštės dalių gali būti praleista.
 
@@ -882,33 +896,33 @@ Terminų ir santrumpų žodynas
 				;; Man šitas padeda suvokti kaip tiksliai vykdomas for - D.
 				Naudojant "while" ciklą, "for" galima aprašyti taip:
 
-				{
-					<inicializatorius>;
-					while (<sąlyga>)
 					{
-						<teiginys>;
-						<iteratorius>;
+						<inicializatorius>;
+						while (<sąlyga>)
+						{
+							<teiginys>;
+							<iteratorius>;
+						}
 					}
-				}
 
 				For ciklo pavyzdžiai:
 
-				// Šis for ciklas spausdina "Spinning infinitely" be galo.
-				for (;;)
-				    Console.WriteLine("Spinning infinitely");
+					// Šis for ciklas spausdina "Spinning infinitely" be galo.
+					for (;;)
+						Console.WriteLine("Spinning infinitely");
 
 
-				// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
-				for (int i = 0; i < 10; i++)
-				    Console.WriteLine(i);
+					// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
+					for (int i = 0; i < 10; i++)
+						Console.WriteLine(i);
 
 
-				// Šis ciklas analogiškas while ciklui
-				for(;i < 10;)
-				{
-					Console.WriteLine(i);
-					i++;
-				}
+					// Šis ciklas analogiškas while ciklui
+					for (; i < 10;)
+					{
+						Console.WriteLine(i);
+						i++;
+					}
 
 
 			2.6.3.3. Kolekcijos iteravimo for ciklas
@@ -916,8 +930,8 @@ Terminų ir santrumpų žodynas
 				Iteravimui per reikšmių kolekcijas dažnai naudojamas specialus ciklas, kitose kalbose vadinamas "foreach" ciklu. Šiame 
 				cikle yra deklaruojamas kintamasis, kuris paeiliui įgyja visas rinkinio reikšmes. 
 
-				for(<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
-					<teiginys>
+					for (<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
+						<teiginys>
 
 				Pagal kintamojo tipą ir pavadinimą yra deklaruojamas lokalus kintamasis. Šio kintamojo galiojimo sritis yra visas ciklas, 
 				bet jo reikšmę galima tik perskaityti. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
@@ -931,28 +945,39 @@ Terminų ir santrumpų žodynas
 
 				Ciklo pavyzdžiai:
 
-				// iteruojama per masyvą
-				auto arr = int[] { 1, 2, 3, 4 };
-				for (auto i in arr)
-					Console.WriteLine(i);
-				// išspausdins skaičius 1 - 4
+					// iteruojama per masyvą
+					auto arr = int[] { 1, 2, 3, 4 };
+					for (auto i in arr)
+						Console.WriteLine(i);
+					// išspausdins skaičius 1 - 4
 
-				// iterauojama per kolekciją
-				ArrayList lst = ...
-				for (object i in lst)
-					Console.WriteLine(i.ToString());
-				// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
+					// iterauojama per kolekciją
+					ArrayList lst = ...
+					for (object i in lst)
+						Console.WriteLine(i.ToString());
+					// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
 3. LaborasLang gramatika
+
+	;; Truksta ivadinio sakinio
+
 	3.1. Programos apibrėžimas
+
 		Programa yra vienas ar daugiau išeities kodo failų.
+
 	3.2. Dviprasmybės
+
 		LaborasLang gramatikoje dviprasmybės yra gailimos tik sudarant žetonus. Jos yra sprendžiamos sudarant maksimalaus galimio ilgio
 		žetonus. Tai yra taikoma valdant tokius žetonus kaip "<<", "++", "--", tai reiška kad nors teiginys "i = i--1" galėtų būti 
 		transformuotas į "i = i - (-1)" dėl žetonų ilgio maksimizavimo jis bus suprastas kaip "i = (i--) 1", kas yra nevalidus kodas (
 		nėra jokio operatoriaus tarp dviejų operandų).
+
 	3.3. Leksinė gramatika
+
+		;; Truksta ivadinio sakinio
+
 		3.3.x. Programa leksiniu požiūriu
+
 			Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
 			* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
 			* Komentarai atitinka C šeimos kalbų komentarus, tai yra galimi vienos eilutės komentarai kurie yra pradedami simboliais "//" bei
@@ -995,13 +1020,19 @@ Terminų ir santrumpų žodynas
 				StatementWithEndOfLine
 
 		3.3.X Kalbos struktūros
+			
+			;; Truksta ivadinio sakinio
+
 			3.3.x.x Sakinys
+
 				Sakinys yra pagrindinė kalbos struktūra kuri nusako tam tikrą veiksmą. Ši kalbos struktūra yra grupė mažesnių struktūrų kurios turi tam tikras formavimo taisykles:
 				"Use" sakinys
 				Deklaravimo sakinys
 				Reikšmės sakinys
 				Grąžinimo sakinys.
+
 				3.3.x.x.x. Sakinių leksinė sandara
+
 					Use sakinys
 					PEG tipo gramatika:
 					UseNode:
@@ -1027,6 +1058,8 @@ Terminų ir santrumpų žodynas
 	3.3. Sintaksinė gramatika
 
 4. LaborasLang programų pavyzdžiai	;; TODO: make sure everything builds and actually works
+
+	;; Truksta ivadinio sakinio
 
 	4.1. Hello world
 
@@ -1121,61 +1154,61 @@ Terminų ir santrumpų žodynas
 
 		Ši programa spausdina, ar įvesti skaičiai yra pirminiai. Programa baigia darbą, kai įvedamas 0.
 
-		use System;
+			use System;
 
-		entry auto Main = void()
-		{
-			auto quit = false;
-			Console.WriteLine("Enter 0 at any time to quit.");
-
-			while (!quit)
+			entry auto Main = void()
 			{
-				int value;
-				string line = Console.ReadLine();
+				auto quit = false;
+				Console.WriteLine("Enter 0 at any time to quit.");
 
-				if (int.TryParse(line, value))
+				while (!quit)
 				{
-					if (value == 0)
+					int value;
+					string line = Console.ReadLine();
+
+					if (int.TryParse(line, value))
 					{
-						quit = true;
-					}
-					else
-					{
-						if (IsPrime(value))
+						if (value == 0)
 						{
-							Console.WriteLine("{0} is a prime number", value);
+							quit = true;
 						}
 						else
 						{
-							Console.WriteLine("{0} is not a prime number", value);
+							if (IsPrime(value))
+							{
+								Console.WriteLine("{0} is a prime number", value);
+							}
+							else
+							{
+								Console.WriteLine("{0} is not a prime number", value);
+							}
 						}
 					}
+					else
+					{
+						Console.WriteLine("Entered value is not a number!");
+					}
 				}
-				else
-				{
-					Console.WriteLine("Entered value is not a number!");
-				}
-			}
-		};
+			};
 
-		auto IsPrime = bool(int value)
-		{
-			if (value < 2)
-				return false;
-	
-			auto isDivisor = bool(int value, int divisor) { return value % divisor == 0 && divisor < value; };
-
-			auto isPrime = true;
-			auto divisor = (int)Math.Sqrt(value) + 2;
-
-			while (--divisor >= 2)
+			auto IsPrime = bool(int value)
 			{
-				if (isDivisor(value, divisor))
+				if (value < 2)
 					return false;
-			}
+	
+				auto isDivisor = bool(int value, int divisor) { return value % divisor == 0 && divisor < value; };
 
-			return true;
-		};
+				auto isPrime = true;
+				auto divisor = (int)Math.Sqrt(value) + 2;
+
+				while (--divisor >= 2)
+				{
+					if (isDivisor(value, divisor))
+						return false;
+				}
+
+				return true;
+			};
 
 	4.5. Interneto svetainės pavadinimas
 
@@ -1385,121 +1418,141 @@ Terminų ir santrumpų žodynas
 			};
 
 5. Pavyzdinis kompiliatorius
-	5.1. Komponentai
-		5.1.1. Lekseris
-			Apžvalga/aprašas ;;Nežinau kaip šitas turėtų vadintis
-				Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
-				Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
-					1. Išeities kodo skaidymas žetonais (leksemomis)
-					2. Pirminis žetonų formavimas į abstraktų sintaksės medį
-					3. AST medžio apdorojimas baigiamosiomis doroklėmis (post processors)
-				Pirmas žingsnis atliekamas "Tokenizer" komponento, antrasis - "Syntax matcher" modulio, trečiasis "Post processor" modulio. 
-				;;todo išversti šitus žodžius, gal Jusas pasiūlys kokias lietuviškas alternatyvas
-			Komponentai
-				Tokenizer
-					Šis komponentas iš išeities kodo teksto sugeneruoja sąrašą leksemų kurios turi tam tikrą tipą, turinį, vietą pradiniame
-					išeities kode.
-					RulePool
-					Šis komponentas yra statinis kalbos gramatinių taisyklių sąrašas kuris naudojamas SyntaxMatcher modulio. Šis modulis
-					nusako visą abstraktaus sintaksės medžio struktūrą kuri bus išlaikoma iki apdorojomo baigiamosiomis daryklėmis. Visos 
-					aprašytos taisyklės yra bekontekstės, naudojama PEG gramatika. Konteksto nebuvimas apsunkina operatorių analizę, dėl to
-					 jų operacijų prioritetą atitinkantis medis yra suformuojamas baigiamosiomis daryklėmis.
-				SyntaxMatcher
-					Šis komponentas analizuoja leksemų sąrašą ir iš jo suformuoja medį pagal RulePool modulyje aprašytas taisykles.
-				PostProcessors
-					Šis komponentas leidžia atlikti kontektines operacijas su abstrakčiu sintaksės medžiu. Tai panaudojama atlikti veiksmus kurie
-					yra labai sudėtingi naudojant PEG gramatiką. Šie veiksmai yra:
-						Operatorių prioritetizavimas
-						Funkcijų ir masyvų atskyrimas
-						Neigiamų skaičių atpažinimas
-						Taško operatoriaus apdorojimas
-						Perteklinių medžio šakų minimizavimas
 
-			Tokenizer ("Žetonatorius")
-				Atliekama funkcija
-					Išeiteis kodas suskaidomas į leksemas. Leksema yra sudaryta iš jos turinio, tipo, vietos išeities kode.
-				veikimo principas
+	;; Truksta ivadinio sakinio
+
+	5.1. Komponentai
+	
+		;; Truksta ivadinio sakinio
+		5.1.1. Lekseris
+
+			Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
+			Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
+				1. Išeities kodo skaidymas žetonais (leksemomis)
+				2. Pirminis žetonų formavimas į abstraktų sintaksės medį
+				3. AST medžio apdorojimas baigiamosiomis doroklėmis (post processors)
+			Pirmas žingsnis atliekamas "Tokenizer" komponento, antrasis - "Syntax matcher" modulio, trečiasis "Post processor" modulio. 
+				;;todo išversti šitus žodžius, gal Jusas pasiūlys kokias lietuviškas alternatyvas
+				;; Jusas sakė neversti - T.
+				
+			Lekserį sudaro šie komponentai:
+
+			Tokenizer
+				Šis komponentas iš išeities kodo teksto sugeneruoja sąrašą leksemų kurios turi tam tikrą tipą, turinį, vietą pradiniame
+				išeities kode.
+				RulePool
+				Šis komponentas yra statinis kalbos gramatinių taisyklių sąrašas kuris naudojamas SyntaxMatcher modulio. Šis modulis
+				nusako visą abstraktaus sintaksės medžio struktūrą kuri bus išlaikoma iki apdorojomo baigiamosiomis daryklėmis. Visos 
+				aprašytos taisyklės yra bekontekstės, naudojama PEG gramatika. Konteksto nebuvimas apsunkina operatorių analizę, dėl to
+					jų operacijų prioritetą atitinkantis medis yra suformuojamas baigiamosiomis daryklėmis.
+			SyntaxMatcher
+				Šis komponentas analizuoja leksemų sąrašą ir iš jo suformuoja medį pagal RulePool modulyje aprašytas taisykles.
+			PostProcessors
+				Šis komponentas leidžia atlikti kontektines operacijas su abstrakčiu sintaksės medžiu. Tai panaudojama atlikti veiksmus kurie
+				yra labai sudėtingi naudojant PEG gramatiką. Šie veiksmai yra:
+					Operatorių prioritetizavimas
+					Funkcijų ir masyvų atskyrimas
+					Neigiamų skaičių atpažinimas
+					Taško operatoriaus apdorojimas
+					Perteklinių medžio šakų minimizavimas
+
+			5.1.1.1. Tokenizer ("Žetonatorius")
+
+				Išeiteis kodas suskaidomas į leksemas. Leksema yra sudaryta iš jos turinio, tipo, vietos išeities kode.
+
+				5.1.1.1.1. veikimo principas
+
 					Modulio veikimo principas - iš eilės skaitomas tekstas po vieną simbolį kol nuskaityti simboliai gali būti sujungti į vieną 
 					leksemą, pvz tekstas {code}pirmas=antras+trečias;{code} bus pradėtas skaityti, pirmas rastas simbolis yra raidė 'p', iš to 
 					galima nuspręsti kad tai bus simbolis. Šis simbolis skaitomas kol bus rasta raidė netinkama simboliams - '=', tada simbolis 
 					bus užsaugotas, patikrita ar tai yra vienas iš rezervuotų žodžių tam kad nustatyti teisingą tipą ir pridėtas į leksemų sąrašą. 
 					Analogiškai bus apdorojamas ir likęs išeities kodas.
-				Testavimas
+
+				5.1.1.1.2. Testavimas
+
 					Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. 
 					Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai 
 					nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka 
 					rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
 					su testų duomenų sąrašu.
-			RulePool ("Taisyklių sąrašas")
-				Atliekama funkcija
-					Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką.
-					Taisyklės yra sudaromos iš terminalinių ir neterminalinių žetonų. Kiekvienam neterminaliniam žetonui yra nurodoma taisyklė 
-					kuri jį aprašo terminaliniais ir neterminalianiais žetonais. Vieną neterminalinį žetoną galima aprašyti keliomis skirtingomis 
-					taisyklėmis, jos bus taikomos iš eilės pagal deklaravimo tvarką. Taisyklėse naudjoami terminalinių ir neterminalinų žetonų 
-					modifikatoriai: 
-						* Vienas arba daugiau
-						* nulis arba daugiau
-						* neprivalomas galas
-						* neprivalomas
-					Modifikatorius "Vienas arba daugiau"
-						Naudojamas nurodyti kad šis elementas gali kartotis vieną arba daugiau kartų
-					Modifikatorius "Nulis arba daugiau"
-						Naudojamas nurodyti kad šis elementas gali kartotis nulį arba daugiau kartų. Gramatikoje naudojamas nurodyti neprivalomus 
-						deklaracijos modifikatorius, vienanarius operatorius. 
-					Modifikatorius "Neprivalomas galas"
-						Šis modifikatorius naudojamas deklaracijose, juo nurodoma kad deklaracijose reikšmės priskyrimas nėra privalomas. Šis 
-						operatorius gali būti pakeistas rekursiniu kreipiniu, tačiau toks kreipinys nėra optimalus dėklo naudojimo požiūriu bei 
-						taisyklių skaitomumo atžvilgiu.
-					Modifikatorius "Neprivalomas"
-						Šis modifikatorius naudojamas nurodant neprivalomus žetonus. Šio modifikatoriaus naudojimo galima išvengti aprašant 
-						alternatyvias taisykles.
 
-					Taip pat taisyklės gali būti apibrėžtos kaip:
-						* Taisyklė
-						* Minimizuojama taisyklė
-						* Visada minimizuojama taisyklė
-					Minimizuojama ir visada minimizuojama taisyklės yra naudojamos tarpinių abstraktaus sintaksės medžio narių aprašymui kurie 
-					turi prasmę tik leksikografinėje analizėje, tokie kaip "Kablelis ir reikšmė".
+			5.1.1.2. RulePool ("Taisyklių sąrašas")
 
-					Taisyklės palaiko ribotą rekursiją. Jos apribojimas yra tai kad rekursinis kreipinys privalo turėti bent vieną nerekursinį 
-					kreipinį prieš rekursinį taisyklės panaudojimą. Nepaisant to tiesioginė rekursija taisyklių sąraše yra nenaudojama.
-				Testavimas
+				Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką.
+				Taisyklės yra sudaromos iš terminalinių ir neterminalinių žetonų. Kiekvienam neterminaliniam žetonui yra nurodoma taisyklė 
+				kuri jį aprašo terminaliniais ir neterminalianiais žetonais. Vieną neterminalinį žetoną galima aprašyti keliomis skirtingomis 
+				taisyklėmis, jos bus taikomos iš eilės pagal deklaravimo tvarką. Taisyklėse naudjoami terminalinių ir neterminalinų žetonų 
+				modifikatoriai: 
+					* Vienas arba daugiau
+					* nulis arba daugiau
+					* neprivalomas galas
+					* neprivalomas
+
+				Modifikatorius "Vienas arba daugiau"
+					Naudojamas nurodyti kad šis elementas gali kartotis vieną arba daugiau kartų
+				Modifikatorius "Nulis arba daugiau"
+					Naudojamas nurodyti kad šis elementas gali kartotis nulį arba daugiau kartų. Gramatikoje naudojamas nurodyti neprivalomus 
+					deklaracijos modifikatorius, vienanarius operatorius. 
+				Modifikatorius "Neprivalomas galas"
+					Šis modifikatorius naudojamas deklaracijose, juo nurodoma kad deklaracijose reikšmės priskyrimas nėra privalomas. Šis 
+					operatorius gali būti pakeistas rekursiniu kreipiniu, tačiau toks kreipinys nėra optimalus dėklo naudojimo požiūriu bei 
+					taisyklių skaitomumo atžvilgiu.
+				Modifikatorius "Neprivalomas"
+					Šis modifikatorius naudojamas nurodant neprivalomus žetonus. Šio modifikatoriaus naudojimo galima išvengti aprašant 
+					alternatyvias taisykles.
+
+				Taip pat taisyklės gali būti apibrėžtos kaip:
+					* Taisyklė
+					* Minimizuojama taisyklė
+					* Visada minimizuojama taisyklė
+				Minimizuojama ir visada minimizuojama taisyklės yra naudojamos tarpinių abstraktaus sintaksės medžio narių aprašymui kurie 
+				turi prasmę tik leksikografinėje analizėje, tokie kaip "Kablelis ir reikšmė".
+
+				Taisyklės palaiko ribotą rekursiją. Jos apribojimas yra tai kad rekursinis kreipinys privalo turėti bent vieną nerekursinį 
+				kreipinį prieš rekursinį taisyklės panaudojimą. Nepaisant to tiesioginė rekursija taisyklių sąraše yra nenaudojama.
+
+				5.1.1.2.1. Testavimas
+
 					Taisyklių sąrašas testuotas jį naudojant sintaksės atpažinimo modulyje bei atliekant taisyklių analizę:
 						Tikrinama ar nėra nenaudojamų taisyklių
 						Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
 						Tikrinama ar nėra begalinės rekursijos taisyklėse 
 
-			SyntaxMatcher ("Sintaksės atpažinimo sistema")
-				Atliekama funkcija
-					Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
-				veikimo principas
+			5.1.1.3. SyntaxMatcher ("Sintaksės atpažinimo sistema")
+			
+				Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
+
+				5.1.1.3.1. veikimo principas
+
 					Syntax matcher nauoja taisyklių sąrašą kad sugeneruoti teisiną ast iš rule pool'o. Viskas pradedama nuo pagrindinės taisyklės
-					 kuri nusako programos struktūrą, tai yra aibė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
-					 taisyklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimų tinka tai ji pridedama į AST, jei ne
-					  - nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena neterminalinė taisyklė yra išskleidžiama iki 
-					  terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisyklė netiko, laikoma, kad išeities kodas yra 
-					  su klaidomis, tačiau kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
-					  galėtų vėl pradėti analizę, ieškodamas simbolių ';' ir '{'. Simboliai kurie nėra pridėti į AST ir yra iki to recovery point ;; Sugalvok kaip recovery point išverst - T.
-					  pridedami prie AST kaip Unknown node. Tai leidžia pranešti daugiau nei vieną klaidą kompiliacijos metu. Syntax matcher 
-					  taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma, kad pirma tikusi 
-					  taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo tvarka nurodo prioritetą, dėl to išvengiama vietų 
-					  kur gali būti pritaikyta daugiau nei viena taiskylė. 
-						Toks syntax matcher veikimo algoritmas yra prastas atminties naudojimo atžvilgiu, nes pastoviai deklaruojama labai daug 
-						AST nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų ;; "sufailino"? Seriously? - T.
-						tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
-						naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
-						resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
-						formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.											 ;; Gal būtų verta plačiau aprašyt apie jo veikimą? - T.
+					kuri nusako programos struktūrą, tai yra aibė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
+					taisyklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimų tinka tai ji pridedama į AST, jei ne
+					- nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena neterminalinė taisyklė yra išskleidžiama iki 
+					terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisyklė netiko, laikoma, kad išeities kodas yra 
+					su klaidomis, tačiau kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
+					galėtų vėl pradėti analizę, ieškodamas simbolių ';' ir '{'. Simboliai kurie nėra pridėti į AST ir yra iki to recovery point ;; Sugalvok kaip recovery point išverst - T.
+					pridedami prie AST kaip Unknown node. Tai leidžia pranešti daugiau nei vieną klaidą kompiliacijos metu. Syntax matcher 
+					taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma, kad pirma tikusi 
+					taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo tvarka nurodo prioritetą, dėl to išvengiama vietų 
+					kur gali būti pritaikyta daugiau nei viena taiskylė. 
+					Toks syntax matcher veikimo algoritmas yra prastas atminties naudojimo atžvilgiu, nes pastoviai deklaruojama labai daug 
+					AST nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų ;; "sufailino"? Seriously? - T.
+					tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
+					naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
+					resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
+					formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.											 ;; Gal būtų verta plačiau aprašyt apie jo veikimą? - T.
 
 					Galima teigti, kad šis modulis yra bekontekstis lexeris, nes nėra saugoma jokia globali būsena kuri naudojama tikrinti ;; Ištrinčiau "Galima teigti, kad", nes lexeris toks ir yra - T.
 					leksemų sąrašui, jis yra lyginamas tik su taisyklių sąrašu. Tai leidžia naudoti metaprogramą - taisyklių sąrašą ir jo 
 					interpretatorių - SyntaxMatcher. Taip labai lengvai atskirtas taisyklės nuo jų pritaikymo logikos, tas leido RulePool ;; I can't comprehend that again'
 					naudoti kaip dalinę AST dokumentaciją.
 
-						Šio modulio sugeneruotas AST yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
-						jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu, jis tampa sudėtingu, kai reikia naudoti 
-						post procesorius. Dėl to po syntax matcher praleidimo jis yra keičiamas paprastu adt-ish medžiu.
-				Testavimas
+					Šio modulio sugeneruotas AST yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
+					jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu, jis tampa sudėtingu, kai reikia naudoti 
+					post procesorius. Dėl to po syntax matcher praleidimo jis yra keičiamas paprastu adt-ish medžiu.
+
+				5.1.1.3.2. Testavimas
+
 					SyntaxMatcher testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami ast kurie yra lyginami 
 					su modifikuoto rulePool ast. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo gabaliuką ir peržiūrėti 
 					sugeneruotą AST dėl korektiškuom. Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei 
@@ -1507,39 +1560,48 @@ Terminų ir santrumpų žodynas
 					Testuose taip pat tikrinama kad medžiuose nėra nei vieno UnknownNode kuris rieškia kad neišėjo pritaikyti nei vienos taisyklės 
 					šiam kodo blokui.
 
-			PostProcesorius
-				Atliekama funkcija
-					PostProcesoirius yra hackas skirtas pridėti kontekstą į bekontekstinį lexerį. Post procesoriai vykdomi iteruojant per ast ir 
-					tikrinant kuris simbolis rastas, jie gali būti keičiami, restrukūtrizuojami, pašalinami. Aktyvšs post'ai:
-						Operatorių prioritetizavimas
-						Funkcijų ir masyvų atskyrimas
-						Neigiamų skaičių atpažinimas
-						Taško operatoriaus apdorojimas
-						Perteklinių medžio šakų minimizavimas
+			5.1.1.4. PostProcesorius
 
-					Operatorių prioritetizavimas:
+				PostProcesoirius yra hackas skirtas pridėti kontekstą į bekontekstinį lexerį. Post procesoriai vykdomi iteruojant per ast ir 
+				tikrinant kuris simbolis rastas, jie gali būti keičiami, restrukūtrizuojami, pašalinami. Aktyvšs post'ai:
+					Operatorių prioritetizavimas
+					Funkcijų ir masyvų atskyrimas
+					Neigiamų skaičių atpažinimas
+					Taško operatoriaus apdorojimas
+					Perteklinių medžio šakų minimizavimas
+
+				5.1.1.4.1. Operatorių prioritetizavimas
+
 					Naudojamas Dijkstros Shunting yard algoritmas infix notacijos vertimui į medžio formos postfix notaciją. Toks metodas parinktas ;; wtf yra infix? Paaiškink, nes aš pats nesuprantu - T.
 					dėl sudėtingumo išreikšiant operatorius per rule pool - jį sudėtinga debuginti, sudėtinga nustatyti okie pakitimai sulaužys 
 					kitas taisykles. Po perėjimo prie psot'o pastebėtas ir gana žymus pagreitėjimas - taip nutiko dėl to kad kiekvienas value 
 					eidavo per 10 bereikalingų taisykjlių lygių, tą panaikinus dabar eina tik per tris, tai reiškia kad kiekviena vertė, reiškėm, 
 					function call yra išleksinami žymiai greičiau.
-					Funkcijų ir masyvų atskyrimas:
-						Kalbos gramatika nėra context free. function call ir tipai atrodo identiškai. Kadangi lexeris yra pritaikytas cfg 
-						gramatikai funkcijų tipus teko analizuoti kontekstą turinčioje dalyje. Šis postas atpažysta ar tai yra funkcija ar taipas 
-						ar masyvas. 
-					Neigiamų skaičių atpažinimas:
-						Parseriui netiko kai minusas yra unary operatorius, reikia kad kai pirmas narys yra skaičius jis būtų neigiamas skaičius o 
-						ne skaičius plius unary operatorius. Tai išsprendžiama šio post'o
-					Taško opreratoriaus apdorojimas:
-						Taškas yra įterpiamas trarp simbolių. Taip gaunamas sąrašįas kurio kas antras narys yra taškas. Tokį parseriui apdoroti 
-						sunkiau, jis performuojamas į medį kuris sudarytas iš kairės, taško, dešinės - taškas tampa paprastu dvinariu operatoriumi.
 
-					perteklinių medžio šakų minimizavimas
-						Kai kurie nodes yra nereikalingi - jie neturi jokio turinio, trukdo parseriui dirbti, dėl to jei jie yra tušti jie yra 
-						collapsinami į. Taip gunamas mažesnis ir prpaastesnis medis. vėliau yra tikimasi panaikinti ir kitus nereikalingus 
-						operatorius kaip taškas, kabliataškus, priskyrimas ar kita.
+				5.1.1.4.2. Funkcijų ir masyvų atskyrimas:
+
+					Kalbos gramatika nėra context free. function call ir tipai atrodo identiškai. Kadangi lexeris yra pritaikytas cfg 
+					gramatikai funkcijų tipus teko analizuoti kontekstą turinčioje dalyje. Šis postas atpažysta ar tai yra funkcija ar taipas 
+					ar masyvas.
+
+				5.1.1.4.3. Neigiamų skaičių atpažinimas:
 				
-				Testavimas
+					Parseriui netiko kai minusas yra unary operatorius, reikia kad kai pirmas narys yra skaičius jis būtų neigiamas skaičius o 
+					ne skaičius plius unary operatorius. Tai išsprendžiama šio post'o
+
+				5.1.1.4.4. Taško opreratoriaus apdorojimas:
+
+					Taškas yra įterpiamas trarp simbolių. Taip gaunamas sąrašįas kurio kas antras narys yra taškas. Tokį parseriui apdoroti 
+					sunkiau, jis performuojamas į medį kuris sudarytas iš kairės, taško, dešinės - taškas tampa paprastu dvinariu operatoriumi.
+
+				5.1.1.4.5. Perteklinių medžio šakų minimizavimas
+
+					Kai kurie nodes yra nereikalingi - jie neturi jokio turinio, trukdo parseriui dirbti, dėl to jei jie yra tušti jie yra 
+					collapsinami į. Taip gunamas mažesnis ir prpaastesnis medis. vėliau yra tikimasi panaikinti ir kitus nereikalingus 
+					operatorius kaip taškas, kabliataškus, priskyrimas ar kita.
+				
+				5.1.1.4.6. Testavimas
+
 					Rankomis suformuojamas siekiamas medžio snippet'as kuris yra lyginamas su gautu medžiu. Toks testavimo būdas parinktas vietoje 
 					serializavimo dėl mažesnio postų sudėtingumo nei syntax matcherio ir sudėtingo analizavimo, nelabai aišku kaip medis geras ar 
 					ne, jei jis formuotas rankomis tai galima nustatyti nesudėtingai. Šis metodas gali būti naudojamas ir paprasto lexerio 
@@ -1559,7 +1621,7 @@ Terminų ir santrumpų žodynas
 			
 			5.1.3.1. Assembly Registry
 				 
-				 Tai yra asemblių registras - jis užkrauna bibliotekas ir saugoja jų metaduomnis. Jo paskirtis yra suteikti kompiliatoriui
+				 Tai yra asemblių registras - jis užkrauna bibliotekas ir saugoja jų metaduomenis. Jo paskirtis yra suteikti kompiliatoriui
 				 žinias apie egzistuojančius tipus, metodus, laukus ir t.t. ir juos pateikti patogiu formatu. Kompiliavimo pradžioje, ši klasė
 				 užkrauna visas vartotojo nurodytas bibliotekas - t.y. jų asemblius. Tai padaręs, asemblių registras sužino visus užkrautuose
 				 asembliuose esančius tipus ir jų vidurius. Asemblių registras gali:
@@ -1589,12 +1651,52 @@ Terminų ir santrumpų žodynas
 					* Surasti nurodyto metodo grąžinamos reikšmės ir parametrų tipus;
 					* Nustatyti, ar metodą galimą iškviesti su nurodytų tipų parametrais;
 					* Nustatyti, ar tam tikras tipas, metodas ar laukas yra prieinami iš nurodyto tipo;
-					* Importuoti kitą iš kito asemblio;
+					* Importuoti tipą iš kito asemblio;
 					* Nustatyti, ar per kolekciją galima iteruoti su kolekcijos iteravimo for ciklu.
 
 				Assembly Registry ir Metadata Helpers subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
 				LaborasLang programos atliekamus veiksmus.
 
+			5.1.3.3. Assembly Emitter ir Type Emitter
+
+				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis yra objektas, simbolizuojantis
+				kompiliavimo rezultatą. Kiekvieną asemblį iš esmės yra tipų konteineris ir dėl to, Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
+				
+				Kita svarbi Assembly Emitter funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, Assembly Emitter atlieka keletą validacijos žingsnių:
+					
+					1. Patikrinti, ar asemblio tipuose nėra metodų su vienodais parametrų tipais. Tai yra geriausia vietą šiai validacijai atlikti, nes visi metodai tuo
+					metu yra galutinai sukurti. Ši validacija reikalinga, nes CLI specifikacija reikalauja, jog viename tipe nebūtų daugiau, nei vieno metodo, turinčio
+					tą patį vardą, tokį patį parametrų skaičių ir tokius pačius parametrų tipus ([1], §I.10.2 Overloading).
+
+					2. Atmesti visus programoje nenaudojamus funkcijų tipus. Kadangi šiuo metu programa jau yra sukompiliuota, Assembly Emitter geba surasti ir išmesti visus
+					funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada nepanaudoti (pavyzdžiui, buvo deklaruota funkcija, kurios tipas void(), tačiau ji niekada
+					niekam nebuvo priskirta).
+
+					3. Jeigu asemblio tipas yra vykdomasis failas, patikrinti, ar yra metodas, esantis vykdomojo failo įeities taškas.
+
+				Jei visi šie validacijos žingsniai pavyko, AssemblyEmitter gali saugiai išsaugoti asemblį diske.
+
+				Type Emitter yra tiesioginis kuriamo tipo atitikmuo kompiliatoriuje. Jis tiesiogiai valdo tipų laukus, jų inicializatorius ir metodus.
+
+			5.1.3.4. Method Emitter
+
+				Method Emitter yra kodo generatoriaus širdis. Šis komponentas verčia parserio sudarytą medį tiesiai į CIL instrukcijas. 
+				
+				CIL yra dėklu pagrįsta žemo lygio objektinė programavimo kalba. Joje visos operacijos manipuliuoja duomenimis evaluacijos dėkle. Pavyzdžiui, prieš kviečiant funkciją,
+				visi argumentai yra įstumiami į evaluacijos dėklą, o funkcijos grąžinama reikšmė yra reikšmė, esanti dėklo viršuje funkcijos pasibaigimo metu ([1], §I.12.1 Virtual Execution System).
+				
+				;; TO DO: linkas į parserio medžio aprašymą
+				Method Emitter veikimas pagrįstas parserio medžio iteracija paieškos gylyn metodu. Kiekviena parserio medžio viršūnė yra aplankoma iš eilės
+				ir paverčiama į atitinkamą CIL kodą. Kadangi CIL kodas operuoja reikšmėmis, esančiomis evaluacijos dėkle, Method Emitter gali tiesiogiai versti
+				parserio medžio viršūnes į CIL instrukcijas nesirūpindamas jokia globalia būsena, tokia kaip procesoriaus registrų reikšmės.
+
+				Pavyzdžiui, Method Emitter parserio medyje aptikęs dvinarės operacijos viršūnę, reiškiančia sudėtį, suformuos instrukcijas į evaluacijos dėklą įstumti 
+				abu sudėties operandus rekursiškai aplankydamas jų viršūnes, ir tada suformuos CIL instrukciją "add", kuri sudeda dvi viršūtines evaluacijos dėklo reikšmės,
+				o rezultatą įstumia atgal į evaluacijos dėklą.
+
+				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, Method Emitter kartais reikšmes turi saugoti laikinuosiuose kintamuosiuose.
+				Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose 
+				laikomos reikšmės nebereikės.
 
 	5.2. Testavimas
 		5.2.1. Lekserio testavimas
@@ -1602,10 +1704,16 @@ Terminų ir santrumpų žodynas
 		5.2.3. Kodo generatorius testavimas
 			5.2.3.1. CIL kodo palyginimu grįsti testai
 			5.2.3.2. Vykdymu grįsti testai
-		5.2.4 Kontraktai/statinė analizė
-	5.3. Vartotojo dokumentacija
-		5.3.1. Išvesties tipai
-		5.3.2. Bibliotekų nuorodos
-		5.3.3. Šakninės direktorijos
+		5.2.4. Integracijos testavimas
+		5.2.5. Kontraktai/statinė analizė
+
+	5.3. Naudotos bibliotekos
+
+	5.4. Vartotojo dokumentacija
+		5.4.1. Išvesties tipai
+		5.4.2. Bibliotekų nuorodos
+		5.4.3. Šakninės direktorijos
 6. Išvados
 7. Literatūra
+
+[1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
