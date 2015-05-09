@@ -390,14 +390,73 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				;; Gal ne taip supratau, bet mačiau apie tai ECMA-334 13.7.2 skyriuje kažką - D.
 				
 		2.4.2. Identifikatoriai
-			2.4.2.x Taškas
+
+			;; gramatikoj turėtų būti specifikuota kas yra identifikatorius - D.
+			LaborasLang turi du būdus pasiekti identifikatorius - kaip tipo arba vardų grupės narį ar kaip pavienį identifikatorių.
+			Pavienio identifikatoriaus paieškai naudojama galiojimo 
+			sritis, ieškomi identifikatoriai šia tvarka:
+				1. Jei identifikatorius nėra funkcijoje einama į punktą 4
+				2. Ieškoma tarp lokalių kintamųjų. Kodo bloke neradus identifikatoriaus, paieška tesiama aukštesniame bloke kol pasiekiamas 
+				aukščiausias funkcijos blokas. Šiame žingsnyje taip pat apimami "for" ciklų kintamieji.
+				3. Ieškoma funkcijos parametro.
+				4. Ieškoma globalaus kintamojo.
+				5. Ieškoma importuotos vardų srities.
+				6. Ieškoma importuoto tipo.
+				7. Ieškoma vardų grupės.
+				8. Ieškoma tipo.
+
+			Nario išraiškos rezultatas priklauso nuo pagrindinės išraiškos ir identifikatoriaus. Šis rezultatas nepriklauso nuo galiojimo 
+			srities, ta pati pagrindinės išraiškos ir identifikatoriaus kombinacija visada duos tą patį rezultatą.
+			;; overload atveju rezultatas yra method group, todėl tai nesiskaito kaip ambiguity taške - D.
+
 			2.4.2.x Lokalūs kintamieji
-			2.4.2.x Globalūs kintamieji
+
+				Lokalius kintamuosius galima pasiekti tik kaip pavienius identifikatorius per galiojimo sirties paiešką. Kintamieji 
+				visada skaitomi, bet gali būti ne rašomi jei deklaruoti su "const" atributu.
+
+			2.4.2.x Globalūs kintamieji			
+
+				Globalius kintamuosius galima pasiekti kaip pavienius identifikatorius iš to pačio failo, taip pat kaip statinius tipų laukus iš kitų failų, 
+				jei jie deklaruoti su atributu "private". Jiems galioja tos pačios taisyklės kaip laukams.
+
 			2.4.2.x Laukai
-			2.4.2.x Metodai ;; ir metodų grupės
+
+				Laukus galima pasiekti kaip tipo narį. Jei pagrindinė išraiška yra objektas, galima pasiekti nestatinius laukus, 
+				jei tipas - tik statinius. Laukai yra skaitomi, bet gali nebūti rašomi jei deklaruoti su "const" (LaborasLang globalūs kintamieji) 
+				arba su "readonly" (CLI laukai).
+
+			2.4.2.x Metodai
+
+				Metodą galima gauti kaip tipo narį, taip pat kaip globalų kintamajį, jei šis kintamasis turi atributą "const". Metodai yra tik 
+				skaitomos reikšmės. Metodus galima iškviesti, taip pat naudoti kaip kintamajį, kada jie tampa funkcijos objektais. Perdengimo 
+				atveju, identifikatoriaus rezultatas gali būti metodų grupė. Šiuo atveju išraiška neturi tipo, kadangi gali reikšti vieną 
+				iš kelių metodų. Yra keli būdai sukonkretinti šią išraišką. Iškvietus metodų grupė bus parenkamas tinkamas metodas pagal 
+				argumentus, arba gražinama klaida, jei tokio metodo rasti neįmanoma. Taip pat, bandant panaudoti grupę kaip išraišką bus 
+				parinktas vienas iš metodų, jei yra žinomas reikalingas tipas ir yra tam tipui tinkantis metodas.
+
 			2.4.2.x Savybės
+
+				LaborasLang palaiko CLI sąvybes. Sąvybė bus skaitoma jei pasiekiamas jos "get" metodas ir rašoma jei pasiekiamas "set" metodas.
+				Sąvybes galima gauti kaip tipo narį.
+
 			2.4.2.x Tipai
+
+				Tipą galima pasiekti kaip kito tipo arba vardų srities narį, arba kaip pavienį identifikatorių, jei jis neturi vardų srities. 
+				Taip pat, kaip pavienį identifikatorių pasiekti galima, jei tipo vardų sritis yra importuota "use" teiginiu. Tipo išraiška 
+				yra speciali išraiška, kurią galima panaudoti tik tam tikrais atvejais:
+
+					* deklaracijose
+					* objekto kūrime
+					* masyvo kūrime
+					* sudėtinių tipų konstravime ;; function types, array tipes, nežinau kaip kitaip pavadinti - D.
+
+				Tipai yra skaitomos išraiškos.
+
 			2.4.2.x Vardų grupės
+
+				Vardų grupės veikimu beveik nesiskiria nuo tipų. Skirtumai yra panaudojime - vardų grupės galima naudoti tik kaip pagrindinę išraišką 
+				nario išraiškoje arba kaip importuojąmą grupę "use" teiginyje.
+
 		2.4.2. Indeksavimas
 			2.4.2.x Masyvo indeksavimas
 			2.4.2.x Indekso operatorius
