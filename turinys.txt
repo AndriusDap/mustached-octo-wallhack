@@ -1598,7 +1598,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Assembly Registry ir Metadata Helpers subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
 				LaborasLang programos atliekamus veiksmus.
 
-			5.1.3.3. Assembly Emitter
+			5.1.3.3. Assembly Emitter ir Type Emitter
 
 				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis yra objektas, simbolizuojantis
 				kompiliavimo rezultatą. Kiekvieną asemblį iš esmės yra tipų konteineris ir dėl to, Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
@@ -1607,7 +1607,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					
 					1. Patikrinti, ar asemblio tipuose nėra metodų su vienodais parametrų tipais. Tai yra geriausia vietą šiai validacijai atlikti, nes visi metodai tuo
 					metu yra galutinai sukurti. Ši validacija reikalinga, nes CLI specifikacija reikalauja, jog viename tipe nebūtų daugiau, nei vieno metodo, turinčio
-					tą patį vardą, tokį patį parametrų skaičių ir tokius pačius parametrų tipus ([1], I.10.2 Overloading).
+					tą patį vardą, tokį patį parametrų skaičių ir tokius pačius parametrų tipus ([1], §I.10.2 Overloading).
 
 					2. Atmesti visus programoje nenaudojamus funkcijų tipus. Kadangi šiuo metu programa jau yra sukompiliuota, Assembly Emitter geba surasti ir išmesti visus
 					funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada nepanaudoti (pavyzdžiui, buvo deklaruota funkcija, kurios tipas void(), tačiau ji niekada
@@ -1617,13 +1617,36 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Jei visi šie validacijos žingsniai pavyko, AssemblyEmitter gali saugiai išsaugoti asemblį diske.
 
+				Type Emitter yra tiesioginis kuriamo tipo atitikmuo kompiliatoriuje. Jis tiesiogiai valdo tipų laukus, jų inicializatorius ir metodus.
+
+			5.1.3.4. Method Emitter
+
+				Method Emitter yra kodo generatoriaus širdis. Šis komponentas verčia parserio sudarytą medį tiesiai į CIL instrukcijas. 
+				
+				CIL yra dėklu pagrįsta žemo lygio objektinė programavimo kalba. Joje visos operacijos manipuliuoja duomenimis evaluacijos dėkle. Pavyzdžiui, prieš kviečiant funkciją,
+				visi argumentai yra įstumiami į evaluacijos dėklą, o funkcijos grąžinama reikšmė yra reikšmė, esanti dėklo viršuje funkcijos pasibaigimo metu ([1], §I.12.1 Virtual Execution System).
+				
+				;; TO DO: linkas į parserio medžio aprašymą
+				Method Emitter veikimas pagrįstas parserio medžio iteracija paieškos gylyn metodu. Kiekviena parserio medžio viršūnė yra aplankoma iš eilės
+				ir paverčiama į atitinkamą CIL kodą. Kadangi CIL kodas operuoja reikšmėmis, esančiomis evaluacijos dėkle, Method Emitter gali tiesiogiai versti
+				parserio medžio viršūnes į CIL instrukcijas nesirūpindamas jokia globalia būsena, tokia kaip procesoriaus registrų reikšmės.
+
+				Pavyzdžiui, Method Emitter parserio medyje aptikęs dvinarės operacijos viršūnę, reiškiančia sudėtį, suformuos instrukcijas į evaluacijos dėklą įstumti 
+				abu sudėties operandus rekursiškai aplankydamas jų viršūnes, ir tada suformuos CIL instrukciją "add", kuri sudeda dvi viršūtines evaluacijos dėklo reikšmės,
+				o rezultatą įstumia atgal į evaluacijos dėklą.
+
+				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, Method Emitter kartais reikšmes turi saugoti laikinuosiuose kintamuosiuose.
+				Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose 
+				laikomos reikšmės nebereikės.
+
 	5.2. Testavimas
 		5.2.1. Lekserio testavimas
 		5.2.2. Parserio testavimas
 		5.2.3. Kodo generatorius testavimas
 			5.2.3.1. CIL kodo palyginimu grįsti testai
 			5.2.3.2. Vykdymu grįsti testai
-		5.2.4 Kontraktai/statinė analizė
+		5.2.4. Integracijos testavimas
+		5.2.5. Kontraktai/statinė analizė
 
 	5.3. Naudotos bibliotekos
 
