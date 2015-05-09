@@ -381,15 +381,28 @@ Terminų ir santrumpų žodynas
 				"null" reikšmė taip pat laikoma literalu. Šis literalas tipo neturi ir gali įgyti bet kokį nuorodinį tipą.
 				;; C# daro kažkoius hackus, kad Nullable veiktų? Mes juos palaikom? - D
 				;; Nedaro jokiu hackų. Nullable<T> yra generic type. Mes jų nepalaikom - T.
+				;; Gal ne taip supratau, bet mačiau apie tai ECMA-334 13.7.2 skyriuje kažką - D.
 				
-		2.4.2. Simboliai
+		2.4.2. Identifikatoriai
+			2.4.2.x Taškas
+			2.4.2.x Lokalūs kintamieji
+			2.4.2.x Globalūs kintamieji
+			2.4.2.x Laukai
+			2.4.2.x Metodai ;; ir metodų grupės
+			2.4.2.x Savybės
+			2.4.2.x Tipai
+			2.4.2.x Vardų grupės
 		2.4.2. Indeksavimas
+			2.4.2.x Masyvo indeksavimas
+			2.4.2.x Indekso operatorius
 		2.4.3. Funkcijos
 		2.4.4. Funkcijos kvietimai
+			2.4.4.x Funkcijos objekto kvietimas ;; LL functors, Func
+			2.4.4.x Metodo kvietimas
 
 		;; Čia reikia nepamiršti paminėti tail calls
 
-		2.4.5. Priskyrimo operacija
+		2.4.5. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
 		2.4.6. Vienanarės operacijos
 			;;2.4.6.1. Aritmeninės operacijos
 			;;2.4.6.2. Loginės operacijos
@@ -402,7 +415,6 @@ Terminų ir santrumpų žodynas
 			2.4.7.4. Stūmimo operacijos
 		2.4.8. Objektų kūrimas
 		2.4.9. Masyvų kūrimas
-		2.4.10. Klasių nariai ;; C# vadina member-access
 	2.5. Teiginiai
 
 		;; kaip parašyti kas yra teiginys - D?
