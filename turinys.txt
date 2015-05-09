@@ -63,12 +63,12 @@ Terminų ir santrumpų žodynas
 
 		Pavyzdinė „Hello, world“ programa LaborasLang kalboje gali būti užrašoma taip:
 
-		use System;
+			use System;
 
-		entry auto HelloWorld = void()
-		{
-			Console.WriteLine("Hello, world!");
-		};
+			entry auto HelloWorld = void()
+			{
+				Console.WriteLine("Hello, world!");
+			};
 
 		Išnagrinėkime šią programą po eilutę:
 		•	Sakinys  use System; nurodo, jog šiame faile tipai ir vardų grupės iš System vardų grupės bus tiesiogiai pasiekiami.
@@ -84,40 +84,41 @@ Terminų ir santrumpų žodynas
 	savyje laiko reikšmę. Nuorodiniai tipai laiko nuorodą į reikšmę. Dvi nuorodos gali rodyti į tą pačią reikšmę, o reiškia, kad 
 	pakeitimai per vieną nuorodą gali atsirasti kitoje. Tai neįmanoma su vertės tipais, nes vertės tipo kintamieji turi savo reikšmės kopiją. Pavyzdžiui:
 
-	use System;
-	use System.Runtime.InteropServices.ComTypes;
-	use System.Text;
+		use System;
+		use System.Runtime.InteropServices.ComTypes;
+		use System.Text;
 
-	entry auto MyFunction = void()
-	{
-		FILETIME value;
-		value.dwLowDateTime = 15;
+		entry auto MyFunction = void()
+		{
+			FILETIME value;
+			value.dwLowDateTime = 15;
 
-		auto reference = StringBuilder("Laboras");
+			auto reference = StringBuilder("Laboras");
 
-		Console.WriteLine(value.dwLowDateTime);
-		Console.WriteLine(reference);
+			Console.WriteLine(value.dwLowDateTime);
+			Console.WriteLine(reference);
 
-		auto valueCopy = value;
-		valueCopy.dwLowDateTime = 20;
+			auto valueCopy = value;
+			valueCopy.dwLowDateTime = 20;
 
-		auto referenceCopy = reference;
-		referenceCopy.Append("Lang");
+			auto referenceCopy = reference;
+			referenceCopy.Append("Lang");
 
-		Console.WriteLine(value.dwLowDateTime);
-		Console.WriteLine(valueCopy.dwLowDateTime);
+			Console.WriteLine(value.dwLowDateTime);
+			Console.WriteLine(valueCopy.dwLowDateTime);
 
-		Console.WriteLine(reference);
-		Console.WriteLine(referenceCopy);
-	};
+			Console.WriteLine(reference);
+			Console.WriteLine(referenceCopy);
+		};
 
 	Ši programa atspausdina:
-	15
-	Laboras
-	15
-	20
-	LaborasLang
-	LaborasLang
+
+		15
+		Laboras
+		15
+		20
+		LaborasLang
+		LaborasLang
 
 	Visi palaikomi CLI tipai paveldi iš System.Object. Reikšmės tipai paveldi iš System.ValueType, kuris paveldi iš System.Object. 
 	LaborasLang taip pat palaiko sąsajos tipus, kurių objektai gali būti vertės arba nuorodiniai tipai, priklausomai nuo realizacijos.
@@ -603,7 +604,7 @@ Terminų ir santrumpų žodynas
 				int()
 				{
 					int a = GetNum();
-					if(a > 6)
+					if (a > 6)
 					{
 						return a - 1;
 					}
@@ -617,7 +618,7 @@ Terminų ir santrumpų žodynas
 				int()
 				{
 					int a = GetNum();
-					if(a > 6)
+					if (a > 6)
 					{
 						return a - 1;
 					}
@@ -631,7 +632,7 @@ Terminų ir santrumpų žodynas
 				int()
 				{
 					int a = 5;
-					if(a > 0)
+					if (a > 0)
 					{
 						return a;
 					}
