@@ -388,6 +388,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				;; C# daro kažkoius hackus, kad Nullable veiktų? Mes juos palaikom? - D
 				;; Nedaro jokiu hackų. Nullable<T> yra generic type. Mes jų nepalaikom - T.
 				;; Gal ne taip supratau, bet mačiau apie tai ECMA-334 13.7.2 skyriuje kažką - D.
+				;; Nu, C# tiesiog int? išverčia į Nullable<int> - T.
 
 		2.4.2 Nario išraiška
 
