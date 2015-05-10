@@ -975,11 +975,21 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 3. LaborasLang gramatika
 
-	;; Truksta ivadinio sakinio
+	Kalbos gramatika nusako kaip leksemos yra sudaromos į prasmingas struktūrąs
 
 	3.1. Programos apibrėžimas
 
-		Programa yra vienas ar daugiau išeities kodo failų.
+		Programa yra vienas ar daugiau išeities kodo failų. ;; Gal šito iš viso nereikia - A.
+
+		Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
+		* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
+		* Komentarai atitinka C šeimos kalbų komentarus, tai yra galimi vienos eilutės komentarai kurie yra pradedami simboliais "//" bei
+		tęsiami iki eilutės pabaigos simbolio ir bloko tipo komentarai pradedami "/*" simboliu ir baigiami "*/" simboliu. Komentarų
+		turinys kompiliavimo metu yra ignoruojamas
+		* Žetonai yra gaunami sujungiant gretimus simbolius į prasmingas maksimalaus ilgio leksemas, kurios yra toliau analizuojamos
+		kompiliuojant programą. Žetonai yra tokie simboliai kaip
+		"*", "+", "=", ";" bei ilgesni dariniai - "auto", "penki", "+=", "while" bei kiti. Žetonai naudojami sudaryti kalbos
+		struktūras, kurios savo ruožtu sudaro programą.
 
 	3.2. Dviprasmybės
 
@@ -990,88 +1000,276 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	3.3. Leksinė gramatika
 
-		;; Truksta ivadinio sakinio
+		Leksiniu požiūriu gramatika nurodo kaip leksemos yra formuojamos į sakinius.
 
-		3.3.x. Programa leksiniu požiūriu
+		Gramatiką sudaro aibė paprastų leksemų kurios sudaro programos kodą:
+		
+		LaborasLang gramatikoje naudojama aibė žetonus atitinkančių taisyklių:							
 
-			Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
-			* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
-			* Komentarai atitinka C šeimos kalbų komentarus, tai yra galimi vienos eilutės komentarai kurie yra pradedami simboliais "//" bei
-			tęsiami iki eilutės pabaigos simbolio ir bloko tipo komentarai pradedami "/*" simboliu ir baigiami "*/" simboliu. Komentarų
-			turinys kompiliavimo metu yra ignoruojamas
-			* Žetonai yra gaunami sujungiant gretimus simbolius į prasmingas maksimalaus ilgio leksemas, kurios yra toliau analizuojamos
-			kompiliuojant programą. Žetonai yra tokie simboliai kaip
-			"*", "+", "=", ";" bei ilgesni dariniai - "auto", "penki", "+=", "while" bei kiti. Žetonai naudojami sudaryti kalbos
-			struktūras, kurios savo ruožtu sudaro programą.
-			
-			Galimi žetonai:
-			;; Tik terminal tokens čia turi būti minimi. Visi kiti yra implementacijos detalė - A.
-				Tiesioginės reikšmės
-					Sveikieji skaičiai
-					Slankaus kablelio skaičiai
-					Simbolių eilutės
-				Operatoriai
-				Eilutės pabaigos simbolis
-				Skliaustai
-					()
-					{}
-					[]
-				Raktažodžiai
-					entry, auto ...
-				Simboliai
-					Foo, Bar
+			;; Čia turėtų gautis kelios lentelės - A.
+			Specialūs simboliai
+			EndOfLine 				;
+			Comma 					,
+			Else 					else
+			If 						if
+			Return 					return
+			Use 					use
+			Virtual 				virtual
+			While 					while
+			For 					for
+			In 						in
 
+			Literalai
+			CharLiteral 			'simbolis'
+			StringLiteral 			"simbolių eilutė"
+			Integer 				0
+			Float 					0.0f
+			Long 					0l
+			Double 					0.0
+			False 					false
+			True 					true
+			Null 					null
 
-			Programa leksiniu požiūriu yra kalbos struktūrų rinkinys. Galimos kalbos struktūros yra kodo blokas, ciklas, sąlygos sakinys,
-			sakinys: ;; Šitą reikia perfrazuot, dabartinis sakinys per arti implementacijos - A.
+			Simbolis
+			Symbol 					foo
+
+			Sklaustai
+			LeftCurlyBrace 			{
+			RightCurlyBrace 		}
+			LeftParenthesis 		(
+			RightParenthesis 		)
+			LeftBracket 			[
+			RightBracket 			]
+
+			Dvinariai operatoriai (InfixOperator)
+			Period 					.
+			BitwiseAnd 				&
+			BitwiseAndEqual 		&=
+			Plus 					+
+			Minus 					-
+			MinusEqual 				-=
+			NotEqual 				!=
+			PlusEqual 				+=
+			BitwiseXor 				^
+			BitwiseXorEqual 		^=
+			BitwiseOr 				|
+			BitwiseOrEqual 			|=
+			LeftShiftEqual 			<<=
+			LeftShift 				<<
+			LessOrEqual 			<=
+			Less 					<
+			LogicalAnd 				&&
+			LogicalAndEqual 		&&=
+			LogicalOr 				||
+			LogicalOrEqual 			||=
+			More 					>
+			RightShift 				>>
+			RightShiftEqual 		>>=
+			MoreOrEqual 			>=
+			Divide 					/
+			DivideEqual 			/=
+			Multiply 				*
+			MultiplyEqual 			*=
+			Remainder 				%
+			RemainderEqual 			%=
+			Assignment 				=
+			Equal 					==
+
+			Vienanariai operatoriai
+			PlusPlus 				++
+			MinusMinus 				--
+			Not 					!
+			BitwiseComplement 		~
+
+			Deklaracijų modifikatoriai (VariableModifier)
+			Const 					const
+			Internal 				internal
+			Protected 				protected
+			NoInstance 				noinstance
+			Private 				private
+			Public 					public
+			Mutable 				mutable
+			Entry 					entry
+
+			Šios leksemos yra naudojamos aprašyti taisyklėms kartu naudojant kitas taisykles atstojančias leksemas.
+
+		3.3.x. Kalbos taisyklės
+			Taisyklėms aprašyti naudojama forma yra
+				<taisyklės pavadinimas>:
+					<kableliais atskirtas taisyklės alternatyvų sąrašas>
+
+				alternatyvas taisyklei sudaro leksemos ir taisyklės, kurioms gali būti taikomi modifikatorai
+					? - elementas yra neprivalomas, jei jo nėra taisyklė alternatyva vis dar gali būti validi
+					* - elementas yra neprivalomas bei gali būti kartojamas kelis kartus jei jis yra.
+
+				Šie modifikatoriai gali būti taikomi taisyklių grupėms jas apskliaudžiant.
+
+			Program:
+				CodeConstruct*
+
+			LaborasLang programą sudaro daugiau nei nulis CodeConstruct, tai yra daugiau nei nulis kalbos struktūrų. Jų gali būti ir nulis,
+			tačiau tokia programa nėra itin naudinga.
+
 			CodeConstruct:
-				CodeBlockNode,
+			    CodeBlockNode,
+			    WhileLoop,
+			    ForLoop,
+			    ForEachLoop,
+			    ConditionalSentence,
+			    StatementWithEndOfLine
 
-				WhileLoop,
-				ForLoop,
-				ForEachLoop,
-				
-				ConditionalSentence,
-				
-				StatementWithEndOfLine
+			Galimos kalbos struktūros yra kodo blokas, ciklas "while", ciklai "for" bei "foreach", sąlygos sakiniai, ar teiginiai kurie
+			baigiasi kabliataškiu.
 
-		3.3.X Kalbos struktūros
+			CodeBlockNode:
+			    LeftCurlyBrace + CodeConstruct* + RightCurlyBrace
+			Kodo bloko kalbos struktūrą sudaro kairysis figūrinis skliaustas "{", nulis ar daugiau kitų kodo konstrukcijų bei dešinysis
+			figūrinis skliaustas "}"
+
+			StatementNode:
+			    UseNode,
+			    DeclarationNode,
+			    Value,
+			    ReturnNode
 			
-			;; Truksta ivadinio sakinio
+			Teiginius sudaro importavimo teiginys "UseNode", deklaravimo teiginys "DeclarationNode", reikšmė (nesvarbu ar kairinė ar
+			dešininė) "Value", grąžinimo sakinys. Šie teiginiai gali būti naudojami kaip kalbos struktūros prie jų pridėjus kabliataškį:
 
-			3.3.x.x Sakinys
+			StatementWithEndOfLine:
+			    StatementNode? EndOfLine
+			Šioje struktūroje teiginys yra neprivalomas - reikia bent vieno kabliataškio, bet jei jie kartojasi kelis kartus programa yra
+			vis dar validi.
 
-				Sakinys yra pagrindinė kalbos struktūra kuri nusako tam tikrą veiksmą. Ši kalbos struktūra yra grupė mažesnių struktūrų kurios turi tam tikras formavimo taisykles:
-				"Use" sakinys
-				Deklaravimo sakinys
-				Reikšmės sakinys
-				Grąžinimo sakinys.
+			UseNode:
+			    Use FullSymbol
+			Importavimo teiginį sudaro raktažodį "use" atitinkanti leksema bei pilnas simbolis - tai yra simbolių atskirtų taškais
+			 rinkinys, kitur jis gali būti suprantamas kaip kairinė reikšmė.
 
-				3.3.x.x.x. Sakinių leksinė sandara
+			DeclarationNode:
+			    VariableModifier* Type Symbol (Assignment Value)?
+			Deklaravimo teiginį sudaro neprivalomi kintamojo modifikatoriai, jo tipas, kintamojo pavadinimas bei neprivalomas priskyrimo
+			operatorius su dešinine reiškme
 
-					Use sakinys
-					PEG tipo gramatika:
-					UseNode:
-						Use Symbol (Period Symbol)* EndOfLine
+			ReturnNode:
+			    Return Value?
+			Grąžinimo sakinį sudaro raktažodis "return" bei neprivaloma dešininė reikšmė. Reikšmė neprivaloma nes void tipo funkcijose
+			galima išeiti iš funkcijos negrąžinant jokios reikšmės
 
-					Šį sakinį sudaro dvi dalys: Raktažodis "Use", tekstinis simbolis, nulis ar daigiau taško ir tekstinio simoblio grupių 
-					bei eilutės pabaigos simbolis - kabliataškis.
-					"Use" sakinio pavyzdys:
-						use Foo.Bar;
-					čia use yra "Use" taisykės dalį atitinkantis raktažodis, Foo atitinka pirmąjį simbolį, taško simbolis bei "Bar" yra
-					vienas pasikartojimas "Period" bei "Symbol" grupės o ";" yra "EndOfLine" reiškiantis simbolis. 
+			Value:
+			    (PrefixNode PostfixOperator*) (InfixOperator PrefixNode PostfixOperator*)* 
+			Dešinines reikšmes atitinka taisyklė "Value". Dešininės reikšmės yra sudarytos iš priešdėlinių operatorių, dvinarių operatorių ir galūninių operatorių. galimi operandai apskliaustos dešininės reikšmės, dešininės reikšmės su masyvo narių pasiekimo operatoriumi ([x]), literalai, simboliai, funkcijų kvietiniai.
 
-					Deklaravimo sakinys
-					PEG tipo gramatika:
-					DeclarationNode:
-						VariableModifier* Type Symbol Assignment Value
-						VariableModifier* Type Symbol
-				
-			3.3.x.x Kodo blokas			
-			3.3.x.x Sąlygos sakinys
-			3.3.x.x Ciklas
+			PrefixNode:
+		        PrefixOperator PrefixNode,
+		        PrefixOperator ParenthesesNode,
+		        ParenthesesNode
 
-	3.3. Sintaksinė gramatika
+			PostfixOperator:
+			    PlusPlus, 
+			    MinusMinus,
+			    IndexNode,
+			    FunctionArgumentsList
+
+			FunctionArgumentsList:
+			    LeftParenthesis RightParenthesis,
+			    LeftParenthesis Value CommaAndValue* RightParenthesis
+			Funkcijos argumentai yra skliaustuose esančios dešininės reikšmės atskirtos kableliais
+
+			PrefixOperator:
+			    PlusPlus, 
+			    MinusMinus, 
+			    Minus, 
+			    Not,
+			    BitwiseComplement,
+			    CastOperator
+
+			CastOperator:
+			    LeftParenthesis Type RightParenthesis			            
+			        
+			IndexNode:
+			    LeftBracket Value CommaAndValue* RightBracket,
+			    LeftBracket Comma* RightBracket),
+			        
+			ParenthesesNode:
+			    LeftParenthesis Value RightParenthesis,
+			    Operand
+			            
+			           
+			Operand:
+			    ArrayLiteral,
+			    Function,
+			    Symbol,
+			    LiteralNode,
+			    Null
+
+			LiteralNode:
+			    Float,
+			    Integer,
+			    Double,
+			    Long,
+			    CharLiteral,
+			    StringLiteral,
+			    True,
+			    False
+		        
+			ArrayLiteral:
+			    Type InitializerList,
+			    InitializerList
+			Masyvo tipo literalus sudaro masyvo tipas bei figūriniuose skliaustuose esantis sąrašas kableliu atskirtų dešininių reikšmių.
+
+			InitializerList:
+			    LeftCurlyBrace Value CommaAndValue* RightCurlyBrace,
+			    LeftCurlyBrace RightCurlyBrace
+
+			CommaAndValue:
+			    Comma Value
+
+			FullSymbol:
+			    Symbol SubSymbol*
+			FullSymbol taisyklė apima kairinius elementus - tai yra taškais atskirti simboliai.
+
+			SubSymbol:
+			    Period Symbol
+
+			Type:
+			    FullSymbol ParameterList*
+			Tipą laborasLang kalboaje sudaro pilnas simbolis bei neprivalomas parametrų sąrašas.			
+			ParameterList:
+			    FunctorParameters,   
+			    IndexNode                     
+			Parametrai gali būti masyvo tipo arba funkcijos tipo
+
+			FunctorParameters:
+			    LeftParenthesis Type (Comma Type)* RightParenthesis,
+			    LeftParenthesis Type Symbol (Comma Type Symbol)* RightParenthesis,
+			    LeftParenthesis RightParenthesis
+			Funkcijos tipo tipo parametrai sudaryti iš tipų, ar tipų ir simbolių sąrašo atskirto kableliais.
+			
+			Function:
+			    Type CodeBlockNode                    
+			Pačią funkciją sudaro tipas bei kodo blokas kuris bus vykdomas iškvietus funkciją.
+
+			Išskiriami trys ciklų tipai ciklas "while", ciklas "foreach" bei ciklas "for"
+			WhileLoop:
+			    While LeftParenthesis Value RightParenthesis CodeConstruct
+			ciklą while sudaro raktažodis "while", apskliausta dešininė reikšmė, bei kodo struktūra kuri bus kartojama
+
+			ForEachLoop:
+			    For LeftParenthesis Type Symbol In Value RightParenthesis CodeConstruct
+			ciklą "foreach" sudaro raktažodis "for", skliaustuose esanti konstrukcija sudaryta iš iteravimo kintamojo deklaravimo,
+			raktažodžio "in" bei dešininės reikšmės per kurią bus iteruojama
+			
+			ForLoop:
+			    For LeftParenthesis Value? EndOfLine Value? EndOfLine Value? RightParenthesis CodeConstruct,
+			    For LeftParenthesis DeclarationNode? EndOfLine Value? EndOfLine Value? RightParenthesis CodeConstruct
+			paprastas "for" ciklas naudojamas taip pat kaip kitose C šiemos kalbose - naudojamas raktažodis "for", skliaustuose trys kodo
+			segmentai atskirti kabliataškiais, kuriuose iš eilės aprašoma kintamojo deklaracija, dešininė reikšmė kuri atitinka ciklo
+			sąlygą, bei teiginys kuris bus vykdomas kiekvienos po kiekvienos iteracijos. Šie segmentai gali neturėti jokio turinio.
+
+			ConditionalSentence:
+			    If LeftParenthesis Value RightParenthesis CodeConstruct (Else CodeConstruct)?
+			sąlygos sakinys sudaromas iš raktažodžio "if", apskliaustos dešininės reikšmės, kodo struktūros kuri bus vykdoma jei sąlyga
+			yra teisinga bei neprivalomo "else" raktažodžio kartu su kodo struktūra kuri bus vykdoma jei sąlyga yra neteisinga
 
 4. LaborasLang programų pavyzdžiai	;; TODO: make sure everything builds and actually works
 
