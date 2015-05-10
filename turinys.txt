@@ -2059,6 +2059,20 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			NodeType nurodo sakinio tipą. SequencePoint susieja šią viršūnę su išeities failu ir vieta jame, kurioje šis sakinys buvo panaudotas.
 
+			Pavyzdžiui, „Hello, world!“ programos parserio medis atrodo taip:
+
+				ICodeBlockNode
+					IReadOnlyList<IParserNode>
+						IMethodCallNode
+							Method: IMethodNode
+								Instance: null
+								Name: System.Void System.Console::WriteLine(System.String)
+								Arguments: IReadOnlyList<IExpressionNode>
+									ILiteralNode
+										System.String "Hello, world"
+
+
+
 	5.3. Testavimas
 
 		Kuriant pavyzdinį LaborasLang kompiliatorių, jam buvo keliami dideli patikimumo ir regresijų nebuvimo reikalavimai. Dėl šios priežasties, kompiliatoriui buvo rašomi testai, su tikslu
