@@ -975,11 +975,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 3. LaborasLang gramatika
 
-	Kalbos gramatika nusako kaip leksemos yra sudaromos į prasmingas struktūrąs
+	Kalbos gramatika nusako kaip leksemos yra sudaromos į prasmingas struktūras
 
 	3.1. Programos apibrėžimas
 
-		Programa yra vienas ar daugiau išeities kodo failų. ;; Gal šito iš viso nereikia - A.
+		Programa yra vienas ar daugiau išeities kodo failų.
 
 		Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
 		* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
@@ -1083,9 +1083,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Deklaracijų modifikatoriai (VariableModifier)
 			Const 					const
-			Internal 				internal
-			Protected 				protected
-			NoInstance 				noinstance
 			Private 				private
 			Public 					public
 			Mutable 				mutable
