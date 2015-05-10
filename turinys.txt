@@ -396,6 +396,46 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			<pagrindinė išraiška>.<identifikatorius>
 
+			Šios sintaksės rezultatas gali būti kelios skirtingos išraiškos, priklausomai nuo pagrindinės išraiškos ir identifikatoriaus.
+			Galimos išraiškos:
+
+				* vardų grupė. Išraiška gaunama jei pagridninė išraiška kartu su identifikatoriumi sudaro vardų grupę arba jos fragmentą. 
+				Tokią išraišką galima panaudoti kaip pagrindinę nario išraišką arba "use" teiginyje.
+
+				* tipas. Išraiška gaunama jei:
+					* pagrindinė išraiška yra vardų grupė ir joje deklaruotas tipas, kurio vardas sutampa su identifikatoriumi.
+					* pagrindinė išraiška yra tipas, kuriame deklaruotas tipas, kurio vardas sutampa su identifikatoriumi.
+				 Tipo išraiška taip pat turi ribotą panaudojimą:
+					* kaip pagrindinė nario išraiška
+					* deklaracijos tipas
+					* kūriamo objekto tipas
+					* kūriamo masyvo tipas
+					* sudėtinio tipo dalis ;; function types, array tipes, nežinau kaip kitaip pavadinti - D.
+
+				* laukas. Išraiška gaunama jei:
+					* pagrindinė išraiška yra tipas. Šiuo atveju pasiekiami statiniai laukai, atitinkantys identifikatorių.
+					* pagrindinė išraiška yra reikšmė. Šiuo atveju pasiekiami nestatiniai laukai.
+				 Laukai yra visada skaitomi. Laukas yra rašomas jei nėra deklaruotas su atributu "readonly" [ECMA-335 III.2.3]. 
+
+				* metodas. Išraiška gaunama taip pat kaip laukas, bet metodai yra tik skaitomi. Naudojant metodą kaip išraišką, 
+				jis yra keičiamas funkcijos kintamuoju.
+
+				* metodų grupė. Išraiška gaunama tada jei tipas turi kelis metodus tuo pačiu vardu. Šią išraišką reikia sukonkretinti taip, 
+				kad būtų parinktas vienas iš metodų. Tam yra du būdai:
+					* metodo kvietimas. Pagal argumentus bus parinktas reikiamas metodas, arba gražinama klaida jei tokio metodo nėra.
+					* panaudojimas kitose išraiškose. Jei išraiška reikalaja tam tikro tipo, bus parinktas tinkantis metodas arba gražinama 
+					klaida, jei tokio nėra.
+				 Kadangi metodų grupė neturi konkretaus tipo, ji negali būti naudojama deklaracijos inicializacijoje su tipu "auto".
+				 Sukonkretinus metodų grupę ji tampa metodo išraiška.
+
+				* sąvybė. Sąvybė gaunama kaip laukas. Sąvybė yra rašoma ir skaitoma jei pasiekiami "set" ir "get" metodai atitinkamai.
+
+		2.4.2 Nario išraiška
+
+			Išraiška naudojama pasiekti vardų grupės ar tipo narį. 
+
+			<pagrindinė išraiška>.<identifikatorius>
+
 			Šios išraiškos rezultatu laikomas tipo arba vardų grupės narys, kurio vardas atitinka nurodytą identifikatorių. Yra trys šios išraiškos apdorojimo variantai:
 
 				* pagrindinė išraiška yra vardų grupė. Šioje grupėje ieškoma tipo arba grupės, kurie atitinka identifikatorių.
@@ -405,13 +445,12 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Jei tipo narys turi apribotą pasiekiamumą ir nėra pasiekiamas iš failo, kuriame rašoma išraiška, gražinama klaida.
 			;; kažkur gal reikia parašyti apie visus access apribojimus, gal prie tipų sistemos - D.
 				
-		2.4.3. Identifikatoriai
+		2.4.3. Pavieniai identifikatoriai
 
 			;; gramatikoj turėtų būti specifikuota kas yra identifikatorius - D.
-			LaborasLang turi du būdus pasiekti identifikatorius - kaip tipo arba vardų grupės narį ar kaip pavienį identifikatorių.
-			Pavienio identifikatoriaus paieškai naudojama galiojimo sritis, ieškomi identifikatoriai šia tvarka:
+			Naudojant identifikatorių kaip išraišką atliekama paieška pagal galiojimo sritį:
 
-				1. Jei identifikatorius nėra funkcijoje einama į punktą 4
+				1. Jei identifikatorius nėra naudojamas funkcijos viduje einama į punktą 4
 				2. Ieškoma tarp lokalių kintamųjų. Kodo bloke neradus identifikatoriaus, paieška tesiama aukštesniame bloke kol pasiekiamas 
 				aukščiausias funkcijos blokas. Šiame žingsnyje taip pat apimami "for" ciklų kintamieji.
 				3. Ieškoma funkcijos parametro.
@@ -421,58 +460,15 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				7. Ieškoma vardų grupės.
 				8. Ieškoma tipo.
 
-			Nario išraiškos rezultatas priklauso nuo pagrindinės išraiškos ir identifikatoriaus. Šis rezultatas nepriklauso nuo galiojimo 
-			srities, ta pati pagrindinės išraiškos ir identifikatoriaus kombinacija visada duos tą patį rezultatą.
-			;; overload atveju rezultatas yra method group, todėl tai nesiskaito kaip ambiguity taške - D.
+			Tipus galima pasiekti kaip pavienius identifikatorius jei:
+				* Jie nėra deklaruoti su vardų grupe arba kitame tipe.
+				* Jie yra deklaruoti importuotoje vardų grupėje.
 
-			2.4.2.x Lokalūs kintamieji
+			Vardų grupes galima pasiekti kaip pavienius identifikatorius jei:
+				* Jos nėra deklaruotos kitoje vardų grupėje.
+				* Jos yra deklaruotos importuotoje vardų grupėje.
 
-				Lokalius kintamuosius galima pasiekti tik kaip pavienius identifikatorius per galiojimo sirties paiešką. Kintamieji 
-				visada skaitomi, bet gali būti ne rašomi jei deklaruoti su "const" atributu.
-
-			2.4.2.x Globalūs kintamieji			
-
-				Globalius kintamuosius galima pasiekti kaip pavienius identifikatorius iš to pačio failo, taip pat kaip statinius tipų laukus iš kitų failų, 
-				jei jie deklaruoti su atributu "public". Jiems galioja tos pačios taisyklės kaip laukams.
-
-			2.4.2.x Laukai
-
-				Laukus galima pasiekti kaip tipo narį. Jei pagrindinė išraiška yra objektas, galima pasiekti nestatinius laukus, 
-				jei tipas - tik statinius. Laukai yra skaitomi, bet gali nebūti rašomi jei deklaruoti su "const" (LaborasLang globalūs kintamieji) 
-				arba su "readonly" (CLI laukai).
-
-			2.4.2.x Metodai
-
-				Metodą galima gauti kaip tipo narį, taip pat kaip globalų kintamajį, jei šis kintamasis turi atributą "const". Metodai yra tik 
-				skaitomos reikšmės. Metodus galima iškviesti, taip pat naudoti kaip kintamajį, kada jie tampa funkcijos objektais. Perdengimo 
-				atveju, identifikatoriaus rezultatas gali būti metodų grupė. Šiuo atveju išraiška neturi tipo, kadangi gali reikšti vieną 
-				iš kelių metodų. Yra keli būdai sukonkretinti šią išraišką. Iškvietus metodų grupė bus parenkamas tinkamas metodas pagal 
-				argumentus, arba gražinama klaida, jei tokio metodo rasti neįmanoma. Taip pat, bandant panaudoti grupę kaip išraišką bus 
-				parinktas vienas iš metodų, jei yra žinomas reikalingas tipas ir yra tam tipui tinkantis metodas.
-
-			2.4.2.x Savybės
-
-				LaborasLang palaiko CLI sąvybes. Sąvybė bus skaitoma jei pasiekiamas jos "get" metodas ir rašoma jei pasiekiamas "set" metodas.
-				Sąvybes galima gauti kaip tipo narį.
-
-			2.4.2.x Tipai
-
-				Tipą galima pasiekti kaip kito tipo arba vardų srities narį, arba kaip pavienį identifikatorių, jei jis neturi vardų srities. 
-				Taip pat, kaip pavienį identifikatorių pasiekti galima, jei tipo vardų sritis yra importuota "use" teiginiu. Tipo išraiška 
-				yra speciali išraiška, kurią galima panaudoti tik tam tikrais atvejais:
-
-					* pagrindinė nario išraiška
-					* deklaracijose
-					* objekto kūrime
-					* masyvo kūrime
-					* sudėtinių tipų konstravime ;; function types, array tipes, nežinau kaip kitaip pavadinti - D.
-
-				Tipai yra skaitomos išraiškos.
-
-			2.4.2.x Vardų grupės
-
-				Vardų grupės veikimu beveik nesiskiria nuo tipų. Skirtumai yra panaudojime - vardų grupės galima naudoti tik kaip pagrindinę išraišką 
-				nario išraiškoje arba kaip importuojąmą grupę "use" teiginyje.
+			Šiuo būdu gautos tipo ar vardų grupės išraiškos yra aprašytos skyriuje Nario išraiška.
 
 		2.4.4. Indeksavimas
 			2.4.2.x Masyvo indeksavimas
@@ -976,11 +972,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 3. LaborasLang gramatika
 
-	Kalbos gramatika nusako kaip leksemos yra sudaromos į prasmingas struktūrąs
+	Kalbos gramatika nusako kaip leksemos yra sudaromos į prasmingas struktūras
 
 	3.1. Programos apibrėžimas
 
-		Programa yra vienas ar daugiau išeities kodo failų. ;; Gal šito iš viso nereikia - A.
+		Programa yra vienas ar daugiau išeities kodo failų.
 
 		Išeities kodo failus sudaro matomieji ir nematomieji tarpai (whitespace), žetonai, komentarai.
 		* Nematomieji tarpai yra tarpo, įtraukos, eilutės pabaigos bei kiti panašūs simboliai, kompiliavimo metu jie yra ignoruojami.
@@ -1084,9 +1080,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Deklaracijų modifikatoriai (VariableModifier)
 			Const 					const
-			Internal 				internal
-			Protected 				protected
-			NoInstance 				noinstance
 			Private 				private
 			Public 					public
 			Mutable 				mutable
