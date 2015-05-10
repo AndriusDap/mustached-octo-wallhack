@@ -355,8 +355,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					int16 b = -20000;
 					uint16 c = 70000;// klaida, skaičius netelpa į uint16
 
-				Literalo įgyjami tipai priklauso nuo tipų maksimalių ir minimalių reikšmių (žr. sk. $2.2.1). Šias reikšmes galima apskaičiuoti arba 
-				gauti iš tipų sąvybių MinValue ir MaxValue.
+				Literalas gali įgyti tipą jei jis telpa į šio tipo reikšmių rėžius imtinai (§2.2.1. Fundamentalieji Tipai).
 
 				;; Dariau, gal gali aprašyt tiksliai kaip tai veiks? Būtų gerai atitikti parserio implementaciją - T.
 
