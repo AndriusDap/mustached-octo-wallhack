@@ -429,20 +429,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				* sąvybė. Sąvybė gaunama kaip laukas. Sąvybė yra kairinė ir dešininė jei pasiekiami "set" ir "get" metodai atitinkamai.
 
-		2.4.2 Nario išraiška
-
-			Išraiška naudojama pasiekti vardų grupės ar tipo narį. 
-
-			<pagrindinė išraiška>.<identifikatorius>
-
-			Šios išraiškos rezultatu laikomas tipo arba vardų grupės narys, kurio vardas atitinka nurodytą identifikatorių. Yra trys šios išraiškos apdorojimo variantai:
-
-				* pagrindinė išraiška yra vardų grupė. Šioje grupėje ieškoma tipo arba grupės, kurie atitinka identifikatorių.
-				* pagrindinė išraiška yra tipas. Tipe ieškoma statinių narių, kurie atitinka identifikatorių.
-				* pagrindinė išraiška yra reikšmė. Reikšmės tipe ieškoma nestatinių narių, kurie atitinka identifikatorių.
-
 			Jei tipo narys turi apribotą pasiekiamumą ir nėra pasiekiamas iš failo, kuriame rašoma išraiška, gražinama klaida.
-			;; kažkur gal reikia parašyti apie visus access apribojimus, gal prie tipų sistemos - D.
 				
 		2.4.3. Pavieniai identifikatoriai
 
@@ -511,11 +498,124 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				;; nieko protingo nesugalvoju - D.
 
 		2.4.5. Funkcijos
+
+			Funkcijos išraiška yra naudojama norint aprašyti funkcijas.
+
+			<tipas>(<parametru sąrašas>)
+				<kodo blokas>
+
+			;; TODO: aprašyti taip pat parametrų sąrašą - D.
+
+			Tipas gali būti bet koks LaborasLang tipas.
+
+			Parametrų sąrašas yra kableliu atskirtos tipo ir identifikatoriaus poros. Šie parametrai iškvietus funkciją įgyja argumentų 
+			reikšmes ir gali būti naudojami kaip lokalūs kintamieji. 
+
+			Kodo blokas yra aprašytas skyriuje §2.5.6.1.
+
+			Tokios išraiškos rezultatas yra nuoroda į funkcijos objektą. Ši išraiška nuo kitų skiriasi tuo, kad nėra vykdomas joje esantis 
+			kodas, tik gaunama nuoroda į funkciją.
+
+			Pavyzdžiai:
+
+				auto func = int(){return 4;};
+
+			Įvykdžius šį sakinį nebus įvykdytas funkcijos kodas, tik kintamajam foo priskirta nuorodą į funkciją.
+			Norint įvykdyti kodą funkciją reikia iškviesti.
+
+				int val;
+				val = func();
+
+			;; kažkaip mažoka pasirodė - D.
+
 		2.4.6. Funkcijos kvietimai
-			2.4.4.x Funkcijos objekto kvietimas ;; LL functors, Func
+
+			LaborasLang leidžia kviesti CLI metodus ir funkcijos tipo objektus. Abu kvietimai yra sintaksiškai vienodi, bet jų veikimas 
+			gali būti priklausomas nuo kompiliatoriaus.
+
+			<funkcija>(<argumentų sąrašas>)
+
+			Funkcija gali būti funkcijos objektas, CLI metodas arba metodų grupė. Nors abi kategorijos kviečiamos vienodai, jų panaudojime 
+			yra subtilių skirtumų. Kviečiant argumentų tipai turi atitikti parametrams, arba turi būti galimas automatinis konvertavimas 
+			tarp jų. Kitaip gražinama klaida.
+
+			Pavyzdžiai:
+
+			auto foo = void(){Console.WriteLine("It works!");};
+
+			foo();
+
+			Šiame kode yra abu kvietimų tipai, foo yra funkcijos objektas, o WriteLine yra metodų grupė tipe Console.
+
+			2.4.4.x Funkcijos objekto kvietimas
+
+				Bet kokia išraiška, kurios reikšmė yra funkcijos objekto tipo, gali būti iškviesta, ne tik kintamieji. 
+				;; TODO integraciniai testai visiems - D.
+				Pavyzdžiui funkcijos rezultatas:
+
+					auto func = int()(){return int(){return 4;};};
+					int value = func()();
+
+				Masyvo elementas:
+
+					auto arr = {int(){return 4;}};
+					int value = arr[0]();
+
+				Pati funkcija:
+
+					int value = int(){return 4;}();
+
+				Tipo keitimas:
+
+					auto func = (object)int(){return 4;};
+					int value = ((int())func)();
+
+				Ši sintaksė leidžia atlikt sudėtingą kintamųjų inicializaciją vienu sakiniu.
+
+					const int value = int()
+					{
+						int day = System.Random().Next(1, 7);
+						int meaningOfLife = 42;
+						return day % meaningOfLife;
+					}();
+
+				Kadangi funkcijos tipas yra nuorodinis tipas, šio tipo išraiškos nebūtinai turi reikšmę.
+
+					auto func = int()(){return null;};
+					int value = func()();// klaida, func rezultatas yra null
+
 			2.4.4.x Metodo kvietimas
 
-		;; Čia reikia nepamiršti paminėti tail calls
+				Jei išraiška yra metodas, kvietimas neturi jokių papildomų reikalavimų. Kitaip negu funkcijos objekto atveju, 
+				toks kvietimas yra visada sekmingas.
+
+			2.4.4.x Funkcijų grupės kvietimas
+
+				Kviečiant funkcijų grupę atsiranda papildomas reikalavimas: pagal tipus turi būti įmanoma tiksliai nustatyti kurią funkciją
+				reikia kviesti. Jei argumentų tipai tiksliai neatitinka parametrų tipų, argumentai gali tikti kelioms funkcijoms iš grupės. 
+				Tokiu atveju gražinama klaida.
+
+				;; reiktų aprašyti tiksliai kaip parenkama, bet aš tai nežinau - D.
+
+				Pavyzdžiui:
+
+					Console.WriteLine(5);
+
+				WriteLine yra metodų grupė, kurios vienas metodų turi parametrą "int", o "5" literalo tipas yra "int". Kviečiamas šis metodas.
+
+				auto foo = void(long a){};
+				auto foo = void(int a){};
+
+				entry auto main = void()
+				{
+					byte a = 5;
+					foo(a);// klaida
+				};
+
+				Kadangi "byte" galima automatiškai keisti ir į "int" ir į "long", neįmanoma konkrečiai pasakyti kuri funkcija tinka.
+
+			;; Čia reikia nepamiršti paminėti tail calls
+			;; tai ne implementation detail - D?
 
 		2.4.7. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
 		2.4.8. Vienanarės operacijos
