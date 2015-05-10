@@ -2001,6 +2001,14 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			NodeType nurodo sakinio tipą. SequencePoint susieja šią viršūnę su išeities failu ir vieta jame, kurioje šis sakinys buvo panaudotas.
 
 	5.3. Testavimas
+
+		Kuriant pavyzdinį LaborasLang kompiliatorių, jam buvo keliami dideli patikimumo ir regresijų nebuvimo reikalavimai. Dėl šios priežasties, kompiliatoriui buvo rašomi testai, su tikslu
+		ištestuoti kuo didesnę kompiliatoriaus funkcionalumo dalį. Tai yra ypač svarbu kuriant tokią programą kaip kompiliatorius, nes testais padengus visą programos funkcionalumą galima nesibaiminti,
+		jog pakeitus tam tikro komponento veikimą netyčia bus sugriauta kokia nors kompiliatoriaus funkcija.
+		
+		LaborasLang pavyzdiniam kompiliatoriui iš viso buvo parašyti 444 testai. Šie testai skirtomi į keturias pagrindines grupes: lekserio testai, parserio testai, kodo generatoriaus testai 
+		ir integraciniai testai. 
+
 		5.3.1. Lekserio testavimas
 		5.3.2. Parserio testavimas
 		5.3.3. Kodo generatorius testavimas
