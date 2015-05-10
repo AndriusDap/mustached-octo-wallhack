@@ -15,8 +15,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie nurodomi LaborasLang kompiliatoriui kaip duomenys. 
 	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus vykdomąjį failą.
 	Išraiška (expression) – kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
-	Skaitoma išraiška (gettable expression, rvalue) – išraiška, kuri garantuotai grąžina reikšmę.
-	Rašoma išraiška (settable expression, lvalue) – išraiška, kuriai galima nustatyti reikšmę.
+	Dešininė išraiška (rvalue) – išraiška, kurios reikšmę galima nuskaityti.
+	Kairinė išraiška (lvalue) – išraiška, kuriai galima nustatyti reikšmę.
 	Lokalus kintamasis (local variable) – kintamasis deklaruotas funkcijoje.
 	Globalus kintamasis (global variable) – kintamasis deklaruotas faile.
 	Galiojimo sritis (scope) – taisyklės nusakančios kintamųjų pasiekiamumą.
@@ -316,7 +316,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Lokalūs kintamieji yra kintamieji deklaruoti funkcijos viduje. Šių kintamųjų galiojimo sritis yra kodo blokas, kuriame jie buvo 
 			deklaruoti, su keliomis išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Jeigu kintamojo 
-			galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip skaitomą reikšmę.
+			galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip dešininę reikšmę.
 
 		2.3.2. Globalūs kintamieji
 
@@ -333,17 +333,17 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		;; man dabar skaitoma/rašoma išraiška nepatinka. gal kas sugalvosit geriau - D.
 		Išraiška yra kodo framgentas, kurios gali gražinti reikšmę, arba priimti reikšmę. Išraiškos, kurios gražina reikšmę, dar vadinamos 
-		skaitomomis išraiškomis. Dauguma išraiškų yra skaitomos. Išraiškos, kurios gali priimti reikšmę vadinamos rašomomis išraiškomis. 
-		Rašomomis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra skaitoma arba rašoma priklauso nuo 
+		dešininėmis išraiškomis. Dauguma išraiškų yra dešininės. Išraiškos, kurios gali priimti reikšmę vadinamos kairinėmis išraiškomis. 
+		Kairinėmis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra dešininė ar kairinė priklauso nuo 
 		išraiškos. Šios taisyklės tiksliai aprašomos prie kiekvieno išraiškos tipo.
 
 		2.4.1. Literalai
 
-			Literalai yra reikšmės įrašytos kode. Literalai yra tik skaitomos išraiškos.
+			Literalai yra reikšmės įrašytos kode. Literalai yra tik dešininės išraiškos.
 
 			2.4.1.1 Loginiai literalai
 
-				Reikšmės "true" ir "false" yra loginiai literalai. Jie gali būti naudojami kaip "bool" tipo skaitomos išraiškos.
+				Reikšmės "true" ir "false" yra loginiai literalai. Jie gali būti naudojami kaip "bool" tipo išraiškos.
 
 			2.4.1.2 Sveikųjų skaičių literalai.
 
@@ -415,9 +415,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				* laukas. Išraiška gaunama jei:
 					* pagrindinė išraiška yra tipas. Šiuo atveju pasiekiami statiniai laukai, atitinkantys identifikatorių.
 					* pagrindinė išraiška yra reikšmė. Šiuo atveju pasiekiami nestatiniai laukai.
-				 Laukai yra visada skaitomi. Laukas yra rašomas jei nėra deklaruotas su atributu "readonly" [ECMA-335 III.2.3]. 
+				 Laukai yra visada dešininiai. Laukas yra kairinis jei nėra deklaruotas su atributu "readonly" ([1] §III.2.3 readonly. (prefix)). 
 
-				* metodas. Išraiška gaunama taip pat kaip laukas, bet metodai yra tik skaitomi. Naudojant metodą kaip išraišką, 
+				* metodas. Išraiška gaunama taip pat kaip laukas, bet metodai yra tik dešininiai. Naudojant metodą kaip išraišką, 
 				jis yra keičiamas funkcijos kintamuoju.
 
 				* metodų grupė. Išraiška gaunama tada jei tipas turi kelis metodus tuo pačiu vardu. Šią išraišką reikia sukonkretinti taip, 
@@ -428,7 +428,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				 Kadangi metodų grupė neturi konkretaus tipo, ji negali būti naudojama deklaracijos inicializacijoje su tipu "auto".
 				 Sukonkretinus metodų grupę ji tampa metodo išraiška.
 
-				* sąvybė. Sąvybė gaunama kaip laukas. Sąvybė yra rašoma ir skaitoma jei pasiekiami "set" ir "get" metodai atitinkamai.
+				* sąvybė. Sąvybė gaunama kaip laukas. Sąvybė yra kairinė ir dešininė jei pasiekiami "set" ir "get" metodai atitinkamai.
 
 		2.4.2 Nario išraiška
 
@@ -471,8 +471,46 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Šiuo būdu gautos tipo ar vardų grupės išraiškos yra aprašytos skyriuje Nario išraiška.
 
 		2.4.4. Indeksavimas
+
+			LaborasLang palaiko du indeksavimo tipus: masyvo indeksavimą ir indekso operatorių.
+
+			<kolekcija>[<indeksai>]
+
+			Kolekcijos išraiška turi būti masyvas arba objektas su indekso operatoriumi.
+
+			Indeksai yra kableliais atskirtos išraiškos.
+
+			Ir kolekcija ir indeksai privalo būti dešininės išraiškos.
+
 			2.4.2.x Masyvo indeksavimas
+
+				Jei kolekcija yra masyvas, indeksavimas nustatomas pagal masyvo tipą:
+
+				* Išraiškos reikšmės tipas yra masyvo elemento tipas.
+				* Indeksų skaičius turi atitikti masyvo matmenų skaičių.
+				* Indeksai gali būti sveikieji skaičiai išskyrus "int64" ir "uint64" tipus.
+
 			2.4.2.x Indekso operatorius
+
+				Jei kolekcija nėra masyvas, joje ieškoma indekso operatoriaus pagal nurodytus indeksus. Operatorius parenkamas taip pat 
+				kaip perdengtas metodas. Šiuo atveju indeksai gali būti bet kokio tipo išraiškos, jei yra tokio tipo operatorius.
+				;; kažkur reikia aprašyti overload resolution esmę spece - D.
+
+				Objektuose gali būti keli indekso operatoriai
+
+			Pavyzdžiai:
+
+				int arr = int[]{1, 2, 3};
+				Console.WriteLine(arr[2]);// išspausdina "3"
+
+				getMap()["foo"];
+
+				incrediblyComplexStructure[1, "agurkas", 6];
+				incrediblyComplexStructure[5];
+				// objektas su keliais skritingais operatoriais
+
+				;; nieko protingo nesugalvoju - D.
+
 		2.4.5. Funkcijos
 		2.4.6. Funkcijos kvietimai
 			2.4.4.x Funkcijos objekto kvietimas ;; LL functors, Func
@@ -513,7 +551,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Identifikatorius yra bet koks legalus simbolis. ;; reiktų kokio link į lexer skyriu kas yra legalus simbolis - D.
 
-			Inicialiatorius yra bet kokia skaitoma išraška.
+			Jei nurodytas, inicializatoriaus reikšmė priskiriama kintamajam.
 
 			Pavyzdžiai:
 
@@ -806,7 +844,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					else
 						<neigiamas sakinys>
 
-				Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
+				Sąlyga yra bet kokia "bool" tipo dešininė išraiška.
 
 				Jei sąlygos reikšmė yra "true", bus vykdomas tegiamas sakinys, jei "false" - neigiamas.
 
@@ -861,7 +899,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 					Ciklo sakinys yra bet koks LaborasLang kalboje legalus sakinys (kodo blokas, sąlyga, ciklas ir t.t.).
 
-					Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
+					Sąlyga yra bet kokia "bool" tipo dešininė išraiška.
 				
 					Keletas while ciklo pavyzdžių:
 
@@ -893,7 +931,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					Deklaracija gali būti su inicializacija arba be. Ši deklaracija sukuria lokalų kintamajį, kurio galiojimo sritis apima visą 
 					ciklą.
 
-					Ciklo sąlyga, jei tokia yra, privalo būti "bool" tipo skaitoma išraiška. Jei sąlygos nėra, ji pakeičiama išraiška "true".
+					Ciklo sąlyga, jei tokia yra, privalo būti "bool" tipo išraiška. Jei sąlygos nėra, ji pakeičiama išraiška "true".
 
 					Ciklo iteratorius, jei toks yra, gali būti bet kokia išraiška.
 
@@ -948,7 +986,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 							<sakinys>
 
 					Pagal kintamojo tipą ir pavadinimą yra deklaruojamas lokalus kintamasis. Šio kintamojo galiojimo sritis yra visas ciklas, 
-					bet jo reikšmę galima tik perskaityti. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
+					bet jam negalima kode priskirti reikšmės. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
 
 					Kolekcijos gali būti masyvai arba objektai turintys metodą GetEnumerator(). Kolekcijos išraiška bus įvykdyta vieną kartą 
 					ir viso ciklo metu bus naudojamas tas pats enumeratorius. 
