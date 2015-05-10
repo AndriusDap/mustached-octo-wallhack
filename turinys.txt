@@ -2007,13 +2007,36 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		jog pakeitus tam tikro komponento veikimą netyčia bus sugriauta kokia nors kompiliatoriaus funkcija.
 		
 		LaborasLang pavyzdiniam kompiliatoriui iš viso buvo parašyti 444 testai. Šie testai skirtomi į keturias pagrindines grupes: lekserio testai, parserio testai, kodo generatoriaus testai 
-		ir integraciniai testai. 
+		ir integracijos testai. 
 
 		5.3.1. Lekserio testavimas
 		5.3.2. Parserio testavimas
 		5.3.3. Kodo generatorius testavimas
-			5.3.3.1. CIL kodo palyginimu grįsti testai
-			5.3.3.2. Vykdymu grįsti testai
+			
+			Kodo generatoriaus testai testuoja skirtingas kodo generatoriaus dalis. Šiuos testus galima suskirstyti į tris grupes: vienetų testai, CIL kodo palyginimu grįsti testai ir vykdymu grįsti testai.
+
+			5.3.3.1. Vienetų testai
+
+				Kodo generatoriaus vienetų testai testuoja pavienių funkcijų veikimą. Jie naudojami testuoti funkcijas, kurios nepriklauso nuo jokios globalios būsenos. Šiuos reikalavimus kodo generuotoriuje
+				tenkina Assembly Registry ir Metadata Helpers komponentai, todėl būtent jiems ir buvo rašomi vienetų testai. Šiems testas yra sudaroma baigtinė argumentų ir rezultatų aibė, iš kurios argumentai
+				yra paduodami pavienėms funkcijoms ir tikrinama, ar jos rezultatas sutapo su rezultatu, kurio buvo tikėtasi. Šių testų pavyzdžiu galima laikyti testą, kuris testuoja, ar Metadata Helpers funkcija
+				IsAssignableTo() teisingai nustato, ar vieno tipo reikšmę galima priskirti kito tipo kintamajam.
+
+			5.3.3.2. CIL kodo palyginimu grįsti testai
+
+				Šie testai specialiai manipuliuoja kodo generatoriumi, kad šis sukurtų asemblį, turintį tam tikrą CIL kodą. Tada, iš gauto asemblio yra nuskaitomas CIL kodas, ir jis yra palyginimas su iš
+				anksto paruoštu CIL kodu. Šie testai yra naudojami vietose, kur reikia užtikrinti, jog gautas CIL kodas yra stabilus ir niekada nekis su tokiomis pačiomis įvestimis. Vienas tokio testo pavyzdys
+				yra testas, kuris testuoja, ar kodo generatorius teisingai sugeneruoja funktorių vardus. Turint tokį testą yra užtikrinama, jog funkctorių vardai netyčia nepasikeis keičiant kodo generatoriaus
+				vidų.
+
+			5.3.3.3. Vykdymu grįsti testai
+
+				Kaip ir praeitame skyrelyje (§5.3.3.2. CIL kodo palyginimu grįsti testai) minėti testai, šie testai manipuliuoja kodo generatoriumi, kad šis sugeneruotų asemblį su tam tikru CIL kodu.
+				Tai yra atliekama jam paduodant ranka parašytą parserio medį, kuris įvykdo tam tikras operacijas ir išspausdina rezultatą į standartinę išvestį. Sugeneravus asemblį yra paleidžiama programa 
+				„PEVerify“, kuri patikrina, ar sugeneruoto asemblio struktūra ir CIL kodas yra validus. Po to, asemblis yra paleidžiamas ir yra nuskaitoma jo standartinė išvestis. Ji yra lyginama su numatytaja
+				išvestimi. Dauguma kodo generatoriaus testų yra vykdymu grįsti testai. Ši testų struktūra leidžia laisvai keisti generuojamo kodo pavidalą ir vistiek ištestuoti, ar kodo semantinė prasmė nepakito.
+				Jei vietoje šių testų būtų naudojami CIL kodo palyginimu grįsti testai, tai kiekvieną kartą pakeitus, kaip kodo generatorius generuoja kodą, testai sulūžtų.
+
 		5.3.4. Integracijos testavimas
 		5.3.5. Kontraktai/statinė analizė
 
