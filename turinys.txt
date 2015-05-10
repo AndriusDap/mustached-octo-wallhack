@@ -2016,8 +2016,10 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		5.5.2. Bibliotekų nuorodos
 		5.5.3. Šakninės direktorijos
 6. Išvados
-7. Literatūra
-8. Priedai
-8.1. Parserio medžio sąsajos
 
-[1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
+7. Literatūra
+
+	[1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
+
+8. Priedai
+	8.1. Parserio medžio sąsajos
