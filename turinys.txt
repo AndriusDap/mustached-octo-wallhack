@@ -1627,7 +1627,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 5. Pavyzdinis kompiliatorius
 
-	;; Truksta ivadinio sakinio
+	Čia pateikiama pavyzdinio LaborasLang kompiliatoriaus dokumentacija. Šis kompiliatorius parašytas naudojantis C# programavimo kalba.
 
 	5.1. Komponentai
 	
@@ -1977,6 +1977,12 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					atliema ši optimizacija.
 
 	5.2. Komponentų integracija
+	
+		Šiame skyrelyje aprašyta, kaip skirtingi kompiliatoriaus komponentai bendrauja tarpusavyje, kokiu formatu ir sąsajomis perduoda duomenis.
+
+		5.2.1. Lekserio ir Parserio integracija
+		5.2.2. Parserio ir Kodo generatoriaus integracija
+
 	5.3. Testavimas
 		5.3.1. Lekserio testavimas
 		5.3.2. Parserio testavimas
