@@ -400,7 +400,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Galimos išraiškos:
 
 				* vardų grupė. Išraiška gaunama jei pagridninė išraiška kartu su identifikatoriumi sudaro vardų grupę arba jos fragmentą. 
-				Tokią išraišką galima panaudoti kaip pagrindinę nario išraišką arba "use" teiginyje.
+				Tokią išraišką galima panaudoti kaip pagrindinę nario išraišką arba "use" sakinyje.
 
 				* tipas. Išraiška gaunama jei:
 					* pagrindinė išraiška yra vardų grupė ir joje deklaruotas tipas, kurio vardas sutampa su identifikatoriumi.
@@ -493,15 +493,16 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.7.4. Stūmimo operacijos
 		2.4.10. Objektų kūrimas
 		2.4.11. Masyvų kūrimas
-	2.5. Teiginiai
 
-		;; kaip parašyti kas yra teiginys - D?
+	2.5. Sakiniai
+
+		;; kaip parašyti kas yra sakinys - D?
 
 		2.5.1 Deklaracija
 
 			;; Šitas skyrius labai išsipūtė, gal ką praleidau - D.
 
-			Deklaracijos teiginys yra naudojamas deklaruojant kintamajį.
+			Deklaracijos sakinys yra naudojamas deklaruojant kintamajį.
 
 				<atributai> <tipas> <identifikatorius>;
 				<atributai> <tipas> <identifikatorius> = <inicializatorius>;
@@ -527,7 +528,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				};
 
 			Verta atkreipti dėmesį, jog po funkcijos bloko uždarymo yra ";". Funkcijos deklracija nėra kontrolės blokas ir jis, kaip visi 
-			įprasti teiginiai yra baigiamas ";".
+			įprasti sakiniai yra baigiami su ";".
 			;; pats šitą klaidą padariau ne kartą - D.
 
 			Inicializuojant deklaraciją, jos tipą galima nustatyti "auto". Tada kintamojo tipas bus toks pat kaip inicializatoriaus išraiškos. 
@@ -602,13 +603,13 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.5.2 Vardų grupės importavimo ;; Gal kas geriau sugalvosit - D.
 
-			Importavimo teiginys naudojamas į failo galiojimo sritį įterptį vardų grupes ir tipus iš kitos vardų grupės.
+			Importavimo sakinys naudojamas į failo galiojimo sritį įterptį vardų grupes ir tipus iš kitos vardų grupės.
 
 				use <vardų grupė>;
 
 			Vardų grupė privalo būti pilna vardų grupė iš naudojamų asemblių.
 
-			Po šio teiginio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant importuotos grupės.
+			Po šio sakinio galima visus tipus ir vardų grupes iš nurodytos vardų grupės pasiekti tiesiogiai, nerašant importuotos grupės.
 
 				use System;
 
@@ -620,21 +621,21 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				System.String a;
 				System.Collections.ArrayList lst;
 
-			Importavimo teiginiai leidžiami tik faile. ;; Kaip kitaip parašyti - D?
-			Faile gali būti neribotas skaičius importavimo teiginių.
+			Importavimo sakiniai leidžiami tik faile. ;; Kaip kitaip parašyti - D?
+			Faile gali būti neribotas skaičius importavimo sakinių.
 
-			Nors teiginys importuoja ir vardų grupes, importavimo teiginyje privaloma rašyti pilną vardų grupę, net jei ji pasiekiama trumpiau per kitą teiginį.
+			Nors sakinys importuoja ir vardų grupes, importavimo sakinyje privaloma rašyti pilną vardų grupę, net jei ji pasiekiama trumpiau per kitą sakinį.
 
 				use System;
 				use Collections; // klaida, nėra tokios vardų grupės
-				use System.Collections; // Toks teiginys veikia
+				use System.Collections; // Toks sakinys veikia
 
 			Kompiliavimo metu importuoti tipai keičiami pilnais tipų vardais. Importavimas, kaip ir tipų pseudonimai, yra pagalbinė kompiliatoriaus funkcija. 
 			Šių sakinių naudojimas visiškai neįtakoja gaunamo kodo veikimo.
 
-		2.5.3 Grįžimo teiginys
+		2.5.3 Grįžimo sakinys
 
-			"return" teiginys naudojamas baigti funkcijos darbą. 
+			"return" sakinys naudojamas baigti funkcijos darbą. 
 
 				return;
 				return <reikšmė>;
@@ -643,11 +644,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Jei funkcijos tipas nėra "void", ji privalo gražinti reikšmę, todėl privalomas bent vienas "return" sakinys su reikšme. Šios reikšmės tipas turi atitikti funkcijos tipą, arba turi egzistuoti automatinis keitimas iš reikšmės į funkcijos gražinamą tipą.
 
-			Norint užtikrinti, jog funkcija tikrai gražins reikšmę, kompiliatoriuje įvedama gražinančio teiginio sąvoka.
+			Norint užtikrinti, jog funkcija tikrai gražins reikšmę, kompiliatoriuje įvedama gražinančio sakinio sąvoka.
 
-			Teiginys gražina jei:
-			* tai yra "return" teiginys
-			* tai yra kodo blokas ir bent vienas jo teiginių gražina
+			Sakinys gražina jei:
+			* tai yra "return" sakinys
+			* tai yra kodo blokas ir bent vienas jo sakinių gražina
 			* tai yra sąlygos sakinys, jis turi abi atšakas ir jos abi yra gražinantys blokai
 
 			Jei funkcijos blokas nėra gražinantis blokas, kompiliatorius gražina klaidą.
@@ -672,7 +673,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					int a = 5;
 				}
 
-				// teigingas kodas, abi šakos gražina reikšmę
+				// teisingas kodas, abi šakos gražina reikšmę
 				int()
 				{
 					int a = GetNum();
@@ -717,258 +718,258 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Šis kodo fragmentas parodo sistemos trūkumą. Nors jūs esatę įsitikinę, kad funkcija gražins reikšmę, kompiliatorius naudoja 
 			paprastą analizę, kuri negali garantuoti šio fakto. Tokiu atveju tenka naudoti "return" sakinius, kurie niekada nebus įvykdyti.
 
-		2.5.4 Tuščias teiginys
+		2.5.4 Tuščias sakinys
 
-			Tuščią teiginį sudaro tik kabliataškis. Toks teiginys nedaro nieko ir gali būti naudojamas ten, kur sintaksė reikalauja teiginio, 
+			Tuščią sakinį sudaro tik kabliataškis. Toks sakinys nedaro nieko ir gali būti naudojamas ten, kur sintaksė reikalauja sakinio, 
 			bet nenorite nieko atlikti.
 
-		2.5.5 Išraiškos teiginys
+		2.5.5 Išraiškos sakinys
 
-			Išraiškos teiginį sudaro pati išraikša ir kabliataškis:
+			Išraiškos sakinį sudaro pati išraikša ir kabliataškis:
 
 				<išraiška>;
 
-			Bet kokia išraiška taip pat gali būti panaudota kaip teiginys. Tokia išraiška bus įvykdyta ir jos gražinama reikšmė atmesta.
+			Bet kokia išraiška taip pat gali būti panaudota kaip sakinys. Tokia išraiška bus įvykdyta ir jos gražinama reikšmė atmesta.
 
-	2.6. Kontrolės blokai
+		2.5.6. Kontrolės blokai
 
-		Kontrolės blokai yra teiginiai naudojami valdyti programos vykdymo seką. Kontrolės blokai gali būti panaudoti tik kodo bloko viduje.
+			Kontrolės blokai yra sakiniai naudojami valdyti programos vykdymo seką. Kontrolės blokai gali būti panaudoti tik kodo bloko viduje.
 
-		2.6.1. Kodo blokas
+			2.5.6.1. Kodo blokas
 
-			LaborasLang kodo blokai sudaromi iš atidarančių kabučių, sąrašo teiginių ir uždarančių kabučių.
+				LaborasLang kodo blokai sudaromi iš atidarančių kabučių, sąrašo sakinių ir uždarančių kabučių.
 
-				{
-					<teiginių sąrašas>
-				}
-
-			Blokas leidžia įrašyti kelis teiginius, kur sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys teiginiai yra vykdomi paeiliui.
-
-			Kodo bloke deklaruoti kintamieji galioja tik iki blogo galo, todėl blokai taip pat naudojami norint apriboti kintamojo galiojimo sirtį.
-
-			Pavyzdys:
-
-				{
-					int a = 5;
-					a++;
-				}
-
-			Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau gražins klaidą (nebent yra kitų kintamųjų vardu a).
-
-				{
-					int b = 5;
 					{
-						int a = b;
-						b++;
+						<sakinių sąrašas>
 					}
 
-					Console.WriteLine(b);// išspausdintų 6
-					Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
-				}
+				Blokas leidžia įrašyti kelis sakinius, kur sintaksė palaiko tik vieną. Vykdant kodo bloką, jame esantys sakiniai yra vykdomi paeiliui.
 
-			Bloke kintamieji negali turėti to pačio vardo.
+				Kodo bloke deklaruoti kintamieji galioja tik iki blogo galo, todėl blokai taip pat naudojami norint apriboti kintamojo galiojimo sirtį.
 
-				{
-					int a = 5;
-					float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
-				}
+				Pavyzdys:
 
-			Tačiau, vardas gali būti vėl panaudojamas gilesniame bloke.
-
-				{
-					int a = 5;
 					{
-						Console.WriteLine(a);
-						int a = 16;
+						int a = 5;
+						a++;
+					}
+
+				Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau gražins klaidą (nebent yra kitų kintamųjų vardu a).
+
+					{
+						int b = 5;
+						{
+							int a = b;
+							b++;
+						}
+
+						Console.WriteLine(b);// išspausdintų 6
+						Console.WriteLine(a);// bet yra klaida, kintamasis a čia neegzistuoja
+					}
+
+				Bloke kintamieji negali turėti to pačio vardo.
+
+					{
+						int a = 5;
+						float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
+					}
+
+				Tačiau, vardas gali būti vėl panaudojamas gilesniame bloke.
+
+					{
+						int a = 5;
+						{
+							Console.WriteLine(a);
+							int a = 16;
+							Console.WriteLine(a);
+						}
 						Console.WriteLine(a);
 					}
-					Console.WriteLine(a);
-				}
 
-			Ši programa išspausdins
+				Ši programa išspausdins
 
-				5
-				16
-				5
+					5
+					16
+					5
 
-			Blokas gali būti tuščias. Toks blokas daro tą patį ką tuščias teiginys - visiškai nieko.
+				Blokas gali būti tuščias. Toks blokas daro tą patį ką tuščias sakinys - visiškai nieko.
 
-		2.6.2. Sąlygos sakinys
+			2.5.6.2. Sąlygos sakinys
 
-			Sąlygos sakinys naudojamas parinkti vykdomą teiginį pagal sąlygą.
+				Sąlygos sakinys naudojamas parinkti vykdomą sakinį pagal sąlygą.
 
-				if (<sąlyga>)
-					<teigiamas teiginys>
+					if (<sąlyga>)
+						<teigiamas sakinys>
 			
-				if (<sąlyga>)
-					<teigiamas teiginys>
-				else
-					<neigiamas teiginys>
-
-			Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
-
-			Jei sąlygos reikšmė yra "true", bus vykdomas tegiamas teiginys, jei "false" - neigiamas.
-
-			"else" ir neigiamas teiginys gali būti praleisti.
-			Pavyzdžiai:
-
-				int num = GetNum();
-				if (num >= 0)
-					Console.WriteLine("Tegiamas skaičius");
-				else
-					Console.WriteLine("Neigiamas skaičius");
-
-				num++;
-
-				if (num < 0)
-					return;
-
-			"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
-
-				int num = GetNum();
-				if (num >= 0)
-					if (num == 0)
-						Console.WriteLine("Nulis");
-				else
-					Console.WriteLine("Neigiamas skaičius");
-
-			Ši programa išspausdins "Neigiamas skaičius" visiems teigiamiems nenuliniams skaičiams, kadangi "else" yra grupuojamas su 
-			artimiausiu "if". Pataisyta programa:
-
-				int num = GetNum();
-				if (num >= 0)
-				{
-					if (num == 0)
-						Console.WriteLine("Nulis");
-				}
-				else
-					Console.WriteLine("Neigiamas skaičius");
-
-
-		2.6.3. Ciklai
-
-			LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	
-			;; Worde pakeisti kabutes į keyword style
-
-			2.6.3.1. while ciklas
-				
-				while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo teiginio. Ciklas yra vykdomas tol, kol ciklo sąlyga 
-				yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
-
-					while (<sąlyga>)
-						<teiginys>
-
-				Ciklo teiginys yra bet koks LaborasLang kalboje legalus teiginys (kodo blokas, sąlyga, ciklas ir t.t.).
+					if (<sąlyga>)
+						<teigiamas sakinys>
+					else
+						<neigiamas sakinys>
 
 				Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
+
+				Jei sąlygos reikšmė yra "true", bus vykdomas tegiamas sakinys, jei "false" - neigiamas.
+
+				"else" ir neigiamas sakinys gali būti praleisti.
+				Pavyzdžiai:
+
+					int num = GetNum();
+					if (num >= 0)
+						Console.WriteLine("Tegiamas skaičius");
+					else
+						Console.WriteLine("Neigiamas skaičius");
+
+					num++;
+
+					if (num < 0)
+						return;
+
+				"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
+
+					int num = GetNum();
+					if (num >= 0)
+						if (num == 0)
+							Console.WriteLine("Nulis");
+					else
+						Console.WriteLine("Neigiamas skaičius");
+
+				Ši programa išspausdins "Neigiamas skaičius" visiems teigiamiems nenuliniams skaičiams, kadangi "else" yra grupuojamas su 
+				artimiausiu "if". Pataisyta programa:
+
+					int num = GetNum();
+					if (num >= 0)
+					{
+						if (num == 0)
+							Console.WriteLine("Nulis");
+					}
+					else
+						Console.WriteLine("Neigiamas skaičius");
+
+
+			2.5.6.3. Ciklai
+
+				LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	
+				;; Worde pakeisti kabutes į keyword style
+
+				2.5.6.3.1. while ciklas
 				
-				Keletas while ciklo pavyzdžių:
+					while ciklas susideda iš dviejų dalių: ciklo sąlygos ir ciklo sakinio. Ciklas yra vykdomas tol, kol ciklo sąlyga 
+					yra teisinga. Bendrą ciklo struktūrą galima aprašyti taip:
 
-					while (foo-- > 0)
-						Report(foo);
-
-					while (IsValid(bar))
-					{
-						if (bar % 2 == 0)
-							Console.WriteLine(bar);
-
-						bar = Transform(bar);
-					}
-
-			2.6.3.2. C stiliaus for ciklas
-
-				;; Mes teiginiais vadinam use, deklaciją, return, visokie ciklai yra kontrolės blokai. Reikia suvienodinti semantiką ir pataisyti taisyklę - D.
-
-				LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C šeimos kalbų. 
-				Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo teiginys. C stiliaus 
-				for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
-
-					for (<inicializatorius>; <sąlyga>; <iteratorius>)
-						<teiginys>
-
-				Kiekviena iš šio for ciklo atraštės dalių gali būti praleista.
-
-				Ciklo inicializatorius, jei toks yra, privalo būti kintamojo deklaracija arba bet kokia LaborasLang išraiška. 
-				Deklaracija gali būti su inicializacija arba be. Ši deklaracija sukuria lokalų kintamajį, kurio galiojimo sritis apima visą 
-				ciklą.
-
-				Ciklo sąlyga, jei tokia yra, privalo būti "bool" tipo skaitoma išraiška. Jei sąlygos nėra, ji pakeičiama išraiška "true".
-
-				Ciklo iteratorius, jei toks yra, gali būti bet kokia išraiška.
-
-				Ciklo teiginys yra bet koks LaborasLang teiginys, išskyrus "use" teiginį.
-
-				Ciklo vykdymo tvaka:
-
-					1. Jei aprašytas, įvykdomas ciklo inicializatorius.
-					2. Įvykdoma ciklo sąlyga. Jei rezultatas nėra "true", baigiamas ciklo vykdymas.
-					3. Įvykdomas ciklo teiginys. 
-					4. Jei nebuvo išeita iš teiginio (pavyzdžiui "return" sakiniu) ir yra aprašytas iteratorius, jis yra įvykdomas.
-						Vykdymas gražinamas į 2 punktą.
-
-				;; Man šitas padeda suvokti kaip tiksliai vykdomas for - D.
-				Naudojant "while" ciklą, "for" galima aprašyti taip:
-
-					{
-						<inicializatorius>;
 						while (<sąlyga>)
+							<sakinys>
+
+					Ciklo sakinys yra bet koks LaborasLang kalboje legalus sakinys (kodo blokas, sąlyga, ciklas ir t.t.).
+
+					Sąlyga yra bet kokia "bool" tipo skaitoma išraiška.
+				
+					Keletas while ciklo pavyzdžių:
+
+						while (foo-- > 0)
+							Report(foo);
+
+						while (IsValid(bar))
 						{
-							<teiginys>;
-							<iteratorius>;
+							if (bar % 2 == 0)
+								Console.WriteLine(bar);
+
+							bar = Transform(bar);
 						}
-					}
 
-				For ciklo pavyzdžiai:
+				2.5.6.3.2. C stiliaus for ciklas
 
-					// Šis for ciklas spausdina "Spinning infinitely" be galo.
-					for (;;)
-						Console.WriteLine("Spinning infinitely");
+					;; Mes sakiniais vadinam use, deklaciją, return, visokie ciklai yra kontrolės blokai. Reikia suvienodinti semantiką ir pataisyti taisyklę - D.
+
+					LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C šeimos kalbų. 
+					Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo sakinys. C stiliaus 
+					for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
+
+						for (<inicializatorius>; <sąlyga>; <iteratorius>)
+							<sakinys>
+
+					Kiekviena iš šio for ciklo atraštės dalių gali būti praleista.
+
+					Ciklo inicializatorius, jei toks yra, privalo būti kintamojo deklaracija arba bet kokia LaborasLang išraiška. 
+					Deklaracija gali būti su inicializacija arba be. Ši deklaracija sukuria lokalų kintamajį, kurio galiojimo sritis apima visą 
+					ciklą.
+
+					Ciklo sąlyga, jei tokia yra, privalo būti "bool" tipo skaitoma išraiška. Jei sąlygos nėra, ji pakeičiama išraiška "true".
+
+					Ciklo iteratorius, jei toks yra, gali būti bet kokia išraiška.
+
+					Ciklo sakinys yra bet koks LaborasLang sakinys, išskyrus "use" sakinį.
+
+					Ciklo vykdymo tvaka:
+
+						1. Jei aprašytas, įvykdomas ciklo inicializatorius.
+						2. Įvykdoma ciklo sąlyga. Jei rezultatas nėra "true", baigiamas ciklo vykdymas.
+						3. Įvykdomas ciklo sakinys.
+						4. Jei nebuvo išeita iš sakinio (pavyzdžiui "return" sakiniu) ir yra aprašytas iteratorius, jis yra įvykdomas.
+							Vykdymas gražinamas į 2 punktą.
+
+					;; Man šitas padeda suvokti kaip tiksliai vykdomas for - D.
+					Naudojant "while" ciklą, "for" galima aprašyti taip:
+
+						{
+							<inicializatorius>;
+							while (<sąlyga>)
+							{
+								<sakinys>;
+								<iteratorius>;
+							}
+						}
+
+					For ciklo pavyzdžiai:
+
+						// Šis for ciklas spausdina "Spinning infinitely" be galo.
+						for (;;)
+							Console.WriteLine("Spinning infinitely");
 
 
-					// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
-					for (int i = 0; i < 10; i++)
-						Console.WriteLine(i);
+						// Šis for ciklas atspausdina skaičius nuo 0 iki 9 imtinai.
+						for (int i = 0; i < 10; i++)
+							Console.WriteLine(i);
 
 
-					// Šis ciklas analogiškas while ciklui
-					for (; i < 10;)
-					{
-						Console.WriteLine(i);
-						i++;
-					}
+						// Šis ciklas analogiškas while ciklui
+						for (; i < 10;)
+						{
+							Console.WriteLine(i);
+							i++;
+						}
 
 
-			2.6.3.3. Kolekcijos iteravimo for ciklas
+				2.5.6.3.3. Kolekcijos iteravimo for ciklas
 
-				Iteravimui per reikšmių kolekcijas dažnai naudojamas specialus ciklas, kitose kalbose vadinamas "foreach" ciklu. Šiame 
-				cikle yra deklaruojamas kintamasis, kuris paeiliui įgyja visas rinkinio reikšmes. 
+					Iteravimui per reikšmių kolekcijas dažnai naudojamas specialus ciklas, kitose kalbose vadinamas "foreach" ciklu. Šiame 
+					cikle yra deklaruojamas kintamasis, kuris paeiliui įgyja visas rinkinio reikšmes. 
 
-					for (<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
-						<teiginys>
+						for (<kintamojo tipas> <kintamojo pavadinimas> in <kolekcija>)
+							<sakinys>
 
-				Pagal kintamojo tipą ir pavadinimą yra deklaruojamas lokalus kintamasis. Šio kintamojo galiojimo sritis yra visas ciklas, 
-				bet jo reikšmę galima tik perskaityti. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
+					Pagal kintamojo tipą ir pavadinimą yra deklaruojamas lokalus kintamasis. Šio kintamojo galiojimo sritis yra visas ciklas, 
+					bet jo reikšmę galima tik perskaityti. Šis ciklas netinka, jei reikia modifikuoti kolekciją.
 
-				Kolekcijos gali būti masyvai arba objektai turintys metodą GetEnumerator(). Kolekcijos išraiška bus įvykdyta vieną kartą 
-				ir viso ciklo metu bus naudojamas tas pats enumeratorius. 
-				;; čia gal tik biški BS.
-				;; norėjau parašyti, kad jei iteruosi per call, nebus kviečiama 500 kartų - D.
+					Kolekcijos gali būti masyvai arba objektai turintys metodą GetEnumerator(). Kolekcijos išraiška bus įvykdyta vieną kartą 
+					ir viso ciklo metu bus naudojamas tas pats enumeratorius. 
+					;; čia gal tik biški BS.
+					;; norėjau parašyti, kad jei iteruosi per call, nebus kviečiama 500 kartų - D.
 
-				Kadangi iš kolekcijos visada galima sužinoti elemento tipą, dažnai deklracijoje naudojamas tipas "auto".
+					Kadangi iš kolekcijos visada galima sužinoti elemento tipą, dažnai deklracijoje naudojamas tipas "auto".
 
-				Ciklo pavyzdžiai:
+					Ciklo pavyzdžiai:
 
-					// iteruojama per masyvą
-					auto arr = int[] { 1, 2, 3, 4 };
-					for (auto i in arr)
-						Console.WriteLine(i);
-					// išspausdins skaičius 1 - 4
+						// iteruojama per masyvą
+						auto arr = int[] { 1, 2, 3, 4 };
+						for (auto i in arr)
+							Console.WriteLine(i);
+						// išspausdins skaičius 1 - 4
 
-					// iterauojama per kolekciją
-					ArrayList lst = ...
-					for (object i in lst)
-						Console.WriteLine(i.ToString());
-					// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
+						// iterauojama per kolekciją
+						ArrayList lst = ...
+						for (object i in lst)
+							Console.WriteLine(i.ToString());
+						// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
 3. LaborasLang gramatika
 
@@ -991,7 +992,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	3.2. Dviprasmybės
 
 		LaborasLang gramatikoje dviprasmybės yra gailimos tik sudarant žetonus. Jos yra sprendžiamos sudarant maksimalaus galimio ilgio
-		žetonus. Tai yra taikoma valdant tokius žetonus kaip "<<", "++", "--", tai reiška kad nors teiginys "i = i--1" galėtų būti 
+		žetonus. Tai yra taikoma valdant tokius žetonus kaip "<<", "++", "--", tai reiška kad nors sakinys "i = i--1" galėtų būti 
 		transformuotas į "i = i - (-1)" dėl žetonų ilgio maksimizavimo jis bus suprastas kaip "i = (i--) 1", kas yra nevalidus kodas (
 		nėra jokio operatoriaus tarp dviejų operandų).
 
@@ -1112,7 +1113,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			    ConditionalSentence,
 			    StatementWithEndOfLine
 
-			Galimos kalbos struktūros yra kodo blokas, ciklas "while", ciklai "for" bei "foreach", sąlygos sakiniai, ar teiginiai kurie
+			Galimos kalbos struktūros yra kodo blokas, ciklas "while", ciklai "for" bei "foreach", sąlygos sakiniai, ar sakiniai kurie
 			baigiasi kabliataškiu.
 
 			CodeBlockNode:
@@ -1126,22 +1127,22 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			    Value,
 			    ReturnNode
 			
-			Teiginius sudaro importavimo teiginys "UseNode", deklaravimo teiginys "DeclarationNode", reikšmė (nesvarbu ar kairinė ar
-			dešininė) "Value", grąžinimo sakinys. Šie teiginiai gali būti naudojami kaip kalbos struktūros prie jų pridėjus kabliataškį:
+			Sakinius sudaro importavimo sakinys "UseNode", deklaravimo sakinys "DeclarationNode", reikšmė (nesvarbu ar kairinė ar
+			dešininė) "Value", grąžinimo sakinys. Šie sakiniai gali būti naudojami kaip kalbos struktūros prie jų pridėjus kabliataškį:
 
 			StatementWithEndOfLine:
 			    StatementNode? EndOfLine
-			Šioje struktūroje teiginys yra neprivalomas - reikia bent vieno kabliataškio, bet jei jie kartojasi kelis kartus programa yra
+			Šioje struktūroje sakinys yra neprivalomas - reikia bent vieno kabliataškio, bet jei jie kartojasi kelis kartus programa yra
 			vis dar validi.
 
 			UseNode:
 			    Use FullSymbol
-			Importavimo teiginį sudaro raktažodį "use" atitinkanti leksema bei pilnas simbolis - tai yra simbolių atskirtų taškais
+			Importavimo sakinį sudaro raktažodį "use" atitinkanti leksema bei pilnas simbolis - tai yra simbolių atskirtų taškais
 			 rinkinys, kitur jis gali būti suprantamas kaip kairinė reikšmė.
 
 			DeclarationNode:
 			    VariableModifier* Type Symbol (Assignment Value)?
-			Deklaravimo teiginį sudaro neprivalomi kintamojo modifikatoriai, jo tipas, kintamojo pavadinimas bei neprivalomas priskyrimo
+			Deklaravimo sakinį sudaro neprivalomi kintamojo modifikatoriai, jo tipas, kintamojo pavadinimas bei neprivalomas priskyrimo
 			operatorius su dešinine reiškme
 
 			ReturnNode:
@@ -1258,7 +1259,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			    For LeftParenthesis DeclarationNode? EndOfLine Value? EndOfLine Value? RightParenthesis CodeConstruct
 			paprastas "for" ciklas naudojamas taip pat kaip kitose C šiemos kalbose - naudojamas raktažodis "for", skliaustuose trys kodo
 			segmentai atskirti kabliataškiais, kuriuose iš eilės aprašoma kintamojo deklaracija, dešininė reikšmė kuri atitinka ciklo
-			sąlygą, bei teiginys kuris bus vykdomas kiekvienos po kiekvienos iteracijos. Šie segmentai gali neturėti jokio turinio.
+			sąlygą, bei sakinys kuris bus vykdomas kiekvienos po kiekvienos iteracijos. Šie segmentai gali neturėti jokio turinio.
 
 			ConditionalSentence:
 			    If LeftParenthesis Value RightParenthesis CodeConstruct (Else CodeConstruct)?
@@ -1980,8 +1981,24 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	
 		Šiame skyrelyje aprašyta, kaip skirtingi kompiliatoriaus komponentai bendrauja tarpusavyje, kokiu formatu ir sąsajomis perduoda duomenis.
 
-		5.2.1. Lekserio ir Parserio integracija
-		5.2.2. Parserio ir Kodo generatoriaus integracija
+		5.2.1. Lekserio ir parserio integracija
+		5.2.2. Parserio ir kodo generatoriaus integracija
+
+			Parseris ir kodo generatoriaus bendrauja valdytojo-valdomojo principu: Kodo generatorius daro tai, ką jam liepia parseris. Pagrindinis duomenų perdavimo mechanizmas, naudojamas duomenis
+			perduoti iš parserio į kodo generatorių yra parserio medis. Vienas parserio medis aprašo vienos funkcijos kūną. Toks medis kodo generatoriui suteikia visą reikalingą informaciją pilno
+			metodo kodo generavimui.
+
+			Pats parserio medis yra sudaromas iš 26 skirtingų sąsajų, kurios apibrėžia įvairias LaborasLang programavimo kalbos struktūras (§8.1. Parserio medžio sąsajos). Kiekviena medžio viršūnė
+			implementuoja vieną ar kelias iš šių 26 sąsajų. Pati elementariausia sąsaja, kurią implementuoja visos kitos sąsajos, yra IParserNode, kuri tiesiogiai atitinka LaborasLang kalbos sakinį,
+			kurį galima naudoti funkcijos viduje (§2.5. Sakiniai). Ji yra apibrėžta taip:
+						
+				interface IParserNode
+				{
+					NodeType Type { get; }
+					SequencePoint SequencePoint { get; }
+				}
+
+			NodeType nurodo sakinio tipą. SequencePoint susieja šią viršūnę su išeities failu ir vieta jame, kurioje šis sakinys buvo panaudotas.
 
 	5.3. Testavimas
 		5.3.1. Lekserio testavimas
@@ -2000,5 +2017,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		5.5.3. Šakninės direktorijos
 6. Išvados
 7. Literatūra
+8. Priedai
+8.1. Parserio medžio sąsajos
 
 [1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
