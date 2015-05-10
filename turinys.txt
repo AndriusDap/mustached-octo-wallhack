@@ -1767,45 +1767,66 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.1.3. SyntaxMatcher ("Sintaksės atpažinimo sistema")
 			
+				
 				Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
 
 				5.1.1.3.1. veikimo principas
+					Šis modulis perdirba Tokenizer sukurtą leksemų sąrašą į abstraktų sintaksės medį (AST). Perdarymas primena Pacrat
+					Parser aprašytą ... ;; Kaip linkint external doc'ą? http://bford.info/pub/lang/packrat-icfp02/
+					
+					Bandoma pritaikyti RulePool aprašytas taisykles, pradedant nuo taisyklės kuri apima visą programą - tai yra taisyklė
+					kuri sako jog programa yra sudaryta iš kodo struktūrų.
+					Visos taisyklės analizuojamos vienodai - iš RulePool modulio parenkamos galimos taisyklės alternatyvos. Alternatyvos
+					yra	sudarytos iš terminalinių žetonų ir kitų taisyklių. Gautos taisyklės alternatyvos yra lyginamos su žetonų sąrašu
+					formuojant abstraktų sintaksės medį.
+					
+					Taisyklės alternatyvos atitikimas žetonų sąrašui tikrinamas lyginant taisyklę sudarančius žetonus su žetonų sąrašo
+					elementais.
+						Jei alternatyvos elementas yra nuoroda į kitą taisyklę mėginama pritaikyti tą taisyklę
+						Jei alternatyvos elementas yra terminalinis žetonas tikrinama ar jis lygus dabar tikrinamam žetonų sąrašo
+						žetonui.
 
-					Syntax matcher nauoja taisyklių sąrašą kad sugeneruoti teisiną ast iš rule pool'o. Viskas pradedama nuo pagrindinės taisyklės
-					kuri nusako programos struktūrą, tai yra aibė sakinių. Taisyklės taikomos jų neterminalines leksemas keičiant kitomis 
-					taisyklėmis ir jas pritaikant. Jei bent viena alternatyva iš taisyklės sprendimų tinka tai ji pridedama į AST, jei ne
-					- nepridedama, ir mėginama kita alternatyvi taisyklė. Taip kiekviena neterminalinė taisyklė yra išskleidžiama iki 
-					terminalinių žetonų kurie atitinka leksemų sąrašo narius. Jei nei viena taisyklė netiko, laikoma, kad išeities kodas yra 
-					su klaidomis, tačiau kompiliavimas nėra nutraukiamas. SyntaxMatcher bando surasti iš kur 
-					galėtų vėl pradėti analizę, ieškodamas simbolių ';' ir '{'. Simboliai kurie nėra pridėti į AST ir yra iki to recovery point ;; Sugalvok kaip recovery point išverst - T.
-					pridedami prie AST kaip Unknown node. Tai leidžia pranešti daugiau nei vieną klaidą kompiliacijos metu. Syntax matcher 
-					taisyklių taikymas yra godus, jei taisyklė tinka tai ji yra pritaikoma ir kitos nemėginamos, laikoma, kad pirma tikusi 
-					taisyklė yra geriausia. Taisyklės yra prioretizuotos, jų deklaravimo tvarka nurodo prioritetą, dėl to išvengiama vietų 
-					kur gali būti pritaikyta daugiau nei viena taiskylė. 
-					Toks syntax matcher veikimo algoritmas yra prastas atminties naudojimo atžvilgiu, nes pastoviai deklaruojama labai daug 
-					AST nodes kurie yra nebenaudojami - jei kokia taisyklė sufailino yra grįžtama iki jos alternatyvos, dėl to daug objektų ;; "sufailino"? Seriously? - T.
-					tampa nebenaudojami ir GC turi juos visus surinkti. Tai darė didelę įtaką analizės greičiui, dėl to sudarant AST
-					naudojamas specialiai parašytas alokatorius. Aprašyta klasė RootNode, kuri atitinka atminties valdymo objektą, kuris suteikia 
-					resursus. Tai leidžia pranešti, kad tam tikra medžio šaka nebus naudojama ir ją galima pernaudoti tolimesniam medžio ;; Gramatiką pataisiau, bet paskutinis sakinys makes no sense whatsoever - T.
-					formavimui, taip išvengiant bereikalingų objektų alokacijų ir deadlokacijų.											 ;; Gal būtų verta plačiau aprašyt apie jo veikimą? - T.
+					Jei bent vienas alternatyvos elementas neatitinka žetonų sąrašo elementų mėginama taikyti sekančią alternatyvą. Jei
+					visos alternatyvos netinka teigiama kad ši taisyklė netinka šiam kodo segmentui, išvalomas šios taisyklės suformuotas
+					medis ir grįžtama.
+					Jei alternatyva atitiko žetonų sąrašą į abstraktų sintaksės medį įrašomas suformuotas medis ir grįžtama.
 
-					Galima teigti, kad šis modulis yra bekontekstis lexeris, nes nėra saugoma jokia globali būsena kuri naudojama tikrinti ;; Ištrinčiau "Galima teigti, kad", nes lexeris toks ir yra - T.
-					leksemų sąrašui, jis yra lyginamas tik su taisyklių sąrašu. Tai leidžia naudoti metaprogramą - taisyklių sąrašą ir jo 
-					interpretatorių - SyntaxMatcher. Taip labai lengvai atskirtas taisyklės nuo jų pritaikymo logikos, tas leido RulePool ;; I can't comprehend that again'
-					naudoti kaip dalinę AST dokumentaciją.
+					Tikrinamos visos taisyklės alternayvos kol randama pirma tinkanti, pagal ją suformuojama medžio šaka ir grįžtama.
+					Suformuotas AST savo struktūra atitinka taisykles.
 
-					Šio modulio sugeneruotas AST yra laikomas specifiniame optimizuotame formate - RootNode valdomame atminties bloke. Nors 
-					jis yra optimalus atminties naudojimo atžvilgiu brute force taisyklių taikymo metu, jis tampa sudėtingu, kai reikia naudoti 
-					post procesorius. Dėl to po syntax matcher praleidimo jis yra keičiamas paprastu adt-ish medžiu.
+					Tokia analizė yra bekontekstė, nes taikant taisyklė yra tikrinama tik ta kodo dalis kuri yra nepanaudota, nėra
+					saugoma globali būsena.
+
+
+					Jei programos kodas yra validus po taisyklių pritaikymo visi žetonai būna sunaudoti ir patalpinti abstrakčiame
+					sintaksės medyje. Tačiau ne visas kodas yra validus, ir vartotojams reikia pranešti apie jų padarytas klaidas.
+					Taisyklių taikymo mechanizmas to nepalaiko - kai taisyklė nebūna pritaikyta bandoma taikyti alternatyvą, dėl
+					konteksto nebuvimo neina stebėti ar dar yra kitų galimų taisyklių. Tam yra sekama kiek žetonų buvo analizuota. Jei
+					nebuvo sugeneruotas validus AST apimantis visą žetonų masyvą žetonai tarp paskutinio panaudoto žetono ir atsistatymo
+					taško yra pažymimi kaip nesuprasti ir analizė yra tęsiama nuo atsistatymo taško siekiant pranešti daugiau nei vieną
+					klaidą kompiliavimo metu.
+
+					Atistatymo taškai yra žetonai kuriuos sekantis kodas gali būti išanalizuotas kaip kodo struktūra. Tai yra žetonai ";",
+					"{", "}".
+
+					SyntaxMatcher veikimo metodas nėra optimalus atminties naudojimo atžvilgiu - jam tikrinant taisykles yra plečiamas AST,
+					jei taisyklė nepavyko jo dalis yra ištrinama ir kuriama iš naujo. Tai reiškia kad yra perkuriama itin daug objektų.
+					Dėl to SyntaxMatcher modulio viduje AST struktūra saugoma ne Garbage Collector valdomoje atmintyje o kitame dėklo
+					tipo konteineryje kuris leidžia perpanaudoti atminties blokus.
+					
+					Tam kad nereikėtų naudoti šios struktūros kituose moduliuose po suformavimo AST transformuojamas į medį kurio atmintį 
+					valdo Garbage Collector.
 
 				5.1.1.3.2. Testavimas
 
-					SyntaxMatcher testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami ast kurie yra lyginami 
-					su modifikuoto rulePool ast. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo gabaliuką ir peržiūrėti 
-					sugeneruotą AST dėl korektiškuom. Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei 
-					keičiasi medžio API reikia pergeneruoti ir rankois patikrinti daug failų.
-					Testuose taip pat tikrinama kad medžiuose nėra nei vieno UnknownNode kuris rieškia kad neišėjo pritaikyti nei vienos taisyklės 
-					šiam kodo blokui.
+					SyntaxMatcher testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami AST kurie yra lyginami 
+					su ankstesnės versijos modulio sugeneruotais AST. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo segmentą
+					kurį norima validuoti ir peržiūrėti sugeneruotą AST tikrinant jo korektiškumą.
+					Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei keičiasi medžio API reikia pergeneruoti
+					ir patikrinti daug duomenų.
+					
+					Testuose taip pat tikrinama kad medžiuose nėra nei vieno neatpažinto žetono kas reikštų kad taisyklių rinkinys nepadengia visos
+					kalbos gramatikos.
 
 			5.1.1.4. PostProcesorius
 
