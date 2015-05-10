@@ -471,8 +471,46 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Šiuo būdu gautos tipo ar vardų grupės išraiškos yra aprašytos skyriuje Nario išraiška.
 
 		2.4.4. Indeksavimas
+
+			LaborasLang palaiko du indeksavimo tipus: masyvo indeksavimą ir indekso operatorių.
+
+			<kolekcija>[<indeksai>]
+
+			Kolekcijos išraiška turi būti masyvas arba objektas su indekso operatoriumi.
+
+			Indeksai yra kableliais atskirtos išraiškos.
+
+			Ir kolekcija ir indeksai privalo būti skaitomi.
+
 			2.4.2.x Masyvo indeksavimas
+
+				Jei kolekcija yra masyvas, indeksavimas nustatomas pagal masyvo tipą:
+
+				* Išraiškos reikšmės tipas yra masyvo elemento tipas.
+				* Indeksų skaičius turi atitikti masyvo matmenų skaičių.
+				* Indeksai gali būti sveikieji skaičiai išskyrus "int64" ir "uint64" tipus.
+
 			2.4.2.x Indekso operatorius
+
+				Jei kolekcija nėra masyvas, joje ieškoma indekso operatoriaus pagal nurodytus indeksus. Operatorius parenkamas taip pat 
+				kaip perdengtas metodas. Šiuo atveju indeksai gali būti bet kokio tipo išraiškos, jei yra tokio tipo operatorius.
+				;; kažkur reikia aprašyti overload resolution esmę spece - D.
+
+				Objektuose gali būti keli indekso operatoriai
+
+			Pavyzdžiai:
+
+				int arr = int[]{1, 2, 3};
+				Console.WriteLine(arr[2]);// išspausdina "3"
+
+				getMap()["foo"];
+
+				incrediblyComplexStructure[1, "agurkas", 6];
+				incrediblyComplexStructure[5];
+				// objektas su keliais skritingais operatoriais
+
+				;; nieko protingo nesugalvoju - D.
+
 		2.4.5. Funkcijos
 		2.4.6. Funkcijos kvietimai
 			2.4.4.x Funkcijos objekto kvietimas ;; LL functors, Func
