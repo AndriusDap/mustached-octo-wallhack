@@ -391,7 +391,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.4.2 Nario išraiška
 
-			Išraiška naudojama pasiekti vardų grupės ar tipo narį. 
+			Nario išraiška yra specialus dvinaris operatorius naudojamas pasiekti vardų grupės arba tipo narį.
 
 			<pagrindinė išraiška>.<identifikatorius>
 
@@ -430,6 +430,20 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				* sąvybė. Sąvybė gaunama kaip laukas. Sąvybė yra kairinė ir dešininė jei pasiekiami "set" ir "get" metodai atitinkamai.
 
 			Jei tipo narys turi apribotą pasiekiamumą ir nėra pasiekiamas iš failo, kuriame rašoma išraiška, gražinama klaida.
+			Pavyzdžiai:
+
+			Console . WriteLine
+			| tipas | metodų grupė |
+
+			Kaip visi dvinariai operatoriai, nario išraiška gali būti panaudota kitoje nario išraiškoje.
+
+			  System      . IO          . File  . OpenRead
+			| vardų grupė | vardų grupė |
+			|        vardų grupė        | tipas |
+			|               tipas               | metodas  |
+
+			;; nežinau ar šitas turi prasmės, galima ir išmesti arba perkelti prie parserio - D.
+
 				
 		2.4.3. Pavieniai identifikatoriai
 
@@ -630,6 +644,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.7.4. Stūmimo operacijos
 		2.4.10. Objektų kūrimas
 		2.4.11. Masyvų kūrimas
+		2.4.12. Nurodomasis tipo keitimas
 
 	2.5. Sakiniai
 
@@ -648,7 +663,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Tipas yra bet koks palaikomas tipas išskyrus "void".
 
-			Identifikatorius yra bet koks legalus simbolis. ;; reiktų kokio link į lexer skyriu kas yra legalus simbolis - D.
+			Identifikatorius yra bet koks legalus simbolis. Tai bus šio kintamojo vardas. ;; reiktų kokio link į lexer skyriu kas yra legalus simbolis - D.
 
 			Jei nurodytas, inicializatoriaus reikšmė priskiriama kintamajam.
 
@@ -682,8 +697,34 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Jei nesilaikoma vieno iš šių apribojimų, kintamojo tipo nustatyti neįmanoma ir yra gražinama klaida.
 
-				auto foo; // klaida
-				auto bar = null; // klaida
+				auto foo; // klaida, nėra inicializacijos
+				auto bar = null; // klaida, null neturi tipo
+				auto baz = Console.WriteLine; // klaida, WriteLine yra metodų grupė
+
+			Nors kintamųjų tuo pačiu vardu galiojimo sritys gali persidengti, neleidžiama vienoje vietoje deklaruoti kelių kintamųjų tuo pačiu vardu:
+				* kodo bloke negali būti kelių kintamųjų tuo pačiu vardu.
+				* funkcijos parametrai privalo turėti skirtingus vardus.
+				* failo globalūs kintamieji privalo turėti skirtingus vardus.
+
+			Vienintelė išimtis: faile galimi keli globalūs kintamieji tuo pačiu vardu, jei jie visi yra funkcijos skirtingais parametrais. 
+			Privalo skirtis ne parametrų vardai, o jų tipai. Tai dažnai vadinama funkcijų perdengimu. 
+
+			Teisingas perdengimas:
+
+				auto foo = void(){};
+				auto foo = void(int a){};
+
+			Neteisingas perdengimas:
+
+				auto foo = void(int a){};
+				auto foo = void(int b){};
+
+			Taip pat neteisinga:
+
+				auto foo = void(){};
+				auto foo = int(){return 4;};
+
+			Kviečiant perdengtas funkcijas, kitap funkcijų grupę, reikiama funkcija parenkama pagal argumentų tipus (žr. §2.4.6.).
 
 			Norint papildomai apriboti kintamuosius, deklaracijoje galima jiems pridėti atributus. LaborasLang turi dvi atributų rūšis - 
 			pasiekiamumo ir kintamumo. Pasiekiamumo atributai apriboja kintamojo galiojimo sritį, o kitamumo leidžia kintamajį padaryti 
@@ -702,6 +743,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					b = 8; // reikšmę galima ir skaityti ir rašyti
 
 					const int c; // klaida, konstantas būtina inicializuoti
+
+				;; dabar galvoju, gal čia compiler detalė - D?
 
 				Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
 				taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
@@ -962,6 +1005,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						return;
 
 				"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
+				;; šitas manau gramatikai priklauso. ten reikia paminėti, o iš čia išmesti - D.
 
 					int num = GetNum();
 					if (num >= 0)
@@ -1103,7 +1147,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						// išspausdins skaičius 1 - 4
 
 						// iterauojama per kolekciją
-						ArrayList lst = ...
+						ArrayList lst = ArrayList({1, 2, 3, 4});
 						for (object i in lst)
 							Console.WriteLine(i.ToString());
 						// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
@@ -2100,7 +2144,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				5.1.3.6.2. Perteklinių šuolių šalinimas
 
 					Šis optimizatorius aptinka situaciją, kai vykdomas šuolis į instrukciją, kuri grįžta iš metodo. Aptikęs tokią situaciją, jis pakeičia šuolio instrukciją į grįžimo
-					instrukciją. Šis optimizatorius padeda padidinti galinių kvietimų optimizacijos efektyvumą (žr. 5.1.3.6.4.). Pavyzdžiui, šis optimizatorius būtų vykdoma tokiai LaborasLang
+					instrukciją. Šis optimizatorius padeda padidinti galinių kvietimų optimizacijos efektyvumą (žr. §5.1.3.6.4.). Pavyzdžiui, šis optimizatorius būtų vykdoma tokiai LaborasLang
 					funkcijai:					
 
 						auto Func = void(int i)
