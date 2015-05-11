@@ -1869,7 +1869,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.1.2. RulePool ("Taisyklių sąrašas")
 
-				Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką.
+				Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką[2].
 				Taisyklės yra sudaromos iš terminalinių ir neterminalinių žetonų. Kiekvienam neterminaliniam žetonui yra nurodoma taisyklė 
 				kuri jį aprašo terminaliniais ir neterminalianiais žetonais. Vieną neterminalinį žetoną galima aprašyti keliomis skirtingomis 
 				taisyklėmis, jos bus taikomos iš eilės pagal deklaravimo tvarką. Taisyklėse naudjoami terminalinių ir neterminalinų žetonų 
@@ -1915,8 +1915,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
 
 				5.1.1.3.1. veikimo principas
-					Šis modulis perdirba Tokenizer sukurtą leksemų sąrašą į abstraktų sintaksės medį (AST). Perdarymas primena Pacrat
-					Parser aprašytą ... ;; Kaip linkint external doc'ą? http://bford.info/pub/lang/packrat-icfp02/
+					Šis modulis perdirba Tokenizer sukurtą leksemų sąrašą į abstraktų sintaksės medį (AST). Taisyklių taikymas primena 
+					Pacrat tipo analizę [3] primena Pacrat Parser, tačiau nenaudojamas tarpinių reikšmių įsiminimas.
 					
 					Bandoma pritaikyti RulePool aprašytas taisykles, pradedant nuo taisyklės kuri apima visą programą - tai yra taisyklė
 					kuri sako jog programa yra sudaryta iš kodo struktūrų.
@@ -1984,41 +1984,38 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				5.1.1.4.1. Operatorių prioritetizavimas
 
-					Naudojamas Dijkstros Shunting yard algoritmas infix notacijos vertimui į medžio formos postfix notaciją. Toks metodas parinktas ;; wtf yra infix? Paaiškink, nes aš pats nesuprantu - T.
-					dėl sudėtingumo išreikšiant operatorius per rule pool - jį sudėtinga debuginti, sudėtinga nustatyti okie pakitimai sulaužys 
-					kitas taisykles. Po perėjimo prie psot'o pastebėtas ir gana žymus pagreitėjimas - taip nutiko dėl to kad kiekvienas value 
-					eidavo per 10 bereikalingų taisykjlių lygių, tą panaikinus dabar eina tik per tris, tai reiškia kad kiekviena vertė, reiškėm, 
-					function call yra išleksinami žymiai greičiau.
+					Naudojamas Dijkstros Shunting yard algoritmas ([4] §Making a Translator for ALGOL 60) įprastos, infiksinės, aritmetinių veiksmų 
+					notacijos kurioje naudojami operatoriai yra tarp operandų transformavimui į atvikštinę lenkišką notaciją. Tai atliekama 
+					nenaudojant RulePool modulio, nes tai sudarė itin didelį kiekį papildomų taisyklių kurios turėjo būti naudojamos kiekvienai 
+					reikšmei. Tai lėmė analizės sulėtėjimą bei sudėtingą RulePool modulio taisyklių sąrašą.
+
+					Testavimas vykdomas lyginant gautą atvirkštinės lenkiškos notacjios veiksmą su apdorotu infiksinės notacijos rezultatu.
 
 				5.1.1.4.2. Funkcijų ir masyvų atskyrimas:
 
-					Kalbos gramatika nėra context free. function call ir tipai atrodo identiškai. Kadangi lexeris yra pritaikytas cfg 
-					gramatikai funkcijų tipus teko analizuoti kontekstą turinčioje dalyje. Šis postas atpažysta ar tai yra funkcija ar taipas 
-					ar masyvas.
+					Kalbos kūrimo metu pastebėta kad kai kurios kalbos struktūros (taipai bei funkcijos) reikalauja tam tikro konteksto jų analizei. 
+					Tai reiškia kad jie negali būti teisingai išanalizuoti naudojant SyntaxMatcher modulį. Pasirinkta juos laikyti funkcijomis ir 
+					kai žinomas papildomas kontekstas juos versti į teisingą tipą - funkcijos arba masyvo.					
 
 				5.1.1.4.3. Neigiamų skaičių atpažinimas:
 				
-					Parseriui netiko kai minusas yra unary operatorius, reikia kad kai pirmas narys yra skaičius jis būtų neigiamas skaičius o 
-					ne skaičius plius unary operatorius. Tai išsprendžiama šio post'o
+					Neigiami skaičiai yra išanalizuojami į vienanarį minuso operatorių bei skaičių. Tai reiškė kad parsinimo dalyje jie negali būti
+					teisingai atpažinti kaip neigiami skaičiai. Pridėta baigiamoji daryklė kuri randa tokius atvejus bei juos perdaro į neigiamų 
+					skaičių leksemas.
 
 				5.1.1.4.4. Taško opreratoriaus apdorojimas:
 
-					Taškas yra įterpiamas trarp simbolių. Taip gaunamas sąrašįas kurio kas antras narys yra taškas. Tokį parseriui apdoroti 
-					sunkiau, jis performuojamas į medį kuris sudarytas iš kairės, taško, dešinės - taškas tampa paprastu dvinariu operatoriumi.
+					Pilni tipai, objektų narių pasiekimas naudoja taško operatorių. Tokios struktūros yra analizuojamos į sąrašą taškais
+					atskirtų leksemų, tačiau loginiu atžvilgiu tai turėtų būti medis kur kiekvienas sekantis taškas yra ankstesnio taško
+					segmento vaikas - struktūra System.Console.WriteLine turi būti išanalizuota į medį System -> Console -> WriteLine
+					o ne ["System", ".", "Console", ".", "WriteLine"]. Tačiau medžio formavimas reikalauja rekursijos kuri lėtina
+					analizę. Dėl to sąrašas yra performuojamas į medį naudojant papildomą baigiamąją daryklę.
 
 				5.1.1.4.5. Perteklinių medžio šakų minimizavimas
 
-					Kai kurie nodes yra nereikalingi - jie neturi jokio turinio, trukdo parseriui dirbti, dėl to jei jie yra tušti jie yra 
-					collapsinami į. Taip gunamas mažesnis ir prpaastesnis medis. vėliau yra tikimasi panaikinti ir kitus nereikalingus 
-					operatorius kaip taškas, kabliataškus, priskyrimas ar kita.
-				
-				5.1.1.4.6. Testavimas
-
-					Rankomis suformuojamas siekiamas medžio snippet'as kuris yra lyginamas su gautu medžiu. Toks testavimo būdas parinktas vietoje 
-					serializavimo dėl mažesnio postų sudėtingumo nei syntax matcherio ir sudėtingo analizavimo, nelabai aišku kaip medis geras ar 
-					ne, jei jis formuotas rankomis tai galima nustatyti nesudėtingai. Šis metodas gali būti naudojamas ir paprasto lexerio 
-					testavime, bet tai neturi įeiti į šią ataskaitą.
-		
+					Vykdant analizę kai kurie medžio segmentai yra reikalingi tik palengvinti taisyklių aprašymą, pavyzdžiui operatorių grupavimas
+					į infiksinius. Dėl to jie yra panaikinami siekiant sumažinti medį ir palengvinti jo analizę.
+					
 		5.1.2. Parseris
 
 			Parserio modulis analizuoja lekserio sukūrtą medį ir pagal jį sukuria naują panašios struktūros medį iš kalbos struktūras aprašančių objektų. Dauguma šių objektų realizuoja §5.2.2. aprašytą sąsają, bet kai kurie objektai yra skirti vidiniam naudojimui.
@@ -2285,6 +2282,10 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 7. Literatūra
 
 	[1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
+	[2] - Parsing Expression Grammars: A Recognition-Based Syntactic Foundation - (http://bford.info/pub/lang/peg.pdf)
+	[3] - Packrat Parsing: Simple, Powerful, Lazy, Linear Time (http://bford.info/pub/lang/packrat-icfp02.pdf)
+	[4] - ALGOL-60 Translation (http://www.cs.utexas.edu/~EWD/MCReps/MR35.PDF)
+	
 
 8. Priedai
 	8.1. Parserio medžio sąsajos
