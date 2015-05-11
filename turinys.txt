@@ -2076,6 +2076,69 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		        GetClass visada gražina šio failo klasę. GetMethod gražina metodą, jei mazgas yra metode. GetSymbol atlieka rekursinę 
 		        identifikatoriaus paiešką ir gražina išraišką, jei identifikatorius buvo rastas.
 
+		    5.1.2.x Laukai ir metodai
+
+		    	Paprastai globalus kintamasis verčiamas klasės lauku. Kai kuriais atvejais vietoje lauko parseris gali sukurti metodą. 
+		    	Tai yra daroma jei funkcijos tipo kintamasis yra konstanta ir taip pat yra inicializuotas. Kadangi kintamojo reikšmė 
+		    	negali kisti, jį galima saugiai keisti metodu. Metodo iškvietimas yra greitesnis negu funkcijos objekto, taip pat metodai 
+		    	leidžia naudoti perdengimą. Dėl šių priežasčių standartinis funkcijos kintamumo atributas yra "const". Metodas išlaiko 
+		    	tą patį gražinamą tipą, pasiekiamumo atributą ir parametrus kaip funkcija.
+
+			5.1.2.x Anoniminių metodų generavimas
+
+				Funkcijos viduje negalima sukurti kitos funkcijos, kad ir kaip norėtusi. Dėl to, kompiliatorius turi sukčiauti ir iškelti 
+				funkcijos objekto kodą į kitą metodą. Tokie metodai vadinami anoniminiais metodais, metodais, kurie neturi pasiekiamo 
+				identifikatoriaus. Šie metodai būna toje pačioje klasėje, bet pavadinti vardais su vartotojui neleidžiamais simboliais. 
+				Vardas generuojamas pagal šabloną $Lambda_<nr>, kur <nr> yra anoniminio metodo numeris. Šie vardai naudojami tik kompiliatoriaus viduje.
+
+				Šis LaborasLang kodas:
+
+					auto one = void()
+					{
+						auto two = void()
+						{
+							auto three = void()
+							{
+							};
+						};
+					};
+
+				sugeneruoja kodą artimą:
+
+					auto one = void()
+					{
+						auto two = $Lambda_0;
+					};
+
+					auto $Lambda_0 = void()
+					{
+						auto three = $Lambda_1;
+					};
+
+					auto $Lambda_1 = void()
+					{
+					};
+
+			5.1.2.x Globalios galiojimo srities įgyvendinimas
+
+				Globalių kintamųjų galiojimo sritis ypač apsunkina parsinimą. Kadangi kintamajį galima panaudoti anksčiau negu jis yra 
+				deklaruojamas, tipinis parsinimas iteruojant per sakinius nebetinka. Šiai problemai išspresti kiekvienam failui yra 
+				sukūriamas ClassNode objektas. Tada vykdomi 3 parsinimo etapai:
+
+					1. Deklaracija. Parsinami "use" sakiniai ir kintamųjų deklaracijos. 
+						Deklaracijose yra parsinami tik tipai ir identifikatoriai. Funkcijos kintamojo atveju yra išparsinama funkcijos 
+						antraštė - gražinamas tipas ir parametrai. Tai reikalinga rekursijai - parsinant funkcijos kodą privalo egzistuoti 
+						jos kintamasis. Visi metodai ir laukai, kurių tipas nėra "auto" yra deklaruojami klasės TypeEmitter.
+
+					2. Inicializacija. Parsinami laukų inicializatoriai. 
+						Inicializatoriai deklaruojami TypeEmitter, taip pat deklaruojami laukai, kurių tipas nebuvo žinomas anksčiau.
+
+					3. Metodai. Parsinamas metodų kodas. 
+						Visi metodai rasti pirmame etape yra parsinami ir perduodami kodo generatoriui. Jei metodų viduje yra funkcijos, 
+						jos taip pat parsinamos.
+
+				Tokie žingsniai leidžia deklaruoti visus klasių narius anksčiau negu yra parsinamas veikiantis kodas.
+
 			5.1.2.x Automatinis tipo radimas
 
 				Vienas iš parserio fundamentaliųjų tipų yra netikras tipas - "auto". Jei išparsinus deklaracijos tipą gaunamas šis tipas,
@@ -2085,7 +2148,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				kintamųjų tipo radimas. Kadangi inicializatoriaus parsinimas yra atidedamas, deklaracijos tipas gali būti nežinomas 
 				deklaravimo stadijoje. Tokiu atveju kintamasis yra sukūriamas tik inicializavimo stadijoje.
 
-			5.1.2.x Globalios galiojimo srities įgyvendinimas
 			5.1.2.x Literalai
 			5.1.2.x Nario išraiška
 			5.1.2.x Indekso išraiška
@@ -2093,7 +2155,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			5.1.2.x IAmbiguousNode sąsaja
 			5.1.2.x Vidiniai medžio objektai
 			5.1.2.x Kodo blokų generavimas
-			5.1.2.x Anoniminių metodų generavimas
 			5.1.2.x Gražinimo validacija
 			5.1.2.x Importavimų panaudojimas
 
