@@ -2018,10 +2018,73 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					
 		5.1.2. Parseris
 
-			Parserio modulis analizuoja lekserio sukūrtą medį ir pagal jį sukuria naują panašios struktūros medį iš kalbos struktūras aprašančių objektų. Dauguma šių objektų realizuoja §5.2.2. aprašytą sąsają, bet kai kurie objektai yra skirti vidiniam naudojimui.
+			Parserio modulis analizuoja lekserio sukūrtą medį ir pagal jį sukuria naują panašios struktūros medį iš kalbos struktūras 
+			aprašančių objektų. Dauguma šių objektų realizuoja §5.2.2. aprašytą sąsają, bet kai kurie objektai yra skirti vidiniam 
+			naudojimui. Iš sąsajos pusės, parserio rezultatas yra miškas, kurio kiekvienas medis atitinka vieną metodą.
+
+			Parserio veikimas yra pagrįstas lekserio medžio analize iteruojant žemyn. Kiekvienai kodo struktūrai yra sukuriama klasė su
+			metodų Parse. Šiame metode vyksta lekserio mazgo analizė. 
+			Klases galima skirstyti į tris kategorijas:
+				* klasės skirtos apdoroti grupę struktūrų. Šios klasės iteruoja per lekserio mazgo vaikus, išparsina juos naudodamos kitas 
+				klases ir renka gautus objektus. Pavyzdžiai: kodo bloko mazgas, klasės mazgas.
+
+				* klasės skirtos apdoroti kelias vienos rūšies struktūras. Šios klasės gali gražinti skirtingus objektus atsižvelgiant į 
+				tai, kokio tipo lekserio mazgas buvo paduotas. Pavyzdžiai: išraiškos mazgo klasė, literalo mazgo klasė.
+
+				* klasės skirtos apdoroti vieną struktūrą. Šios klasės suformuoja mazgus, kurie bus naudojami gautame medyje. Paprastai 
+				jos žemesnių mazgų parsinimą perduoda kitomis klasėsmis ir validuoda ar gautas mazgas yra teisingas. Pavyzdžiai: deklaracijos
+				mazgo klasė, "while" ciklo klasė.
 
 			5.1.2.x Kontekstinis medis
+
+				Parserio darbui reikaligas antras kontekstinis medis. Šio medžio kryptis yra priešinga negu pagrindinio medžio - kiekvienas 
+				mazgas turi nuorodą į aukštesnį kontekstinį mazgą. 
+				Kontekstinis objektas duoda mazgui reikiamą informaciją apie jo aplinką:
+					* mazgo metodas, jei toks yra
+					* mazgo klasė
+					* šio failo Parser objektas
+					* mazgo asemblis
+
+				Šis medis taip pat naudojamas pavienių simbolių parsinimui.
+
+				ContextNode klasė:
+
+				abstract class ContextNode : ParserNode
+			    {
+			        public ContextNode Parent { get; private set; }
+			        public Parser Parser { get; private set; }
+			        public AssemblyEmitter Assembly { get { return Parser.Assembly; } }
+
+			        public abstract FunctionDeclarationNode GetMethod();
+			        public abstract ClassNode GetClass();
+			        public abstract ExpressionNode GetSymbol(string name, ContextNode scope, SequencePoint point);
+
+			        protected ContextNode(Parser parser, ContextNode parent, SequencePoint point) : base(point)
+			        {
+			        	Parser = parser;
+            			Parent = parent;
+			        }
+		        }
+
+		        Iš šios klasės paveldi:
+		        	* ClassNode
+		        	* CodeBlockNode
+		        	* FieldDeclarationNode
+		        	* ForEachNode
+		        	* FunctionDeclarationNode
+
+		        GetClass visada gražina šio failo klasę. GetMethod gražina metodą, jei mazgas yra metode. GetSymbol atlieka rekursinę 
+		        identifikatoriaus paiešką ir gražina išraišką, jei identifikatorius buvo rastas.
+
 			5.1.2.x Automatinis tipo radimas
+
+				Vienas iš parserio fundamentaliųjų tipų yra netikras tipas - "auto". Jei išparsinus deklaracijos tipą gaunamas šis tipas,
+				 jis yra keičiamas inicializatoriaus tipu, arba gražinama klaida jei inicializatoriaus nėra ar jis netinkamas tipo radimui.
+
+				Lokalių kintamųjų tipo radimas paprastas - išparsinamas inicializatorius ir naudojamas jo tipas. Sudėtingas yra globalių 
+				kintamųjų tipo radimas. Kadangi inicializatoriaus parsinimas yra atidedamas, deklaracijos tipas gali būti nežinomas 
+				deklaravimo stadijoje. Tokiu atveju kintamasis yra sukūriamas tik inicializavimo stadijoje.
+
 			5.1.2.x Globalios galiojimo srities įgyvendinimas
 			5.1.2.x Literalai
 			5.1.2.x Nario išraiška
