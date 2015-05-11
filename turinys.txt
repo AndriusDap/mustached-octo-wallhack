@@ -2241,6 +2241,16 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		ir integracijos testai. 
 
 		5.3.1. Lekserio testavimas
+			;; Testai bailiams
+
+
+			;;	Planas:
+			;;		RulePool testavimas - koki testai, kiek jų, rezultatai, kaip implementuoti testai (dfs kažkur atrodo buvo, įdomu tas visai)
+			;;		SyntaxMatcher testavimas - Koki testai, rezultatas, kodėl netestuota rimtai o tik sintaksė, kiek testų, rezultatas
+			;;		PostProcesorių testavimas - RPN medžių rašymas ranka, kiek testų, rezultatas
+			;;		Pridėti apie kiek % padengta testais
+			;;		
+
 		5.3.2. Parserio testavimas
 		5.3.3. Kodo generatorius testavimas
 			
@@ -2268,7 +2278,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				išvestimi. Dauguma kodo generatoriaus testų yra vykdymu grįsti testai. Ši testų struktūra leidžia laisvai keisti generuojamo kodo pavidalą ir vistiek ištestuoti, ar kodo semantinė prasmė nepakito.
 				Jei vietoje šių testų būtų naudojami CIL kodo palyginimu grįsti testai, tai kiekvieną kartą pakeitus, kaip kodo generatorius generuoja kodą, testai sulūžtų.
 
-		5.3.4. Integracijos testavimas
+		5.3.4. Integraciniai testavimas
 		5.3.5. Kontraktai/statinė analizė
 
 	5.4. Naudotos bibliotekos
