@@ -2209,18 +2209,21 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.3.3. Assembly Emitter ir Type Emitter
 
-				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis yra objektas, simbolizuojantis
-				kompiliavimo rezultatą. Kiekvieną asemblį iš esmės yra tipų konteineris ir dėl to, Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
+				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis 
+				yra objektas, simbolizuojantis kompiliavimo rezultatą. Kiekvieną asemblį iš esmės yra tipų konteineris ir dėl to, 
+				Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
 				
-				Kita svarbi Assembly Emitter funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, Assembly Emitter atlieka keletą validacijos žingsnių:
+				Kita svarbi Assembly Emitter funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, Assembly Emitter atlieka 
+				keletą validacijos žingsnių:
 					
-					1. Patikrinti, ar asemblio tipuose nėra metodų su vienodais parametrų tipais. Tai yra geriausia vietą šiai validacijai atlikti, nes visi metodai tuo
-					metu yra galutinai sukurti. Ši validacija reikalinga, nes CLI specifikacija reikalauja, jog viename tipe nebūtų daugiau, nei vieno metodo, turinčio
-					tą patį vardą, tokį patį parametrų skaičių ir tokius pačius parametrų tipus ([1], §I.10.2 Overloading).
+					1. Patikrinti, ar asemblio tipuose nėra metodų su vienodais parametrų tipais. Tai yra geriausia vietą šiai validacijai 
+					atlikti, nes visi metodai tuo metu yra galutinai sukurti. Ši validacija reikalinga, nes CLI specifikacija reikalauja, 
+					jog viename tipe nebūtų daugiau, nei vieno metodo, turinčio tą patį vardą, tokį patį parametrų skaičių ir tokius pačius 
+					parametrų tipus ([1], §I.10.2 Overloading).
 
-					2. Atmesti visus programoje nenaudojamus funkcijų tipus. Kadangi šiuo metu programa jau yra sukompiliuota, Assembly Emitter geba surasti ir išmesti visus
-					funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada nepanaudoti (pavyzdžiui, buvo deklaruota funkcija, kurios tipas void(), tačiau ji niekada
-					niekam nebuvo priskirta).
+					2. Atmesti visus programoje nenaudojamus funkcijų tipus. Kadangi šiuo metu programa jau yra sukompiliuota, 
+					Assembly Emitter geba surasti ir išmesti visus funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada 
+					nepanaudoti (pavyzdžiui, buvo deklaruota funkcija, kurios tipas void(), tačiau ji niekada niekam nebuvo priskirta).
 
 					3. Jeigu asemblio tipas yra vykdomasis failas, patikrinti, ar yra metodas, esantis vykdomojo failo įeities taškas.
 
@@ -2232,59 +2235,64 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Method Emitter yra kodo generatoriaus širdis. Šis komponentas verčia parserio sudarytą medį tiesiai į CIL instrukcijas. 
 				
-				CIL yra dėklu pagrįsta žemo lygio objektinė programavimo kalba. Joje visos operacijos manipuliuoja duomenimis evaluacijos dėkle. Pavyzdžiui, prieš kviečiant funkciją,
-				visi argumentai yra įstumiami į evaluacijos dėklą, o funkcijos grąžinama reikšmė yra reikšmė, esanti dėklo viršuje funkcijos pasibaigimo metu ([1], §I.12.1 Virtual Execution System).
+				CIL yra dėklu pagrįsta žemo lygio objektinė programavimo kalba. Joje visos operacijos manipuliuoja duomenimis evaluacijos 
+				dėkle. Pavyzdžiui, prieš kviečiant funkciją, visi argumentai yra įstumiami į evaluacijos dėklą, o funkcijos grąžinama 
+				reikšmė yra reikšmė, esanti dėklo viršuje funkcijos pasibaigimo metu ([1], §I.12.1 Virtual Execution System).
 				
 				;; TO DO: linkas į parserio medžio aprašymą
-				Method Emitter veikimas pagrįstas parserio medžio iteracija paieškos gylyn metodu. Kiekviena parserio medžio viršūnė yra aplankoma iš eilės
-				ir paverčiama į atitinkamą CIL kodą. Kadangi CIL kodas operuoja reikšmėmis, esančiomis evaluacijos dėkle, Method Emitter gali tiesiogiai versti
-				parserio medžio viršūnes į CIL instrukcijas nesirūpindamas jokia globalia būsena, tokia kaip procesoriaus registrų reikšmės.
+				Method Emitter veikimas pagrįstas parserio medžio iteracija paieškos gylyn metodu. Kiekviena parserio medžio viršūnė yra 
+				aplankoma iš eilės ir paverčiama į atitinkamą CIL kodą. Kadangi CIL kodas operuoja reikšmėmis, esančiomis evaluacijos dėkle, 
+				Method Emitter gali tiesiogiai versti parserio medžio viršūnes į CIL instrukcijas nesirūpindamas jokia globalia būsena, 
+				tokia kaip procesoriaus registrų reikšmės.
 
-				Pavyzdžiui, Method Emitter parserio medyje aptikęs dvinarės operacijos viršūnę, reiškiančia sudėtį, suformuos instrukcijas į evaluacijos dėklą įstumti 
-				abu sudėties operandus rekursiškai aplankydamas jų viršūnes, ir tada suformuos CIL instrukciją "add", kuri sudeda dvi viršūtines evaluacijos dėklo reikšmės,
-				o rezultatą įstumia atgal į evaluacijos dėklą.
+				Pavyzdžiui, Method Emitter parserio medyje aptikęs dvinarės operacijos viršūnę, reiškiančia sudėtį, suformuos instrukcijas 
+				į evaluacijos dėklą įstumti abu sudėties operandus rekursiškai aplankydamas jų viršūnes, ir tada suformuos CIL instrukciją "add", 
+				kuri sudeda dvi viršūtines evaluacijos dėklo reikšmės, o rezultatą įstumia atgal į evaluacijos dėklą.
 
-				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, Method Emitter kartais reikšmes turi saugoti laikinuosiuose kintamuosiuose.
-				Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose 
-				laikomos reikšmės nebereikės.
+				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, Method Emitter kartais reikšmes 
+				turi saugoti laikinuosiuose kintamuosiuose. Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo 
+				tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose laikomos reikšmės nebereikės.
 			
 			5.1.3.5. Functor Emitter
 				
-				LaborasLang kalba palaiko tipus, kurių kintamiesiems galima priskirti funkcijas. Kodo generatorius šiuos tipus vadinas funktoriais. Functor Emitter tikslas yra
-				surformuoti šiuos tipus.
+				LaborasLang kalba palaiko tipus, kurių kintamiesiems galima priskirti funkcijas. Kodo generatorius šiuos tipus vadinas 
+				funktoriais. Functor Emitter tikslas yra surformuoti šiuos tipus.
 
 				Functor Emitter formuoja dviejų tipų funktorius: bazinius funktorius ir implementacijos funktorius.
 
-				Kiekvienas funkcijos tipas LaborasLang kalboje atitinka vieną bazinį funktorių. Bazinis funktoriaus tipas yra abstrakti klasė, turinti du metodus:
+				Kiekvienas funkcijos tipas LaborasLang kalboje atitinka vieną bazinį funktorių. Bazinis funktoriaus tipas yra abstrakti 
+				klasė, turinti du metodus:
 					1. Invoke(), kuris priima savyje laikomos funkcijos parametrus ir grąžina funkcijos gražinamą reikšmę;
-					2. AsDelegate(), kuris funktorių paverčia į CLI specifikaciją atitinkantį "delegate" objektą ([1], §I.8.9.3. Delegates). Šio gražinamo delegate objekto tipas yra
-					deklaruotas kaip vidinis bazinio funktoriaus tipas.
+					2. AsDelegate(), kuris funktorių paverčia į CLI specifikaciją atitinkantį "delegate" objektą ([1], §I.8.9.3. Delegates). 
+					Šio gražinamo "delegate" objekto tipas yra deklaruotas kaip vidinis bazinio funktoriaus tipas.
 
-				Funktoriaus implementacijos tipas paveldi iš atitinkančio bazinio tipo. Šis tipas yra sukuriamas, kai funkcijos tipo kintamajam yra priskiriama tam tikra funkcija.
-				Šio tipo Invoke() metodas iškvies priskirtą funkciją, o AsDelegate() metodas sukurs delegate objektą kviečiamai funkcijai. Jei priskiriama funkcija nėra statinė, tai
-				funktorius savyje taip pat laikys objektą, ant kurio ši funkcija turi būti iškviesta.
+				Funktoriaus implementacijos tipas paveldi iš atitinkančio bazinio tipo. Šis tipas yra sukuriamas, kai funkcijos tipo 
+				kintamajam yra priskiriama tam tikra funkcija. Šio tipo Invoke() metodas iškvies priskirtą funkciją, o AsDelegate() metodas 
+				sukurs "delegate" objektą kviečiamai funkcijai. Jei priskiriama funkcija nėra statinė, tai funktorius savyje taip pat laikys 
+				objektą, ant kurio ši funkcija turi būti iškviesta.
 
 				Kai LaborasLang kalboje yra kviečiamas kintamasis, kuris yra funkcija, tai atitinka funktoriaus Invoke() metodo kvietimą.
 
 			5.1.3.6. Method Body Optimizers
 			
-				Method Body Optimizers - metodų optimizatoriai - yra kodo generatoriaus dalis, kuri analizuoja ir optimizuoja Method Emitter sugeneruotą CIL kodą. Nors Method 
-				Emitter stengiasi sugeneruotikuo efektyvesnį kodą, tai nėra visada įmanoma padaryti pereinant visą parserio medį tik vieną kartą. Dėl šios priežasties, metodų 
-				optimizatoriai buvo pridėti į kodo generatorių.
+				Method Body Optimizers - metodų optimizatoriai - yra kodo generatoriaus dalis, kuri analizuoja ir optimizuoja Method Emitter 
+				sugeneruotą CIL kodą. Nors Method Emitter stengiasi sugeneruotikuo efektyvesnį kodą, tai nėra visada įmanoma padaryti 
+				pereinant visą parserio medį tik vieną kartą. Dėl šios priežasties, metodų optimizatoriai buvo pridėti į kodo generatorių.
 
 				Šiuo metu, kompiliatoriuje yra keturi metodų optimizatorai. Iš jų kiekvienas yra pritaikytas optimizuoti skirtingus scenarijus.
 
 				5.1.3.6.1. „nop“ instrukcijų šalinimas
 
-					„nop“ instrukcija yra CIL instrukcija, kuri nieko nedaro. Ji naudojama kaip šuolių taikinys. Pavyzdžiui, jei sąlygos sakinyje sąlyga nėra išpildoma, tai vykdomas
-					šuolis į „nop“ instrukciją, kuri įdedama po sąlygos kodo bloko. Šis optimizatorius iš metodo pašalina visas „nop“ instrukcijas, ir atnaujina visus šuolius, kad jų
-					taikinys būtų sekanti instrukcija po pašalintosios.
+					„nop“ instrukcija yra CIL instrukcija, kuri nieko nedaro. Ji naudojama kaip šuolių taikinys. Pavyzdžiui, jei sąlygos 
+					sakinyje sąlyga nėra išpildoma, tai vykdomas šuolis į „nop“ instrukciją, kuri įdedama po sąlygos kodo bloko. Šis 
+					optimizatorius iš metodo pašalina visas „nop“ instrukcijas, ir atnaujina visus šuolius, kad jų taikinys būtų sekanti 
+					instrukcija po pašalintosios.
 
 				5.1.3.6.2. Perteklinių šuolių šalinimas
 
-					Šis optimizatorius aptinka situaciją, kai vykdomas šuolis į instrukciją, kuri grįžta iš metodo. Aptikęs tokią situaciją, jis pakeičia šuolio instrukciją į grįžimo
-					instrukciją. Šis optimizatorius padeda padidinti galinių kvietimų optimizacijos efektyvumą (žr. §5.1.3.6.4.). Pavyzdžiui, šis optimizatorius būtų vykdoma tokiai LaborasLang
-					funkcijai:					
+					Šis optimizatorius aptinka situaciją, kai vykdomas šuolis į instrukciją, kuri grįžta iš metodo. Aptikęs tokią situaciją, 
+					jis pakeičia šuolio instrukciją į grįžimo instrukciją. Šis optimizatorius padeda padidinti galinių kvietimų optimizacijos 
+					efektyvumą (žr. §5.1.3.6.4.). Pavyzdžiui, šis optimizatorius būtų vykdoma tokiai LaborasLang funkcijai:					
 
 						auto Func = void(int i)
 						{
@@ -2302,21 +2310,23 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				5.1.3.6.3. Negyvo kodo šalinimas
 
-					Šis optimizatorius pašalina visą kodą, kuriam gali įrodyt, kad jis niekada nebus pasiektas. Tai pagreita JIT kompiliavimą ir sumažina atminties naudojimą bei asemblio dydį.
-					Optimizatorius visą metodą paverčia vienkrypčiu grafu: kiekviena instrukcija tampa viršūne, kurios kaimynės yra sekanti instrukcija, šuolio taikinys arba abu, jei šuolis yra
-					sąlyginis. Sudarius grafą, vykdoma paieška gylyn ir pažymimos aplankytos viršūnės. Paieškos gale neaplankytos instrukcijos yra pašalinamos.
+					Šis optimizatorius pašalina visą kodą, kuriam gali įrodyt, kad jis niekada nebus pasiektas. Tai pagreita JIT kompiliavimą 
+					ir sumažina atminties naudojimą bei asemblio dydį. Optimizatorius visą metodą paverčia vienkrypčiu grafu: kiekviena instrukcija 
+					tampa viršūne, kurios kaimynės yra sekanti instrukcija, šuolio taikinys arba abu, jei šuolis yra sąlyginis. Sudarius grafą, 
+					vykdoma paieška gylyn ir pažymimos aplankytos viršūnės. Paieškos gale neaplankytos instrukcijos yra pašalinamos.
 
 				5.1.3.6.4. Galinis metodo kvietimas
 
-					Galinis metodo kvietimas - tai toks kvietimas, kuris neišsaugo dabartinės instrukcijų rodyklės adreso ir nepadidina vykdymo dėklo - tai yra pernaudoja 
-					dėklo vietą, skirtą kviečiančiajam metodui. CLI specifikacija sako, jog galinis metodo kvietimas yra validus tik tada, jei po kvietimo iš kart grįžtama
-					iš kviečiančiojo metodo ([1], §I.12.4.1.2 Calling instructions). Šis reikalavimas yra natūralus: kadangi instrukcijos rodyklė nėra įrašoma į dėklą, grįžtant
-					iš iškviesto metodo yra grįžtama į praeitą metodą kvietimų dėkle, o ne šį dėklą. Jei po tokio kvietimoreiktų atlikti kokią nors kitą operaciją, ji niekada 
-					nebūtų atlikta.
+					Galinis metodo kvietimas - tai toks kvietimas, kuris neišsaugo dabartinės instrukcijų rodyklės adreso ir nepadidina 
+					vykdymo dėklo - tai yra pernaudoja dėklo vietą, skirtą kviečiančiajam metodui. CLI specifikacija sako, jog galinis metodo 
+					kvietimas yra validus tik tada, jei po kvietimo iš kart grįžtama iš kviečiančiojo metodo 
+					([1], §I.12.4.1.2 Calling instructions). Šis reikalavimas yra natūralus: kadangi instrukcijos rodyklė nėra įrašoma į dėklą, 
+					grįžtant iš iškviesto metodo yra grįžtama į praeitą metodą kvietimų dėkle, o ne šį dėklą. Jei po tokio kvietimoreiktų 
+					atlikti kokią nors kitą operaciją, ji niekada nebūtų atlikta.
 
-					Šis optimizatorius suranda visus metodų kvietimus, kuriuos gali paversti galiniai metodų kvietimais ir taip padaro. Dėl CLI reikalavimo, kad galinis metodo
-					kvietimas gali būti atliekamas tik prieš grįžimo instrukciją, perteklinių šuolių optimizatorius turi galimybę smarkiai padidinti metodų kvietimų kiekį, kuriems
-					atliema ši optimizacija.
+					Šis optimizatorius suranda visus metodų kvietimus, kuriuos gali paversti galiniai metodų kvietimais ir taip padaro. 
+					Dėl CLI reikalavimo, kad galinis metodo kvietimas gali būti atliekamas tik prieš grįžimo instrukciją, perteklinių šuolių 
+					optimizatorius turi galimybę smarkiai padidinti metodų kvietimų kiekį, kuriems atliema ši optimizacija.
 
 	5.2. Komponentų integracija
 	
@@ -2325,13 +2335,15 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		5.2.1. Lekserio ir parserio integracija
 		5.2.2. Parserio ir kodo generatoriaus integracija
 
-			Parseris ir kodo generatoriaus bendrauja valdytojo-valdomojo principu: Kodo generatorius daro tai, ką jam liepia parseris. Pagrindinis duomenų perdavimo mechanizmas, naudojamas duomenis
-			perduoti iš parserio į kodo generatorių yra parserio medis. Vienas parserio medis aprašo vienos funkcijos kūną. Toks medis kodo generatoriui suteikia visą reikalingą informaciją pilno
+			Parseris ir kodo generatoriaus bendrauja valdytojo-valdomojo principu: Kodo generatorius daro tai, ką jam liepia parseris. 
+			Pagrindinis duomenų perdavimo mechanizmas, naudojamas duomenis perduoti iš parserio į kodo generatorių yra parserio medis. 
+			Vienas parserio medis aprašo vienos funkcijos kūną. Toks medis kodo generatoriui suteikia visą reikalingą informaciją pilno
 			metodo kodo generavimui.
 
-			Pats parserio medis yra sudaromas iš 26 skirtingų sąsajų, kurios apibrėžia įvairias LaborasLang programavimo kalbos struktūras (§8.1. Parserio medžio sąsajos). Kiekviena medžio viršūnė
-			implementuoja vieną ar kelias iš šių 26 sąsajų. Pati elementariausia sąsaja, kurią implementuoja visos kitos sąsajos, yra IParserNode, kuri tiesiogiai atitinka LaborasLang kalbos sakinį,
-			kurį galima naudoti funkcijos viduje (§2.5. Sakiniai). Ji yra apibrėžta taip:
+			Pats parserio medis yra sudaromas iš 26 skirtingų sąsajų, kurios apibrėžia įvairias LaborasLang programavimo kalbos struktūras 
+			(§8.1. Parserio medžio sąsajos). Kiekviena medžio viršūnė implementuoja vieną ar kelias iš šių 26 sąsajų. Pati elementariausia 
+			sąsaja, kurią implementuoja visos kitos sąsajos, yra IParserNode, kuri tiesiogiai atitinka LaborasLang kalbos sakinį, kurį galima 
+			naudoti funkcijos viduje (§2.5. Sakiniai). Ji yra apibrėžta taip:
 						
 				interface IParserNode
 				{
@@ -2357,12 +2369,13 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	5.3. Testavimas
 
-		Kuriant pavyzdinį LaborasLang kompiliatorių, jam buvo keliami dideli patikimumo ir regresijų nebuvimo reikalavimai. Dėl šios priežasties, kompiliatoriui buvo rašomi testai, su tikslu
-		ištestuoti kuo didesnę kompiliatoriaus funkcionalumo dalį. Tai yra ypač svarbu kuriant tokią programą kaip kompiliatorius, nes testais padengus visą programos funkcionalumą galima nesibaiminti,
-		jog pakeitus tam tikro komponento veikimą netyčia bus sugriauta kokia nors kompiliatoriaus funkcija.
+		Kuriant pavyzdinį LaborasLang kompiliatorių, jam buvo keliami dideli patikimumo ir regresijų nebuvimo reikalavimai. Dėl šios 
+		priežasties, kompiliatoriui buvo rašomi testai, su tikslu ištestuoti kuo didesnę kompiliatoriaus funkcionalumo dalį. Tai yra ypač 
+		svarbu kuriant tokią programą kaip kompiliatorius, nes testais padengus visą programos funkcionalumą galima nesibaiminti, jog 
+		pakeitus tam tikro komponento veikimą netyčia bus sugriauta kokia nors kompiliatoriaus funkcija.
 		
-		LaborasLang pavyzdiniam kompiliatoriui iš viso buvo parašyti 445 testai. Šie testai skirtomi į keturias pagrindines grupes: lekserio testai, parserio testai, kodo generatoriaus testai 
-		ir integracijos testai. 
+		LaborasLang pavyzdiniam kompiliatoriui iš viso buvo parašyti 445 testai. Šie testai skirtomi į keturias pagrindines grupes: 
+		lekserio testai, parserio testai, kodo generatoriaus testai ir integracijos testai. 
 
 		5.3.1. Lekserio testavimas
 			;; Testai bailiams
@@ -2378,29 +2391,36 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		5.3.2. Parserio testavimas
 		5.3.3. Kodo generatorius testavimas
 			
-			Kodo generatoriaus testai testuoja skirtingas kodo generatoriaus dalis. Šiuos testus galima suskirstyti į tris grupes: vienetų testai, CIL kodo palyginimu grįsti testai ir vykdymu grįsti testai.
+			Kodo generatoriaus testai testuoja skirtingas kodo generatoriaus dalis. Šiuos testus galima suskirstyti į tris grupes: vienetų 
+			testai, CIL kodo palyginimu grįsti testai ir vykdymu grįsti testai.
 
 			5.3.3.1. Vienetų testai
 
-				Kodo generatoriaus vienetų testai testuoja pavienių funkcijų veikimą. Jie naudojami testuoti funkcijas, kurios nepriklauso nuo jokios globalios būsenos. Šiuos reikalavimus kodo generuotoriuje
-				tenkina Assembly Registry ir Metadata Helpers komponentai, todėl būtent jiems ir buvo rašomi vienetų testai. Šiems testas yra sudaroma baigtinė argumentų ir rezultatų aibė, iš kurios argumentai
-				yra paduodami pavienėms funkcijoms ir tikrinama, ar jos rezultatas sutapo su rezultatu, kurio buvo tikėtasi. Šių testų pavyzdžiu galima laikyti testą, kuris testuoja, ar Metadata Helpers funkcija
-				IsAssignableTo() teisingai nustato, ar vieno tipo reikšmę galima priskirti kito tipo kintamajam.
+				Kodo generatoriaus vienetų testai testuoja pavienių funkcijų veikimą. Jie naudojami testuoti funkcijas, kurios nepriklauso 
+				nuo jokios globalios būsenos. Šiuos reikalavimus kodo generuotoriuje tenkina Assembly Registry ir Metadata Helpers 
+				komponentai, todėl būtent jiems ir buvo rašomi vienetų testai. Šiems testas yra sudaroma baigtinė argumentų ir rezultatų 
+				aibė, iš kurios argumentai yra paduodami pavienėms funkcijoms ir tikrinama, ar jos rezultatas sutapo su rezultatu, kurio 
+				buvo tikėtasi. Šių testų pavyzdžiu galima laikyti testą, kuris testuoja, ar Metadata Helpers funkcija IsAssignableTo() 
+				teisingai nustato, ar vieno tipo reikšmę galima priskirti kito tipo kintamajam.
 
 			5.3.3.2. CIL kodo palyginimu grįsti testai
 
-				Šie testai specialiai manipuliuoja kodo generatoriumi, kad šis sukurtų asemblį, turintį tam tikrą CIL kodą. Tada, iš gauto asemblio yra nuskaitomas CIL kodas, ir jis yra palyginimas su iš
-				anksto paruoštu CIL kodu. Šie testai yra naudojami vietose, kur reikia užtikrinti, jog gautas CIL kodas yra stabilus ir niekada nekis su tokiomis pačiomis įvestimis. Vienas tokio testo pavyzdys
-				yra testas, kuris testuoja, ar kodo generatorius teisingai sugeneruoja funktorių vardus. Turint tokį testą yra užtikrinama, jog funkctorių vardai netyčia nepasikeis keičiant kodo generatoriaus
-				vidų.
+				Šie testai specialiai manipuliuoja kodo generatoriumi, kad šis sukurtų asemblį, turintį tam tikrą CIL kodą. Tada, iš gauto 
+				asemblio yra nuskaitomas CIL kodas, ir jis yra palyginimas su iš anksto paruoštu CIL kodu. Šie testai yra naudojami vietose, 
+				kur reikia užtikrinti, jog gautas CIL kodas yra stabilus ir niekada nekis su tokiomis pačiomis įvestimis. Vienas tokio 
+				testo pavyzdys yra testas, kuris testuoja, ar kodo generatorius teisingai sugeneruoja funktorių vardus. Turint tokį testą 
+				yra užtikrinama, jog funkctorių vardai netyčia nepasikeis keičiant kodo generatoriaus vidų.
 
 			5.3.3.3. Vykdymu grįsti testai
 
-				Kaip ir praeitame skyrelyje (§5.3.3.2. CIL kodo palyginimu grįsti testai) minėti testai, šie testai manipuliuoja kodo generatoriumi, kad šis sugeneruotų asemblį su tam tikru CIL kodu.
-				Tai yra atliekama jam paduodant ranka parašytą parserio medį, kuris įvykdo tam tikras operacijas ir išspausdina rezultatą į standartinę išvestį. Sugeneravus asemblį yra paleidžiama programa 
-				„PEVerify“, kuri patikrina, ar sugeneruoto asemblio struktūra ir CIL kodas yra validus. Po to, asemblis yra paleidžiamas ir yra nuskaitoma jo standartinė išvestis. Ji yra lyginama su numatytaja
-				išvestimi. Dauguma kodo generatoriaus testų yra vykdymu grįsti testai. Ši testų struktūra leidžia laisvai keisti generuojamo kodo pavidalą ir vistiek ištestuoti, ar kodo semantinė prasmė nepakito.
-				Jei vietoje šių testų būtų naudojami CIL kodo palyginimu grįsti testai, tai kiekvieną kartą pakeitus, kaip kodo generatorius generuoja kodą, testai sulūžtų.
+				Kaip ir praeitame skyrelyje (§5.3.3.2. CIL kodo palyginimu grįsti testai) minėti testai, šie testai manipuliuoja kodo 
+				generatoriumi, kad šis sugeneruotų asemblį su tam tikru CIL kodu. Tai yra atliekama jam paduodant ranka parašytą parserio 
+				medį, kuris įvykdo tam tikras operacijas ir išspausdina rezultatą į standartinę išvestį. Sugeneravus asemblį yra paleidžiama 
+				programa  „PEVerify“, kuri patikrina, ar sugeneruoto asemblio struktūra ir CIL kodas yra validus. Po to, asemblis yra 
+				paleidžiamas ir yra nuskaitoma jo standartinė išvestis. Ji yra lyginama su numatytaja išvestimi. Dauguma kodo generatoriaus 
+				testų yra vykdymu grįsti testai. Ši testų struktūra leidžia laisvai keisti generuojamo kodo pavidalą ir vistiek ištestuoti, 
+				ar kodo semantinė prasmė nepakito. Jei vietoje šių testų būtų naudojami CIL kodo palyginimu grįsti testai, tai kiekvieną 
+				kartą pakeitus, kaip kodo generatorius generuoja kodą, testai sulūžtų.
 
 		5.3.4. Integraciniai testavimas
 		5.3.5. Kontraktai/statinė analizė
