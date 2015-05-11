@@ -2267,11 +2267,28 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kaip ir praeitame skyrelyje (§5.3.3.2. CIL kodo palyginimu grįsti testai) minėti testai, šie testai manipuliuoja kodo generatoriumi, kad šis sugeneruotų asemblį su tam tikru CIL kodu.
 				Tai yra atliekama jam paduodant ranka parašytą parserio medį, kuris įvykdo tam tikras operacijas ir išspausdina rezultatą į standartinę išvestį. Sugeneravus asemblį yra paleidžiama programa 
-				„PEVerify“, kuri patikrina, ar sugeneruoto asemblio struktūra ir CIL kodas yra validus. Po to, asemblis yra paleidžiamas ir yra nuskaitoma jo standartinė išvestis. Ji yra lyginama su numatytaja
+				„PEVerify“, kuri patikrina, ar sugeneruoto asemblio struktūra ir CIL kodas yra validūs. Po to, asemblis yra paleidžiamas ir yra nuskaitoma jo standartinė išvestis. Ji yra lyginama su numatytaja
 				išvestimi. Dauguma kodo generatoriaus testų yra vykdymu grįsti testai. Ši testų struktūra leidžia laisvai keisti generuojamo kodo pavidalą ir vistiek ištestuoti, ar kodo semantinė prasmė nepakito.
 				Jei vietoje šių testų būtų naudojami CIL kodo palyginimu grįsti testai, tai kiekvieną kartą pakeitus, kaip kodo generatorius generuoja kodą, testai sulūžtų.
 
 		5.3.4. Integracijos testavimas
+
+			Integracijos testai kompiliatoriuje yra naudojami ištestuoti visą kompiliatoriaus darbą: nuo komandinės eilutės analizės iki asemblio
+			išsaugojimo diske. Šie testai susidaro iš trijų dalių: išeities kodo, kuris yra sukompiliuojamas, įvesties simbolių eilutės, kuri yra
+			paduodama paleistam asemblis (kuris yra gautas sukompiliavus programos išeities kodą) ir išvesties simbolių eilutės, su kuria bus
+			lyginama programos išvestis.
+
+			Kiekvienas integracijos testas prasideda su komandinės eilutės, kuri bus paduodama kompiliatoriui, suformavimo. Joje būna nurodomas
+			vienas arba daugiau išeities failų ir vieta diske, kur kompiliatorius turėtų sukurti asemblį. Suformavus šią eilutę, ji yra perduodama
+			paleistam kompiliatoriui. Kai kompiliatorius baigia darbą, yra patikrinama jo grąžintas klaidos kodas operacinei sistemai: jei jis yra
+			0, tai kompiliavimas pavyko. Kitu atveju, testas nepavyksta.
+
+			Turint asemblį, testavimo karkasas paleidžia „PEVerify“ programą, jai perduodamas asemblio vietą diske, kad ši patikrintų, ar asemblio
+			struktūra ir CIL kodas yra validūs. Nesėkmės atveju, testas yra nutraukiamas.
+
+			Paskutinis integracijos testo žingsnis - paleidžiamas sukompiliuotas asemblis, jam paduodama įvesties simbolių eilutė ir nuskaitoma jo
+			išvestis. Ši išvestis yra palyginima su numatytąja. Jei išvestis nesutampa, testas nepavyksta. Priešingu atveju, testas buvo sėkmingas.
+
 		5.3.5. Kontraktai/statinė analizė
 
 	5.4. Naudotos bibliotekos
