@@ -2210,7 +2210,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			5.1.3.3. Assembly Emitter ir Type Emitter
 
 				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis 
-				yra objektas, simbolizuojantis kompiliavimo rezultatą. Kiekvieną asemblį iš esmės yra tipų konteineris ir dėl to, 
+				yra objektas, simbolizuojantis kompiliavimo rezultatą. Kiekvienas asemblis iš esmės yra tipų konteineris ir dėl to, 
 				Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
 				
 				Kita svarbi Assembly Emitter funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, Assembly Emitter atlieka 
