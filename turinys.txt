@@ -298,7 +298,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	2.3. Operatorių prioritetas
 
 		Galimi operatoriai, surikiuoti nuo aukščiausio prioriteto iki žemiausio, yra:
-		;; trūksta cast, reikia patikrinti ar nemeluojam
+
 			Taško operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
 			Vienanariai operatoriai: bitų inversija ~x, loginė inversija !a, aritmetinė inversija -x, didinimo vienetu ++x, mažinimo vienetu --x, nurodomojo tipo keitimo operarius (<tipas>)x
 			Daugybos *, dalybos /, liekanos % operatoriai
@@ -312,8 +312,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		Operatorių prioritetas gali būti valdomas naudojant skliaustus:
 
-			auto a = 3 + 4 * 5; //a reikšmė yra 23, skaičiuojama kaip 3 + (4 * 5)
-			auto b = (3 + 4) * 5; //b reikšmė yra 35, skaičiuojama kaip (3 + 4) * 5
+			auto a = 3 + 4 * 5; // a reikšmė yra 23, skaičiuojama kaip 3 + (4 * 5)
+			auto b = (3 + 4) * 5; // b reikšmė yra 35, skaičiuojama kaip (3 + 4) * 5
 			auto c = (2 + 2).ToString(); //apskaičiuojama 2 + 2 reikšmė ir jai iškviečiamas metodas ToString
 
 	2.3. Kintamieji
