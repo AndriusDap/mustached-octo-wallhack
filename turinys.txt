@@ -34,7 +34,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
 	Vardų grupė (namespace) - ;; dunno, lol - D.
 	PEG - parsing expression grammar ;; jei ką čia žemaitiškai o ne angliškai - A.
-	Metaduomenys - 
+	Metaduomenys - ;; TO DO
 
 Įvadas
 
@@ -44,11 +44,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	•	Statinė tipų sistema. LaborasLang kompiliatorius turi sugebėti statiškai patikrinti tipų naudojimą.
 	•	Funkcijos – pirmos klasės nariai. LaborasLang programavimo kalboje, funkcijas galima naudoti lygiai taip pat, kaip ir bet kurį kitą duomenų tipą.
 	•	Paprastumas. Vienas iš LaborasLang uždavinių – būti kuo įmanoma paprastesnei.
-	•	Vykdymo greitis. LaborasLang kalba parašytos programos turi galėti efektyviai išnaudoti kompiuterio resursus. ;;Ar čia kalbos ar implementacijos dalis? A.
+	•	Vykdymo greitis. LaborasLang kalba parašytos programos turi galėti efektyviai išnaudoti kompiuterio resursus.
 	•	Sąveika su kitomis programavimo kalbomis. LaborasLang kalba parašytos programos turi galėti naudotis bibliotekomis, kurios yra parašytos kitomis .NET programavimo kalbomis. Dėl šios priežasties, LaborasLang programos yra kompiliuojamos į CIL. Taip pat bibliotekos parašytos LaborasLang turi veikti kitose .NET kalbose.
 
 
-1. Apimtis ;;siūlau Specifikacijos apimtis A.
+1. Specifikacijos apimtis
 
 	Ši specifikacija apibrėžia LaborasLang programavimo kalbą. Tai apima:
 	•	LaborasLang kalbos leksinę ir sintaksinę gramatiką;
@@ -127,7 +127,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		LaborasLang turi keletą fundamentaliųjų tipų, kurie atitinka fundamentaliuosius CLI tipus:
 
-		;; c# ref rašo .NET Framework type, ne CLI type - D.
 		Tipo vardas	     CLI tipo atitikmuo	     Pastabos
 		bool	         System.Boolean	         Loginis tipas, galintis laikyti 2 reikšmes: true ir false.
 		int8	         System.SByte	         1 baito dydžio sveikasis skaičius su ženklu. Galimos reikšmės: [-128; 127].
@@ -146,8 +145,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		string	         System.String	         Simbolių eilutės tipas.
 
 		Fundamentalieji tipai išskyrus void, object ir string yra taip pat vadinami primityviaisiai tipais. Jie yra naudojami atliekant 
-		standartines operacijas ir sudaro kitus CLI tipus. 
-		;;might be BS, bet kažkaip noriu parašyti kad yra primitives. paskui primitives naudoju apie castus rašydamas
+		standartines operacijas ir sudaro kitus CLI tipus.
 
 		Fundamentaliųjų tipų vardai yra pseudonimai CLI tipams ir jie yra kompiliavimo metu verčiami į tikruosius tipus.
 		Todėl:
@@ -158,7 +156,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		yra sukompiliuojami į identišką kodą.
 
-	2.2.2 Vardų erdvė ir pilnas vardas
+	2.2.2 Vardų grupė ir pilnas vardas
 
 		Tipo pilnas vardas yra sudaromas iš jo vardų grupės ir vardo atskirtu tašku. Pavyzdžiai:
 
@@ -197,21 +195,12 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		string()() - funkcija, kuri gražina string() tipo funkciją ir neima jokių argumentų.
 
-		Funkcijų tipams yra naudojamos kompiliatoriaus generuotos klasės, kurių tiksli realizacija gali priklausyti nuo kompiliatoriaus. Taip 
-		funkcijos gali be jokių papildomų išlygų tapti tipų sistemos dalimi.
-
-		;; compiler spece reiktų parašyti tą tikslią realizaciją, tipo jei kas norės su laboraslang interopintis
-
-		;; IMO, čia visai ne į temą. skyrius vadinasi Funkcijų tipai, o rašai apie calls, higer order functions ir panašius dalykus
-		;; galima parašyti "daugiau apie funkcijas ir funkcijų tipus skyriuje Funkcijos"
-
-		;; Aš manau, jog čia tam sakiniui apie implementacija tikrai ne vieta - T.
-
 		Funkcija, kurią laiko funkcijos tipo kintamasis, yra iškviečiama šalia kintamojo parašant skliausteliuose argumentus, atskirtus kableliais. Pavyzdžiui:
-		void(int, double) myVariable = someFunction;
-		myVariable(3, 5.8);
 
-		Funkcijų tipus galima naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms: ;;Patogu - šališka nuomonė, nėra įrodymo kad patogu ar ne. A.
+			void(int, double) myVariable = someFunction;
+			myVariable(3, 5.8);
+
+		Funkcijų tipus galima naudoti perduodant funkcijas kaip argumentus kitoms funkcijoms:
 
 			int(int()) GetFunctionResultPlusOne = int(int() function)
 			{
@@ -223,7 +212,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Console.WriteLine(GetFunctionResultPlusOne(int() { return 5; }));
 			};
 
-		;; TO DO: Parašyti, kad funkcijos tipas kitose CLI kalbose turi "Invoke" metodą, kuris iškviečia funkciją, grąžino jos grąžinamą reikšmę ir priima tokius pačius argumentus.
+		Implementacijos pastaba: šie tipai yra objektai, turintys „Invoke“ metodą, kuris iškviečia funkciją, grąžino jos grąžinamą reikšmę ir priima tokius pačius argumentus.
 
 	2.2.3. Masyvų tipai
 
@@ -310,7 +299,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		LaborasLang palaiko trijų tipų kintamuosius: lokalius kintamuosius, globalius kintamuosius ir funkcijų parametrus. Pagrindiniai 
 		kintamųjų panaudojimo skirtumai yra jų galiojimo sritis.
-		;; kiti skirtumai yra kur alokuojama, kada dealokuojama, gal šitą kada reikės parašyti
 
 		2.3.1. Lokalūs kintamieji
 
@@ -331,8 +319,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	2.4. Išraiškos
 
-		;; man dabar skaitoma/rašoma išraiška nepatinka. gal kas sugalvosit geriau - D.
-		Išraiška yra kodo framgentas, kurios gali gražinti reikšmę, arba priimti reikšmę. Išraiškos, kurios gražina reikšmę, dar vadinamos 
+		Išraiška yra kodo fragmentas, kurios gali gražinti reikšmę, arba priimti reikšmę. Išraiškos, kurios gražina reikšmę, dar vadinamos 
 		dešininėmis išraiškomis. Dauguma išraiškų yra dešininės. Išraiškos, kurios gali priimti reikšmę vadinamos kairinėmis išraiškomis. 
 		Kairinėmis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra dešininė ar kairinė priklauso nuo 
 		išraiškos. Šios taisyklės tiksliai aprašomos prie kiekvieno išraiškos tipo.
@@ -347,8 +334,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			2.4.1.2 Sveikųjų skaičių literalai.
 
-				;; gal reikia užsimint apie visokius u, l. visa informacija apie tai ką lexer 
-				;; laiko sveikuoju skaičiumi eina į lexer dalį, bet čia reikia parašyti, kad tipą gali pakeisti - D.
 				Sveikųjų skaičių literalo įgyjamas tipas priklauso nuo skaičiaus dydžio ir jo ženklo. 
 
 					uint8 a = 5;
@@ -357,10 +342,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Literalas gali įgyti tipą jei jis telpa į šio tipo reikšmių rėžius imtinai (§2.2.1. Fundamentalieji Tipai).
 
-				;; Dariau, gal gali aprašyt tiksliai kaip tai veiks? Būtų gerai atitikti parserio implementaciją - T.
-
-				Standarinis tipas yra "int". Šis tipas yra naudojamas jei nėra žinomas reikalingas tipas. Tipas 
-				nėra žinomas dviem atvejais - jei naudojama deklaracija su inicializacija ir jei kviečiama perdengta funkcija.
+				Standarinis tipas yra "int". Šis tipas yra naudojamas jei nėra žinomas reikalingas tipas. Tipas nėra žinomas dvejais
+				atvejais - jei naudojama deklaracija su inicializacija ir jei kviečiama perdengta funkcija.
 
 					auto foo = void(int a){};
 					auto foo = void(long a){};
@@ -371,27 +354,26 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 					foo((long)5);
 
+				Literalo tipą galima paversti į "long" jo pabaigoje prirašant simbolį 'l' arba 'L'.
+
 			2.4.1.3 Realiųjų skaičių literalai
 
-				Realieji skaičiai gali įgyti tipus "float" ir "double". Įgyjamas tipas priklauso nuo skaičiaus užrašymo.
-				;; turbūt prie gramatikos reiktų specifikuoti - D.
+				Realieji skaičiai gali įgyti tipus "float" ir "double". "float" tipas yra įgijamas, jei literalo gale yra simbolis
+				'f' arba 'F'. Kitu atveju, jei literale yra dešimtainio taško simbolis ('.'), literalas įgija tipą "double".
 
 			2.4.1.4 Tekstiniai literalai
 
-				Tekstiniai literalai turi du tipus - "string" ir "char". Įgyjamas tipas priklauso nuo naudojamų kabučių.
-				;; taip pat mažoka, bet gramatikoj bus aprašyta - D.
+				Tekstiniai literalai turi du tipus - "string" ir "char". "string" literalai gali būti sudaryti iš bet kokio
+				skaičiaus simbolių, ir jie yra apgaubiami dvigubų kabučių simboliu ("). "char" literalai yra sudaryti iš vieno
+				simbolio, ir yra apgaubti viengubomis kabutėmis.
 
 			2.4.1.5 Null literalas
 
 				"null" reikšmė taip pat laikoma literalu. Šis literalas tipo neturi ir gali įgyti bet kokį nuorodinį tipą.
-				;; C# daro kažkoius hackus, kad Nullable veiktų? Mes juos palaikom? - D
-				;; Nedaro jokiu hackų. Nullable<T> yra generic type. Mes jų nepalaikom - T.
-				;; Gal ne taip supratau, bet mačiau apie tai ECMA-334 13.7.2 skyriuje kažką - D.
-				;; Nu, C# tiesiog int? išverčia į Nullable<int> - T.
 
 		2.4.2 Nario išraiška
 
-			Nario išraiška yra specialus dvinaris operatorius naudojamas pasiekti vardų grupės arba tipo narį.
+			Nario išraiška yra specialus operatorius naudojamas pasiekti vardų grupės arba tipo narį.
 
 			<pagrindinė išraiška>.<identifikatorius>
 
@@ -410,7 +392,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					* nurdomojo keitimo tipas
 					* kūriamo objekto tipas
 					* kūriamo masyvo tipas
-					* sudėtinio tipo dalis ;; function types, array tipes, nežinau kaip kitaip pavadinti - D.
+					* sudėtinio tipo dalis (sudėtiniais tipais laikomi funkcijų tipai ir masyvų tipai)
 
 				* laukas. Išraiška gaunama jei:
 					* pagrindinė išraiška yra tipas. Šiuo atveju pasiekiami statiniai laukai, atitinkantys identifikatorių.
@@ -436,20 +418,18 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Console . WriteLine
 			| tipas | metodų grupė |
 
-			Kaip visi dvinariai operatoriai, nario išraiška gali būti panaudota kitoje nario išraiškoje.
+			Kaip visi operatoriai, nario išraiška gali būti panaudota kitoje nario išraiškoje.
 
 			  System      . IO          . File  . OpenRead
 			| vardų grupė | vardų grupė |
 			|        vardų grupė        | tipas |
 			|               tipas               | metodas  |
 
-			;; nežinau ar šitas turi prasmės, galima ir išmesti arba perkelti prie parserio - D.
-
 				
 		2.4.3. Pavieniai identifikatoriai
-
-			;; gramatikoj turėtų būti specifikuota kas yra identifikatorius - D.
-			Naudojant identifikatorių kaip išraišką atliekama paieška pagal galiojimo sritį:
+		
+			Identifikatorius yra bet koks legalus simbolis (§3.3. Leksinė gramatika). Naudojant identifikatorių kaip išraišką atliekama paieška 
+			pagal galiojimo sritį:
 
 				1. Jei identifikatorius nėra naudojamas funkcijos viduje einama į punktą 4
 				2. Ieškoma tarp lokalių kintamųjų. Kodo bloke neradus identifikatoriaus, paieška tesiama aukštesniame bloke kol pasiekiamas 
@@ -495,22 +475,19 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Jei kolekcija nėra masyvas, joje ieškoma indekso operatoriaus pagal nurodytus indeksus. Operatorius parenkamas taip pat 
 				kaip perdengtas metodas. Šiuo atveju indeksai gali būti bet kokio tipo išraiškos, jei yra tokio tipo operatorius.
-				;; kažkur reikia aprašyti overload resolution esmę spece - D.
 
 				Objektuose gali būti keli indekso operatoriai
 
-			Pavyzdžiai:
+				Pavyzdžiai:
 
-				int arr = int[]{1, 2, 3};
-				Console.WriteLine(arr[2]);// išspausdina "3"
+					int arr = int[]{1, 2, 3};
+					Console.WriteLine(arr[2]); // išspausdina "3"
 
-				getMap()["foo"];
-
-				incrediblyComplexStructure[1, "agurkas", 6];
-				incrediblyComplexStructure[5];
-				// objektas su keliais skritingais operatoriais
-
-				;; nieko protingo nesugalvoju - D.
+					getMap()["foo"];
+				
+					// objektas su keliais skritingais operatoriais
+					incrediblyComplexStructure[1, "agurkas", 6];
+					incrediblyComplexStructure[5];
 
 		2.4.5. Funkcijos
 
@@ -518,8 +495,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			<tipas>(<parametru sąrašas>)
 				<kodo blokas>
-
-			;; TODO: aprašyti taip pat parametrų sąrašą - D.
 
 			Tipas gali būti bet koks LaborasLang tipas.
 
@@ -533,15 +508,13 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Pavyzdžiai:
 
-				auto func = int(){return 4;};
+				auto func = int() { return 4; };
 
 			Įvykdžius šį sakinį nebus įvykdytas funkcijos kodas, tik kintamajam foo priskirta nuorodą į funkciją.
 			Norint įvykdyti kodą funkciją reikia iškviesti.
 
 				int val;
 				val = func();
-
-			;; kažkaip mažoka pasirodė - D.
 
 		2.4.6. Funkcijos kvietimai
 
@@ -556,7 +529,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Pavyzdžiai:
 
-			auto foo = void(){Console.WriteLine("It works!");};
+			auto foo = void() { Console.WriteLine("It works!"); };
 
 			foo();
 
@@ -564,25 +537,24 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			2.4.4.x Funkcijos objekto kvietimas
 
-				Bet kokia išraiška, kurios reikšmė yra funkcijos objekto tipo, gali būti iškviesta, ne tik kintamieji. 
-				;; TODO integraciniai testai visiems - D.
-				Pavyzdžiui funkcijos rezultatas:
+				Bet kokia išraiška, kurios reikšmė yra funkcijos objekto tipo, gali būti iškviesta, ne tik kintamieji. Pavyzdžiui
+				funkcijos rezultatas:
 
-					auto func = int()(){return int(){return 4;};};
+					auto func = int()() { return int() { return 4; }; };
 					int value = func()();
 
 				Masyvo elementas:
 
-					auto arr = {int(){return 4;}};
+					auto arr = { int() { return 4; } };
 					int value = arr[0]();
 
 				Pati funkcija:
 
-					int value = int(){return 4;}();
+					int value = int() { return 4; }();
 
 				Tipo keitimas:
 
-					auto func = (object)int(){return 4;};
+					auto func = (object)int() { return 4; };
 					int value = ((int())func)();
 
 				Ši sintaksė leidžia atlikt sudėtingą kintamųjų inicializaciją vienu sakiniu.
@@ -596,8 +568,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kadangi funkcijos tipas yra nuorodinis tipas, šio tipo išraiškos nebūtinai turi reikšmę.
 
-					auto func = int()(){return null;};
-					int value = func()();// klaida, func rezultatas yra null
+					auto func = int()() { return null; };
+					int value = func()(); // klaida, func rezultatas yra null
 
 			2.4.4.x Metodo kvietimas
 
@@ -609,8 +581,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Kviečiant funkcijų grupę atsiranda papildomas reikalavimas: pagal tipus turi būti įmanoma tiksliai nustatyti kurią funkciją
 				reikia kviesti. Jei argumentų tipai tiksliai neatitinka parametrų tipų, argumentai gali tikti kelioms funkcijoms iš grupės. 
 				Tokiu atveju gražinama klaida.
-
-				;; reiktų aprašyti tiksliai kaip parenkama, bet aš tai nežinau - D.
 
 				Pavyzdžiui:
 
@@ -624,13 +594,14 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				entry auto main = void()
 				{
 					byte a = 5;
-					foo(a);// klaida
+					foo(a); // klaida
 				};
 
 				Kadangi "byte" galima automatiškai keisti ir į "int" ir į "long", neįmanoma konkrečiai pasakyti kuri funkcija tinka.
 
 			;; Čia reikia nepamiršti paminėti tail calls
 			;; tai ne implementation detail - D?
+			;; Ne, nes tai language feature, nes gali infinite recursion daryt
 
 		2.4.7. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
 		2.4.8. Vienanarės operacijos
@@ -649,12 +620,10 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	2.5. Sakiniai
 
-		;; kaip parašyti kas yra sakinys - D?
+		Sakinys yra pats elementariausias LaborasLang kalbos elementas turintis semantinę prasmę.
 
 		2.5.1 Deklaracija
-
-			;; Šitas skyrius labai išsipūtė, gal ką praleidau - D.
-
+		
 			Deklaracijos sakinys yra naudojamas deklaruojant kintamajį.
 
 				<atributai> <tipas> <identifikatorius>;
@@ -663,8 +632,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Atributai yra sąrašas atributų atskirtų tarpais, palaikomi atributai priklauso nuo kintamojo tipo. Atributus galima praleisti.
 
 			Tipas yra bet koks palaikomas tipas išskyrus "void".
-
-			Identifikatorius yra bet koks legalus simbolis. Tai bus šio kintamojo vardas. ;; reiktų kokio link į lexer skyriu kas yra legalus simbolis - D.
+			
+			Šio kintamojo vardas bus identifikatorius.
 
 			Jei nurodytas, inicializatoriaus reikšmė priskiriama kintamajam.
 
@@ -682,14 +651,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Verta atkreipti dėmesį, jog po funkcijos bloko uždarymo yra ";". Funkcijos deklracija nėra kontrolės blokas ir jis, kaip visi 
 			įprasti sakiniai yra baigiami su ";".
-			;; pats šitą klaidą padariau ne kartą - D.
 
 			Inicializuojant deklaraciją, jos tipą galima nustatyti "auto". Tada kintamojo tipas bus toks pat kaip inicializatoriaus išraiškos. 
 
 			auto numbers = int[5];
-			auto sudoku = void() { sudoku(); };	
-			;; Ar pažiūrėjai, kad buildintųsi? Aš galvojau toks capture neveikia.
-			;; yes, jei tai global var. O jei ir ne, šitas spece tinka, nes pagal spec veikia capture - D.
+			auto sudoku = void() { sudoku(); };
 
 			;; čia dubliuojasi su skyriumi Automatinis tipo radimas, galvosiu kaip keisti - D.
 			Deklaruojant "auto" tipą taikomi du apribojimai:
@@ -723,7 +689,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Taip pat neteisinga:
 
 				auto foo = void(){};
-				auto foo = int(){return 4;};
+				auto foo = int() { return 4; };
 
 			Kviečiant perdengtas funkcijas, kitap funkcijų grupę, reikiama funkcija parenkama pagal argumentų tipus (žr. §2.4.6.).
 
@@ -746,6 +712,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					const int c; // klaida, konstantas būtina inicializuoti
 
 				;; dabar galvoju, gal čia compiler detalė - D?
+				;; Ne. Butu implementacijos detale, jei pasakytumem, jog kompiliuojasi i metoda - T.
 
 				Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
 				taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
@@ -756,9 +723,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					mutable void() foo; // šis kodas veikia
 
 				Kintamumo atributai yra palaikomi lokalių ir globalių kintamųjų. 
-				;; Koks tas atvejis kai kintamasis yra ne mutable by default? A.
-				;; global functors, nes tada kompiliuojam į metodus. greičiau veikia ir galima naudoti overloading - D.
-
 				
 			2.5.1.2 Pasiekiamumo atributai
 
@@ -782,7 +746,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					public private int a; // klaida
 					public public int b; // kompiliatoriui nereikia kartoti dalykų
 
-		2.5.2 Vardų grupės importavimo ;; Gal kas geriau sugalvosit - D.
+		2.5.2 Vardų grupės importavimas
 
 			Importavimo sakinys naudojamas į failo galiojimo sritį įterptį vardų grupes ir tipus iš kitos vardų grupės.
 
@@ -802,7 +766,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				System.String a;
 				System.Collections.ArrayList lst;
 
-			Importavimo sakiniai leidžiami tik faile. ;; Kaip kitaip parašyti - D?
+			Importavimo sakiniai leidžiami tik viso failo galiojimo srityje.
 			Faile gali būti neribotas skaičius importavimo sakinių.
 
 			Nors sakinys importuoja ir vardų grupes, importavimo sakinyje privaloma rašyti pilną vardų grupę, net jei ji pasiekiama trumpiau per kitą sakinį.
@@ -1006,7 +970,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						return;
 
 				"if" yra grupuojamas su artimiausiu "else" bloku. Norint sugrupuoti kitaip naudojami kodo blokai.
-				;; šitas manau gramatikai priklauso. ten reikia paminėti, o iš čia išmesti - D.
 
 					int num = GetNum();
 					if (num >= 0)
@@ -1030,8 +993,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			2.5.6.3. Ciklai
 
-				LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.	
-				;; Worde pakeisti kabutes į keyword style
+				LaborasLang programavimo kalba palaiko trijų tipų ciklus: "while" tipo ciklą ir du "for" tipo ciklus.
 
 				2.5.6.3.1. while ciklas
 				
@@ -1059,12 +1021,10 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						}
 
 				2.5.6.3.2. C stiliaus for ciklas
-
-					;; Mes sakiniais vadinam use, deklaciją, return, visokie ciklai yra kontrolės blokai. Reikia suvienodinti semantiką ir pataisyti taisyklę - D.
-
+				
 					LaborasLang kalba palaiko C stiliaus for ciklą - jis analogiškas C ciklui ir yra palaikomas daugumos C šeimos kalbų. 
 					Šį for ciklą sudaro kelios dalys: ciklo inicializatorius, ciklo sąlyga, ciklo iteratorius ir ciklo sakinys. C stiliaus 
-					for ciklo struktūra yra tokia: ;; nepasiskolinom o atėmėm A.
+					for ciklo struktūra yra tokia:
 
 						for (<inicializatorius>; <sąlyga>; <iteratorius>)
 							<sakinys>
@@ -1089,7 +1049,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						4. Jei nebuvo išeita iš sakinio (pavyzdžiui "return" sakiniu) ir yra aprašytas iteratorius, jis yra įvykdomas.
 							Vykdymas gražinamas į 2 punktą.
 
-					;; Man šitas padeda suvokti kaip tiksliai vykdomas for - D.
 					Naudojant "while" ciklą, "for" galima aprašyti taip:
 
 						{
@@ -1134,24 +1093,22 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 					Kolekcijos gali būti masyvai arba objektai turintys metodą GetEnumerator(). Kolekcijos išraiška bus įvykdyta vieną kartą 
 					ir viso ciklo metu bus naudojamas tas pats enumeratorius. 
-					;; čia gal tik biški BS.
-					;; norėjau parašyti, kad jei iteruosi per call, nebus kviečiama 500 kartų - D.
 
 					Kadangi iš kolekcijos visada galima sužinoti elemento tipą, dažnai deklracijoje naudojamas tipas "auto".
 
 					Ciklo pavyzdžiai:
 
 						// iteruojama per masyvą
+						// išspausdins skaičius 1 - 4
 						auto arr = int[] { 1, 2, 3, 4 };
 						for (auto i in arr)
 							Console.WriteLine(i);
-						// išspausdins skaičius 1 - 4
 
 						// iterauojama per kolekciją
+						// išspausdins kolekcijos objektų tekstines reprezentacijas
 						ArrayList lst = ArrayList({1, 2, 3, 4});
 						for (object i in lst)
 							Console.WriteLine(i.ToString());
-						// išspausdinami kolekcijos objektų tekstinės reprezentacijos ;; gal geresnis žodis tam yra - D.
 
 3. LaborasLang gramatika
 
@@ -1449,8 +1406,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			yra teisinga bei neprivalomo "else" raktažodžio kartu su kodo struktūra kuri bus vykdoma jei sąlyga yra neteisinga
 
 4. LaborasLang programų pavyzdžiai	;; TODO: make sure everything builds and actually works
-
-	;; Truksta ivadinio sakinio
+	
+	Šiame skyriuje yra pateikiamos pavyzdinės LaborasLang programavimo kalbos programos.
 
 	4.1. Hello world
 
@@ -1816,7 +1773,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	5.1. Komponentai
 	
 		;; Truksta ivadinio sakinio
-		5.1.1. Lekseris
+		5.1.1. „Lexer“
 
 			Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
 			Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
@@ -1848,7 +1805,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					Taško operatoriaus apdorojimas
 					Perteklinių medžio šakų minimizavimas
 
-			5.1.1.1. Tokenizer ("Žetonatorius")
+			5.1.1.1. „Tokenizer“
 
 				Išeiteis kodas suskaidomas į leksemas. Leksema yra sudaryta iš jos turinio, tipo, vietos išeities kode.
 
@@ -1868,7 +1825,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
 					su testų duomenų sąrašu.
 
-			5.1.1.2. RulePool ("Taisyklių sąrašas")
+			5.1.1.2. „RulePool“ (Taisyklių sąrašas)
 
 				Saugomas kalbos gramatikos taisyklių sąrašas. Naudojama gramatika kuri yra panaši į PEG gramatiką[2].
 				Taisyklės yra sudaromos iš terminalinių ir neterminalinių žetonų. Kiekvienam neterminaliniam žetonui yra nurodoma taisyklė 
@@ -1910,8 +1867,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
 						Tikrinama ar nėra begalinės rekursijos taisyklėse 
 
-			5.1.1.3. SyntaxMatcher ("Sintaksės atpažinimo sistema")
-			
+			5.1.1.3. „SyntaxMatcher“ (Sintaksės atpažinimo sistema)			
 				
 				Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
 
@@ -1973,7 +1929,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					Testuose taip pat tikrinama kad medžiuose nėra nei vieno neatpažinto žetono kas reikštų kad taisyklių rinkinys nepadengia visos
 					kalbos gramatikos.
 
-			5.1.1.4. PostProcesorius
+			5.1.1.4. „PostProcesorius“
 
 				PostProcesoirius yra hackas skirtas pridėti kontekstą į bekontekstinį lexerį. Post procesoriai vykdomi iteruojant per ast ir 
 				tikrinant kuris simbolis rastas, jie gali būti keičiami, restrukūtrizuojami, pašalinami. Aktyvšs post'ai:
@@ -2017,7 +1973,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					Vykdant analizę kai kurie medžio segmentai yra reikalingi tik palengvinti taisyklių aprašymą, pavyzdžiui operatorių grupavimas
 					į infiksinius. Dėl to jie yra panaikinami siekiant sumažinti medį ir palengvinti jo analizę.
 				
-		5.1.2. Parseris
+		5.1.2. „Parser“
 
 			Parserio modulis analizuoja lekserio sukūrtą medį ir pagal jį sukuria naują panašios struktūros medį iš kalbos struktūras 
 			aprašančių objektų. Dauguma šių objektų realizuoja §5.2.2. aprašytą sąsają, bet kai kurie objektai yra skirti vidiniam 
@@ -2221,9 +2177,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				* Functor Emitter
 				* Method Body Optimzers
 			
-			5.1.3.1. Assembly Registry
+			5.1.3.1. „Assembly Registry“ - asemblių registras
 				 
-				 Tai yra asemblių registras - jis užkrauna bibliotekas ir saugoja jų metaduomenis. Jo paskirtis yra suteikti kompiliatoriui
+				 Asemblių registras užkrauna bibliotekas ir saugoja jų metaduomenis. Jo paskirtis yra suteikti kompiliatoriui
 				 žinias apie egzistuojančius tipus, metodus, laukus ir t.t. ir juos pateikti patogiu formatu. Kompiliavimo pradžioje, ši klasė
 				 užkrauna visas vartotojo nurodytas bibliotekas - t.y. jų asemblius. Tai padaręs, asemblių registras sužino visus užkrautuose
 				 asembliuose esančius tipus ir jų vidurius. Asemblių registras gali:
@@ -2239,9 +2195,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					* Sukurti masyvo tipą pagal jo elemento tipą ir matmenų skaičių;
 					* Surasti specialius kolekcijos tipo metodus įgalinančius jos iteravimą.
 
-			5.1.3.2. Metadata Helpers
+			5.1.3.2. „Metadata Helpers“
 
-				Metadata Helpers - tai rinkinys funkcijų, skirtų padėti manipuliuoti metaduomenimis ir sužinoti jų sąvybes. Pagrindiniai Metadata Helpers
+				„Metadata Helpers“ - tai rinkinys funkcijų, skirtų padėti manipuliuoti metaduomenimis ir sužinoti jų sąvybes. Pagrindiniai Metadata Helpers
 
 					* Pasakyti, ar tipas yra primityvus tipas, sveikasis skaičiaus tipas, slankiojančio kablelio skaičiaus tipas, funkcijos tipas ir t.t.;
 					* Suskaičiuoti tipo dydį;
@@ -2256,16 +2212,16 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					* Importuoti tipą iš kito asemblio;
 					* Nustatyti, ar per kolekciją galima iteruoti su kolekcijos iteravimo for ciklu.
 
-				Assembly Registry ir Metadata Helpers subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
+				„Assembly Registry“ ir „Metadata Helpers“ subkomponentai įgalina kompiliatorių suprasti metaduomenų pasaulį ir leidžia parseriui validuoti visus
 				LaborasLang programos atliekamus veiksmus.
 
-			5.1.3.3. Assembly Emitter ir Type Emitter
+			5.1.3.3. „Assembly Emitter“ ir „Type Emitter“
 
-				Assembly Emitter yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis 
+				„Assembly Emitter“ yra subkomponentas atsakingas už kompiliuojamo asemblio sukūrimą ir iššaugojimą diske. Kompiliatoriuje jis 
 				yra objektas, simbolizuojantis kompiliavimo rezultatą. Kiekvienas asemblis iš esmės yra tipų konteineris ir dėl to, 
-				Assembly Emitter viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
+				„Assembly Emitter“ viena iš pagrindinių funkcijų ir yra kaupti sukurtus tipus.
 				
-				Kita svarbi Assembly Emitter funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, Assembly Emitter atlieka 
+				Kita svarbi „Assembly Emitter“ funkcija yra išsaugoti sukurtą asemblį diske. Prieš tai atlikdamas, „Assembly Emitter“ atlieka 
 				keletą validacijos žingsnių:
 					
 					1. Patikrinti, ar asemblio tipuose nėra metodų su vienodais parametrų tipais. Tai yra geriausia vietą šiai validacijai 
@@ -2274,43 +2230,42 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					parametrų tipus ([1], §I.10.2 Overloading).
 
 					2. Atmesti visus programoje nenaudojamus funkcijų tipus. Kadangi šiuo metu programa jau yra sukompiliuota, 
-					Assembly Emitter geba surasti ir išmesti visus funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada 
+					„Assembly Emitter“ geba surasti ir išmesti visus funkcijų tipus, kurie buvo matyti programoje, bet realiai niekada 
 					nepanaudoti (pavyzdžiui, buvo deklaruota funkcija, kurios tipas void(), tačiau ji niekada niekam nebuvo priskirta).
 
 					3. Jeigu asemblio tipas yra vykdomasis failas, patikrinti, ar yra metodas, esantis vykdomojo failo įeities taškas.
 
-				Jei visi šie validacijos žingsniai pavyko, AssemblyEmitter gali saugiai išsaugoti asemblį diske.
+				Jei visi šie validacijos žingsniai pavyko, „Assembly Emitter“ gali saugiai išsaugoti asemblį diske.
 
-				Type Emitter yra tiesioginis kuriamo tipo atitikmuo kompiliatoriuje. Jis tiesiogiai valdo tipų laukus, jų inicializatorius ir metodus.
+				„Type Emitter“ yra tiesioginis kuriamo tipo atitikmuo kompiliatoriuje. Jis tiesiogiai valdo tipų laukus, jų inicializatorius ir metodus.
 
-			5.1.3.4. Method Emitter
+			5.1.3.4. „Method Emitter“
 
-				Method Emitter yra kodo generatoriaus širdis. Šis komponentas verčia parserio sudarytą medį tiesiai į CIL instrukcijas. 
+				„Method Emitter“ yra kodo generatoriaus širdis. Šis komponentas verčia parserio sudarytą medį tiesiai į CIL instrukcijas. 
 				
 				CIL yra dėklu pagrįsta žemo lygio objektinė programavimo kalba. Joje visos operacijos manipuliuoja duomenimis evaluacijos 
 				dėkle. Pavyzdžiui, prieš kviečiant funkciją, visi argumentai yra įstumiami į evaluacijos dėklą, o funkcijos grąžinama 
 				reikšmė yra reikšmė, esanti dėklo viršuje funkcijos pasibaigimo metu ([1], §I.12.1 Virtual Execution System).
-				
-				;; TO DO: linkas į parserio medžio aprašymą
-				Method Emitter veikimas pagrįstas parserio medžio iteracija paieškos gylyn metodu. Kiekviena parserio medžio viršūnė yra 
-				aplankoma iš eilės ir paverčiama į atitinkamą CIL kodą. Kadangi CIL kodas operuoja reikšmėmis, esančiomis evaluacijos dėkle, 
-				Method Emitter gali tiesiogiai versti parserio medžio viršūnes į CIL instrukcijas nesirūpindamas jokia globalia būsena, 
-				tokia kaip procesoriaus registrų reikšmės.
 
-				Pavyzdžiui, Method Emitter parserio medyje aptikęs dvinarės operacijos viršūnę, reiškiančia sudėtį, suformuos instrukcijas 
+				„Method Emitter“ veikimas pagrįstas parserio medžio (§5.2.2. „Parser“ ir kodo generatoriaus integracija) iteracija paieškos 
+				gylyn metodu. Kiekviena parserio medžio viršūnė yra aplankoma iš eilės ir paverčiama į atitinkamą CIL kodą. Kadangi CIL
+				kodas operuoja reikšmėmis, esančiomis evaluacijos dėkle, „Method Emitter“ gali tiesiogiai versti parserio medžio viršūnes
+				į CIL instrukcijas nesirūpindamas jokia globalia būsena, tokia kaip procesoriaus registrų reikšmės.
+
+				Pavyzdžiui, „Method Emitter“ parserio medyje aptikęs dvinarės operacijos viršūnę, reiškiančia sudėtį, suformuos instrukcijas 
 				į evaluacijos dėklą įstumti abu sudėties operandus rekursiškai aplankydamas jų viršūnes, ir tada suformuos CIL instrukciją "add", 
 				kuri sudeda dvi viršūtines evaluacijos dėklo reikšmės, o rezultatą įstumia atgal į evaluacijos dėklą.
 
-				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, Method Emitter kartais reikšmes 
+				Kadangi kai kurios parserio medžio viršūnės tiesiogiai nesisieja su CIL instrukcijomis, „Method Emitter“ kartais reikšmes 
 				turi saugoti laikinuosiuose kintamuosiuose. Šiam tikslui buvo panaudota speciali duomenų struktūra, kuri tiekia reikiamo 
-				tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai Method Emitter žino, kad juose laikomos reikšmės nebereikės.
+				tipo lokaliuosius kintamuosius, ir gali juos pernaudoti, kai „Method Emitter“ žino, kad juose laikomos reikšmės nebereikės.
 			
-			5.1.3.5. Functor Emitter
+			5.1.3.5. „Functor Emitter“
 				
 				LaborasLang kalba palaiko tipus, kurių kintamiesiems galima priskirti funkcijas. Kodo generatorius šiuos tipus vadinas 
-				funktoriais. Functor Emitter tikslas yra surformuoti šiuos tipus.
+				funktoriais. „Functor Emitter“ tikslas yra surformuoti šiuos tipus.
 
-				Functor Emitter formuoja dviejų tipų funktorius: bazinius funktorius ir implementacijos funktorius.
+				„Functor Emitter“ formuoja dviejų tipų funktorius: bazinius funktorius ir implementacijos funktorius.
 
 				Kiekvienas funkcijos tipas LaborasLang kalboje atitinka vieną bazinį funktorių. Bazinis funktoriaus tipas yra abstrakti 
 				klasė, turinti du metodus:
@@ -2325,10 +2280,10 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kai LaborasLang kalboje yra kviečiamas kintamasis, kuris yra funkcija, tai atitinka funktoriaus Invoke() metodo kvietimą.
 
-			5.1.3.6. Method Body Optimizers
+			5.1.3.6. „Method Body Optimizers“ - metodų optimizatoriai
 			
-				Method Body Optimizers - metodų optimizatoriai - yra kodo generatoriaus dalis, kuri analizuoja ir optimizuoja Method Emitter 
-				sugeneruotą CIL kodą. Nors Method Emitter stengiasi sugeneruotikuo efektyvesnį kodą, tai nėra visada įmanoma padaryti 
+				„Method Body Optimizers“ - metodų optimizatoriai - yra kodo generatoriaus dalis, kuri analizuoja ir optimizuoja „Method Emitter“
+				sugeneruotą CIL kodą. Nors „Method Emitter“ stengiasi sugeneruotikuo efektyvesnį kodą, tai nėra visada įmanoma padaryti 
 				pereinant visą parserio medį tik vieną kartą. Dėl šios priežasties, metodų optimizatoriai buvo pridėti į kodo generatorių.
 
 				Šiuo metu, kompiliatoriuje yra keturi metodų optimizatorai. Iš jų kiekvienas yra pritaikytas optimizuoti skirtingus scenarijus.
@@ -2384,8 +2339,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	
 		Šiame skyrelyje aprašyta, kaip skirtingi kompiliatoriaus komponentai bendrauja tarpusavyje, kokiu formatu ir sąsajomis perduoda duomenis.
 
-		5.2.1. Lekserio ir parserio integracija
-		5.2.2. Parserio ir kodo generatoriaus integracija
+		5.2.1. „Lexer“ ir „Parser“ integracija
+		5.2.2. „Parser“ ir kodo generatoriaus integracija
 
 			Parseris ir kodo generatoriaus bendrauja valdytojo-valdomojo principu: Kodo generatorius daro tai, ką jam liepia parseris. 
 			Pagrindinis duomenų perdavimo mechanizmas, naudojamas duomenis perduoti iš parserio į kodo generatorių yra parserio medis. 
