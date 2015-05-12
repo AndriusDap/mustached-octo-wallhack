@@ -2442,6 +2442,23 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		5.3.5. Kontraktai/statinė analizė
 
+			Kuriant kompiliatorių, be testų naudojome papildomas kokybės kontrolės priemones: kontraktus ir statinę analizę. Kontraktai suteikia
+			galimybę nustatyti priešsąlyginius ir posąlyginius reikavimus metodams. Priešsąlyginiai reikalavimai yra reikavimai, kurie turi galioti
+			metodo iškvietimo metu, o posąlyginiai reikalavimai nustato sąlygas, galiojančias metodą įvykdžius. Kontraktai leidžia lengvai nustatyti,
+			kokių įvesčių ar būsenų metodas tikisi ir garantuoti, ką jis grąžins ar tam tikrų būsenų būvimą. Tai yra ypač svarbu, kai vieno žmogaus
+			rašyti komponentai turi bendrauti su kito žmogaus rašytais komponentais, kai jų bendravimas nėra visiškai specifikuotas, o sutartas tik
+			žodžiu.
+			
+			Kontraktus pažįsta C# statinis analizatorius, kuris gali patikrinti, ar niekas nepažeidžia kontraktų. Pavyzdžiui, jei metodas,
+			turintis sveiko skaičiaus parametrą, pažymimas, kad ko jo kontraktas reikalauja, jog skaičius būtų didesnis nei 10, tai statinis
+			analizatorius suras visas vietas kode, kur yra kviečiamas šis metodas ir bandys įrodyti, kad visais įmanomais atvejais šis argumentas
+			bus didesnis nei 10. Jei to įrodyti nepavyksta, statinė analizės rezultatas bus perspėjimas, jog gali būti, kad kontraktas yra
+			nepaisomas.	Tokia statinė analizė yra atliekama kiekvieną kartą kompiliatorių kompiliuojant su „Checked“ konfigūracija.
+
+			Kontraktai taip pat yra validuojami kompiliatoriaus vykdymo metu, jei kompiliatorius yra sukompiliuotas su „Debug“ arba „Checked“
+			konfigūracija. Jei kontraktas yra pažeidžiamas vykdymo metu, kompiliatoriaus darbas yra sustabdomas. Kontraktai yra išoptimizuojami,
+			jei kompiliatorius yra sukompiliuojamas su „Release“ konfigūracija.
+
 	5.4. Naudotos bibliotekos
 
 	5.5. Vartotojo dokumentacija
