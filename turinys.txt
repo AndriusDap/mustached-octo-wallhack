@@ -2423,36 +2423,42 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Visi moduliai testuoti skirtingai, atsižvelgiant į jų veikimo principą.
 			
 			5.3.1.1 „Tokenizer“ testavimas
-					Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. 
-					Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai 
-					nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka 
-					rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
-					su testų duomenų sąrašu.
+				Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. 
+				Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai 
+				nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka 
+				rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
+				su testų duomenų sąrašu.
 
 			5.3.1.2 „RulePool“ testavimas
 
-					Taisyklių sąrašas testuotas jį naudojant sintaksės atpažinimo modulyje bei atliekant taisyklių analizę:
-						Tikrinama ar nėra nenaudojamų taisyklių
-						Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
-						Tikrinama ar nėra begalinės rekursijos taisyklėse 
+				Taisyklių sąrašas testuotas jį naudojant sintaksės atpažinimo modulyje bei atliekant taisyklių analizę:
+					Tikrinama ar nėra nenaudojamų taisyklių
+					Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
+					Tikrinama ar nėra begalinės rekursijos taisyklėse 
 
+					5.3.1.2.1 Nenaudojamų taisyklių radimas
+						Kalbos taisyklės sudaro grafą, kurio viršūnės yra taisyklių žetonai o lankai - ryšiai tarp taisyklių. Testo metu 
+						vykdoma paieška gilyn, po kurios tikrinama ar yra neaplankytų viršūnių, neaplankyta taisyklė reiškia kad taisyklių 
+						rinkinys yra neteisingas ir testas nėra sėkmingas.
+
+					5.3.1.2.2 Nenaudojamų taisyklių žetonų radimas
+						Vykdoma paieška gilyn taisyklių grafe, žymima kurie žetonai buvo paminėti taisyklėse, radus nepaminėtų žetonų 
+						pabaigus paiešką testas laikomas nesėkmingu.
+
+					5.3.1.2.3 Begalinės rekursijos paieška taisyklėse
+						Taisyklių grafe ieškoma ciklų naudojant pirmus taisyklų elementus, nes tokia rekursija nėra paliakoma. Rasti ciklai
+						reiškia kad testas yra nesėkmingas.
+					
 			5.3.1.3 „Syntax Matcher“ testavimas
 
-					„SyntaxMatcher“ testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami AST kurie yra lyginami 
-					su ankstesnės versijos modulio sugeneruotais AST. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo segmentą
-					kurį norima validuoti ir peržiūrėti sugeneruotą AST tikrinant jo korektiškumą.
-					Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei keičiasi medžio API reikia pergeneruoti
-					ir patikrinti daug duomenų.
-					
-					Testuose taip pat tikrinama kad medžiuose nėra nei vieno neatpažinto žetono kas reikštų kad taisyklių rinkinys nepadengia visos
-					kalbos gramatikos.
-
-			;;	Planas:
-			;;		RulePool testavimas - koki testai, kiek jų, rezultatai, kaip implementuoti testai (dfs kažkur atrodo buvo, įdomu tas visai)
-			;;		SyntaxMatcher testavimas - Koki testai, rezultatas, kodėl netestuota rimtai o tik sintaksė, kiek testų, rezultatas
-			;;		PostProcesorių testavimas - RPN medžių rašymas ranka, kiek testų, rezultatas
-			;;		Pridėti apie kiek % padengta testais
-			;;		
+				„SyntaxMatcher“ testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami AST kurie yra lyginami 
+				su ankstesnės versijos modulio sugeneruotais AST. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo segmentą
+				kurį norima validuoti ir peržiūrėti sugeneruotą AST tikrinant jo korektiškumą.
+				Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei keičiasi medžio API reikia pergeneruoti
+				ir patikrinti daug duomenų.
+				
+				Testuose taip pat tikrinama kad medžiuose nėra nei vieno neatpažinto žetono. Neatpažinti žetonai rodo, kad taisyklių rinkinys
+				nepadengia visos kalbos gramatikos.
 
 		5.3.2. Parserio testavimas
 		5.3.3. Kodo generatorius testavimas
