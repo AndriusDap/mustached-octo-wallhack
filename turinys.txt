@@ -2446,7 +2446,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		svarbu kuriant tokią programą kaip kompiliatorius, nes testais padengus visą programos funkcionalumą galima nesibaiminti, jog 
 		pakeitus tam tikro komponento veikimą netyčia bus sugriauta kokia nors kompiliatoriaus funkcija.
 		
-		LaborasLang pavyzdiniam kompiliatoriui iš viso buvo parašyti 445 testai. Šie testai skirtomi į keturias pagrindines grupes: 
+		LaborasLang pavyzdiniam kompiliatoriui iš viso buvo parašyti 446 testai. Šie testai skirtomi į keturias pagrindines grupes: 
 		lekserio testai, parserio testai, kodo generatoriaus testai ir integracijos testai. 
 
 		5.3.1. Lekserio testavimas
