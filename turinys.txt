@@ -686,7 +686,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Po šių operacijų, value reikšmė bus lygi pradinei reikšmei - 5.
 
 			Kiti vienanariai operatoriai yra aritmetinė, bitų ir loginė inversijos. Jie gali būti naudojami tik prieš operandą. Šie
-			operatoriai nekeičia operandų reikšmės, todėl juos galima naudoti ant dešininių reikšmių.
+			operatoriai nekeičia operandų reikšmės, todėl juos galima naudoti su dešininėmis reikšmėmis.
 			
 			Aritmetinė inversija atitinka daugybą iš -1:
 
@@ -698,12 +698,38 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				auto a = ~1; // a reikšmė bus -2
 
-			Loginės inversijos operatorius gali būti naudojamas tik ant bool tipo operandų. Jis pakeičia jo reikšmę į priešingą.
+			Loginės inversijos operatorius gali būti naudojamas tik su bool tipo operandų. Jis pakeičia jo reikšmę į priešingą.
 
 				auto a = !true; // a reikšmė yra false
 
+			Visi šie operatoriai taip gali būti su operandais, kurių tipai yra perkrovę tam tikros operacijos operandus ([1], §I.10.3.1 Unary operators).
+
 		2.4.9. Dvinarės operacijos
+
+			LaborasLang kalboje visos dvinarės operacijos susideda iš dviejų operandų ir operatoriaus. Jos yra užrašomos šitaip:
+
+			<operandas 1> <operatorius> <operandas 2>
+
+			Visos šios operacijos grąžina operacijos rezultatą, tačiau nekeičia operandų reikšmės.
+
 			2.4.7.1. Aritmetinės operacijos
+
+				Egzistuoja penkios aritmetinės dvinarės operacijos:
+				
+				    Operacija                         Operatorius
+					sudėtis                           +
+					atimtis                           -
+					daugyba                           *
+					dalyba                            /
+					liekanos gavimo operacija         %
+
+				Kiekviena iš šių operacijų gali būti atlikta su sveikųjų skaičių arba slankiojo kablelio skaičių operandais. Papildomai,
+				sudėtis galima su simbolių eilutės operandais. Taip pat operacija galima, jei tipas yra perkrovęs tos operacijos operatorių
+				([1], §I.10.3.2 Binary Operators).
+
+				;; TODO: rezultato tipai, ka su kuo galima operaruoti, examples.
+				
+
 			2.4.7.2. Loginės operacijos
 			2.4.7.3. Bitų operacijos
 			2.4.7.4. Stūmimo operacijos
