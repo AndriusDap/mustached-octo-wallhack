@@ -1810,7 +1810,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 5. Pavyzdinis kompiliatorius
 
-	Čia pateikiama pavyzdinio LaborasLang kompiliatoriaus dokumentacija. Šis kompiliatorius parašytas naudojantis C# programavimo kalba.
+	Čia pateikiama pavyzdinio LaborasLang kompiliatoriaus dokumentacija. Šis kompiliatorius parašytas naudojantis C# programavimo kalba. Šio
+	kompiliatoriaus išeities kodas yra publikuojamas GitHub terpėje (https://github.com/SusirinkeLaborams/LaborasLang-aka-ForScience-).
 
 	5.1. Komponentai
 	
@@ -2460,6 +2461,10 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			jei kompiliatorius yra sukompiliuojamas su „Release“ konfigūracija.
 
 	5.4. Naudotos bibliotekos
+
+		Pavyzdinis LaborasLang programavimo kalbos kompiliatorius be standartinių .NET karkaso bibliotekų naudojo vieną biblioteką:	Mono.Cecil
+		(https://github.com/jbevain/cecil). Ši biblioteka leidžia patogiai manipuliuoti CIL kodu ir asemblių metaduomenimis. Jos pagalba,
+		kompiliatorius sugeba nuskaityti iš disko asemblius, sukurti naujus asemblius, modifikuoti jų vidų (pavyzdžiui, generuoti kodą).
 
 	5.5. Vartotojo dokumentacija
 		5.5.1. Išvesties tipai
