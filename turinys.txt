@@ -297,6 +297,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	2.3. Operatorių prioritetas
 		Galimi operatoriai, surikiuoti nuo aukščiausio prioriteto iki žemiausio, yra:
+		;; trūksta cast, reikia patikrinti ar nemeluojam
 			Taško operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
 			Vienanariai operatoriai: inversija ~x, neigimas !a, minuso ženklas -x, didinimo vienetu ++x, mažinimo vienetu --x
 			Daugybos *, dalybos /, liekanos % operatoriai
@@ -311,6 +312,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		Operatorių prioritetas gali būti valdomas naudojant skliaustus:
 			auto a = 3 + 4 * 5; //a reikšmė yra 23, skaičiuojama kaip 3 + (4 * 5)
 			auto b = (3 + 4) * 5; //b reikšmė yra 35, skaičiuojama kaip (3 + 4) * 5
+			auto c = (2 + 2).ToString(); //apskaičiuojama 2 + 2 reikšmė ir jai iškviečiamas metodas ToString
 
 	2.3. Kintamieji
 
@@ -320,14 +322,14 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		2.3.1. Lokalūs kintamieji
 
 			Lokalūs kintamieji yra kintamieji deklaruoti funkcijos viduje. Šių kintamųjų galiojimo sritis yra kodo blokas, kuriame jie buvo 
-			deklaruoti, su keliomis išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Jeigu kintamojo 
-			galiojimo srityje yra deklaruota funkcija, iš šios funkcijos galima pasiekti kintamąjį, bet tik kaip dešininę reikšmę.
+			deklaruoti, su keliomis išlygomis. Kintamieji pradeda galioti nuo jų deklaracijos ir baigia uždarant jų bloką. Kintamųjų 
+			galiojimo sritis nesitesia į bloke deklaruotas funkcijas.
 
 		2.3.2. Globalūs kintamieji
 
 			Deklaruojant kintamajį tiesiogiai faile, bus sukuriamas globalus kintamasis. Tokio kintamojo galiojimo sritis yra visas failas, 
 			juo galima naudotis anksčiau negu jis yra deklaruotas. Kintamajį, priklausomai nuo deklaracijos, taip pat galima pasiekti iš 
-			kitų failų. Plačiau apie tai skyriuje "Atributai".
+			kitų failų. Plačiau apie tai §2.5.1 Deklaracija.
 
 		2.3.3. Funkcijų parametrai
 
@@ -2533,7 +2535,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			sekmingu, jei atitinka išsaugotas ir naujas medžiai. Taip pat atsižvelgiama į kompiliatoriaus klaidas - kiekviename teste yra 
 			nurodyta aibė klaidų, kurias testas turi gauti. Jei gaunamos klaidos neatitinka nurodytų, testas buvo nesekmingas. Taip 
 			patikrinama ar teisingas kodas buvo sekmindai išparsintas ir ar neteisingas kodas gražino reikiamas klaidas.
-			
+
 		5.3.3. Kodo generatorius testavimas
 			
 			Kodo generatoriaus testai testuoja skirtingas kodo generatoriaus dalis. Šiuos testus galima suskirstyti į tris grupes: vienetų 
