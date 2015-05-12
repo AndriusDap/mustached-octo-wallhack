@@ -1809,21 +1809,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Išeiteis kodas suskaidomas į leksemas. Leksema yra sudaryta iš jos turinio, tipo, vietos išeities kode.
 
-				5.1.1.1.1. veikimo principas
-
-					Modulio veikimo principas - iš eilės skaitomas tekstas po vieną simbolį kol nuskaityti simboliai gali būti sujungti į vieną 
-					leksemą, pvz tekstas {code}pirmas=antras+trečias;{code} bus pradėtas skaityti, pirmas rastas simbolis yra raidė 'p', iš to 
-					galima nuspręsti kad tai bus simbolis. Šis simbolis skaitomas kol bus rasta raidė netinkama simboliams - '=', tada simbolis 
-					bus užsaugotas, patikrita ar tai yra vienas iš rezervuotų žodžių tam kad nustatyti teisingą tipą ir pridėtas į leksemų sąrašą. 
-					Analogiškai bus apdorojamas ir likęs išeities kodas.
-
-				5.1.1.1.2. Testavimas
-
-					Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. 
-					Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai 
-					nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka 
-					rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
-					su testų duomenų sąrašu.
+				Modulio veikimo principas - iš eilės skaitomas tekstas po vieną simbolį kol nuskaityti simboliai gali būti sujungti į vieną 
+				leksemą, pvz tekstas pirmas=antras+trečias; bus pradėtas skaityti, pirmas rastas simbolis yra raidė „p“, iš to 
+				galima nuspręsti kad tai bus simbolis. Šis simbolis skaitomas kol bus rasta raidė netinkama simboliams - „=“, tada simbolis 
+				bus užsaugotas, patikrita ar tai yra vienas iš rezervuotų žodžių tam kad nustatyti teisingą tipą ir pridėtas į leksemų sąrašą. 
+				Analogiškai bus apdorojamas ir likęs išeities kodas.
 
 			5.1.1.2. „RulePool“ (Taisyklių sąrašas)
 
@@ -1837,16 +1827,15 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					* neprivalomas galas
 					* neprivalomas
 
-				Modifikatorius "Vienas arba daugiau"
-					Naudojamas nurodyti kad šis elementas gali kartotis vieną arba daugiau kartų
-				Modifikatorius "Nulis arba daugiau"
+				Modifikatorius „Vienas arba daugiau“					Naudojamas nurodyti kad šis elementas gali kartotis vieną arba daugiau kartų
+				Modifikatorius „Nulis arba daugiau“
 					Naudojamas nurodyti kad šis elementas gali kartotis nulį arba daugiau kartų. Gramatikoje naudojamas nurodyti neprivalomus 
 					deklaracijos modifikatorius, vienanarius operatorius. 
-				Modifikatorius "Neprivalomas galas"
+				Modifikatorius „Neprivalomas galas“
 					Šis modifikatorius naudojamas deklaracijose, juo nurodoma kad deklaracijose reikšmės priskyrimas nėra privalomas. Šis 
 					operatorius gali būti pakeistas rekursiniu kreipiniu, tačiau toks kreipinys nėra optimalus dėklo naudojimo požiūriu bei 
 					taisyklių skaitomumo atžvilgiu.
-				Modifikatorius "Neprivalomas"
+				Modifikatorius „Neprivalomas“
 					Šis modifikatorius naudojamas nurodant neprivalomus žetonus. Šio modifikatoriaus naudojimo galima išvengti aprašant 
 					alternatyvias taisykles.
 
@@ -1860,79 +1849,62 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Taisyklės palaiko ribotą rekursiją. Jos apribojimas yra tai kad rekursinis kreipinys privalo turėti bent vieną nerekursinį 
 				kreipinį prieš rekursinį taisyklės panaudojimą. Nepaisant to tiesioginė rekursija taisyklių sąraše yra nenaudojama.
 
-				5.1.1.2.1. Testavimas
-
-					Taisyklių sąrašas testuotas jį naudojant sintaksės atpažinimo modulyje bei atliekant taisyklių analizę:
-						Tikrinama ar nėra nenaudojamų taisyklių
-						Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
-						Tikrinama ar nėra begalinės rekursijos taisyklėse 
-
 			5.1.1.3. „SyntaxMatcher“ (Sintaksės atpažinimo sistema)			
 				
 				Šis modulis leksemų sąrašą performuoja į abstraktų sintaksės medį pagal taisyklių sąrašą.
 
-				5.1.1.3.1. veikimo principas
-					Šis modulis perdirba Tokenizer sukurtą leksemų sąrašą į abstraktų sintaksės medį (AST). Taisyklių taikymas primena 
-					Pacrat tipo analizę [3] primena Pacrat Parser, tačiau nenaudojamas tarpinių reikšmių įsiminimas.
-					
-					Bandoma pritaikyti RulePool aprašytas taisykles, pradedant nuo taisyklės kuri apima visą programą - tai yra taisyklė
-					kuri sako jog programa yra sudaryta iš kodo struktūrų.
-					Visos taisyklės analizuojamos vienodai - iš RulePool modulio parenkamos galimos taisyklės alternatyvos. Alternatyvos
-					yra	sudarytos iš terminalinių žetonų ir kitų taisyklių. Gautos taisyklės alternatyvos yra lyginamos su žetonų sąrašu
-					formuojant abstraktų sintaksės medį.
-					
-					Taisyklės alternatyvos atitikimas žetonų sąrašui tikrinamas lyginant taisyklę sudarančius žetonus su žetonų sąrašo
-					elementais.
-						Jei alternatyvos elementas yra nuoroda į kitą taisyklę mėginama pritaikyti tą taisyklę
-						Jei alternatyvos elementas yra terminalinis žetonas tikrinama ar jis lygus dabar tikrinamam žetonų sąrašo
-						žetonui.
+				Šis modulis perdirba Tokenizer sukurtą leksemų sąrašą į abstraktų sintaksės medį (AST). Taisyklių taikymas primena 
+				Pacrat tipo analizę [3] primena „Pacrat Parser“, tačiau nenaudojamas tarpinių reikšmių įsiminimas.
+				
+				Bandoma pritaikyti RulePool aprašytas taisykles, pradedant nuo taisyklės kuri apima visą programą - tai yra taisyklė
+				kuri sako jog programa yra sudaryta iš kodo struktūrų.
+				Visos taisyklės analizuojamos vienodai - iš RulePool modulio parenkamos galimos taisyklės alternatyvos. Alternatyvos
+				yra	sudarytos iš terminalinių žetonų ir kitų taisyklių. Gautos taisyklės alternatyvos yra lyginamos su žetonų sąrašu
+				formuojant abstraktų sintaksės medį.
+				
+				Taisyklės alternatyvos atitikimas žetonų sąrašui tikrinamas lyginant taisyklę sudarančius žetonus su žetonų sąrašo
+				elementais.
+					Jei alternatyvos elementas yra nuoroda į kitą taisyklę mėginama pritaikyti tą taisyklę
+					Jei alternatyvos elementas yra terminalinis žetonas tikrinama ar jis lygus dabar tikrinamam žetonų sąrašo
+					žetonui.
 
-					Jei bent vienas alternatyvos elementas neatitinka žetonų sąrašo elementų mėginama taikyti sekančią alternatyvą. Jei
-					visos alternatyvos netinka teigiama kad ši taisyklė netinka šiam kodo segmentui, išvalomas šios taisyklės suformuotas
-					medis ir grįžtama.
-					Jei alternatyva atitiko žetonų sąrašą į abstraktų sintaksės medį įrašomas suformuotas medis ir grįžtama.
+				Jei bent vienas alternatyvos elementas neatitinka žetonų sąrašo elementų mėginama taikyti sekančią alternatyvą. Jei
+				visos alternatyvos netinka teigiama kad ši taisyklė netinka šiam kodo segmentui, išvalomas šios taisyklės suformuotas
+				medis ir grįžtama.
+				Jei alternatyva atitiko žetonų sąrašą į abstraktų sintaksės medį įrašomas suformuotas medis ir grįžtama.
 
-					Tikrinamos visos taisyklės alternayvos kol randama pirma tinkanti, pagal ją suformuojama medžio šaka ir grįžtama.
-					Suformuotas AST savo struktūra atitinka taisykles.
+				Tikrinamos visos taisyklės alternayvos kol randama pirma tinkanti, pagal ją suformuojama medžio šaka ir grįžtama.
+				Suformuotas AST savo struktūra atitinka taisykles.
 
-					Tokia analizė yra bekontekstė, nes taikant taisyklė yra tikrinama tik ta kodo dalis kuri yra nepanaudota, nėra
-					saugoma globali būsena.
+				Tokia analizė yra bekontekstė, nes taikant taisyklė yra tikrinama tik ta kodo dalis kuri yra nepanaudota, nėra
+				saugoma globali būsena.
 
 
-					Jei programos kodas yra validus po taisyklių pritaikymo visi žetonai būna sunaudoti ir patalpinti abstrakčiame
-					sintaksės medyje. Tačiau ne visas kodas yra validus, ir vartotojams reikia pranešti apie jų padarytas klaidas.
-					Taisyklių taikymo mechanizmas to nepalaiko - kai taisyklė nebūna pritaikyta bandoma taikyti alternatyvą, dėl
-					konteksto nebuvimo neina stebėti ar dar yra kitų galimų taisyklių. Tam yra sekama kiek žetonų buvo analizuota. Jei
-					nebuvo sugeneruotas validus AST apimantis visą žetonų masyvą žetonai tarp paskutinio panaudoto žetono ir atsistatymo
-					taško yra pažymimi kaip nesuprasti ir analizė yra tęsiama nuo atsistatymo taško siekiant pranešti daugiau nei vieną
-					klaidą kompiliavimo metu.
+				Jei programos kodas yra validus po taisyklių pritaikymo visi žetonai būna sunaudoti ir patalpinti abstrakčiame
+				sintaksės medyje. Tačiau ne visas kodas yra validus, ir vartotojams reikia pranešti apie jų padarytas klaidas.
+				Taisyklių taikymo mechanizmas to nepalaiko - kai taisyklė nebūna pritaikyta bandoma taikyti alternatyvą, dėl
+				konteksto nebuvimo neina stebėti ar dar yra kitų galimų taisyklių. Tam yra sekama kiek žetonų buvo analizuota. Jei
+				nebuvo sugeneruotas validus AST apimantis visą žetonų masyvą žetonai tarp paskutinio panaudoto žetono ir atsistatymo
+				taško yra pažymimi kaip nesuprasti ir analizė yra tęsiama nuo atsistatymo taško siekiant pranešti daugiau nei vieną
+				klaidą kompiliavimo metu.
 
-					Atistatymo taškai yra žetonai kuriuos sekantis kodas gali būti išanalizuotas kaip kodo struktūra. Tai yra žetonai ";",
-					"{", "}".
+				Atistatymo taškai yra žetonai kuriuos sekantis kodas gali būti išanalizuotas kaip kodo struktūra. Tai yra žetonai ";",
+				"{", "}".
 
-					SyntaxMatcher veikimo metodas nėra optimalus atminties naudojimo atžvilgiu - jam tikrinant taisykles yra plečiamas AST,
-					jei taisyklė nepavyko jo dalis yra ištrinama ir kuriama iš naujo. Tai reiškia kad yra perkuriama itin daug objektų.
-					Dėl to SyntaxMatcher modulio viduje AST struktūra saugoma ne Garbage Collector valdomoje atmintyje o kitame dėklo
-					tipo konteineryje kuris leidžia perpanaudoti atminties blokus.
-					
-					Tam kad nereikėtų naudoti šios struktūros kituose moduliuose po suformavimo AST transformuojamas į medį kurio atmintį 
-					valdo Garbage Collector.
+				SyntaxMatcher veikimo metodas nėra optimalus atminties naudojimo atžvilgiu - jam tikrinant taisykles yra plečiamas AST,
+				jei taisyklė nepavyko jo dalis yra ištrinama ir kuriama iš naujo. Tai reiškia kad yra perkuriama itin daug objektų.
+				Dėl to SyntaxMatcher modulio viduje AST struktūra saugoma ne Garbage Collector valdomoje atmintyje o kitame dėklo
+				tipo konteineryje kuris leidžia perpanaudoti atminties blokus.
+				
+				Tam kad nereikėtų naudoti šios struktūros kituose moduliuose po suformavimo AST transformuojamas į medį kurio atmintį 
+				valdo Garbage Collector.
 
-				5.1.1.3.2. Testavimas
+			5.1.1.4. „PostProcesor“
 
-					SyntaxMatcher testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami AST kurie yra lyginami 
-					su ankstesnės versijos modulio sugeneruotais AST. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo segmentą
-					kurį norima validuoti ir peržiūrėti sugeneruotą AST tikrinant jo korektiškumą.
-					Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei keičiasi medžio API reikia pergeneruoti
-					ir patikrinti daug duomenų.
-					
-					Testuose taip pat tikrinama kad medžiuose nėra nei vieno neatpažinto žetono kas reikštų kad taisyklių rinkinys nepadengia visos
-					kalbos gramatikos.
-
-			5.1.1.4. „PostProcesorius“
-
-				PostProcesoirius yra hackas skirtas pridėti kontekstą į bekontekstinį lexerį. Post procesoriai vykdomi iteruojant per ast ir 
-				tikrinant kuris simbolis rastas, jie gali būti keičiami, restrukūtrizuojami, pašalinami. Aktyvšs post'ai:
+				„PostProcesor“ yra modulis skirtas pridėti kontekstą į bekontekstinį lexerį. Po pirminės analizės kuri suformuoja abstraktų
+				sintaksės medį medis yra transformuojamas kiekvienu aktyviu šio modulio elementu. Šio apdorojimo metu tikrinama medžio
+				struktūra ir ji keičiama modifikuojant medžio šakas - keičiamos elementų pozicijos, jų tipai, šalinami ir pridedami
+				elementai. Atliekamos operacijos:
 					Operatorių prioritetizavimas
 					Funkcijų ir masyvų atskyrimas
 					Neigiamų skaičių atpažinimas
@@ -1941,22 +1913,20 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				5.1.1.4.1. Operatorių prioritetizavimas
 
-					Naudojamas Dijkstros Shunting yard algoritmas ([4] §Making a Translator for ALGOL 60) įprastos, infiksinės, aritmetinių veiksmų 
+					Naudojamas „Dijkstros Shunting yard“ algoritmas ([4] §Making a Translator for ALGOL 60) įprastos, infiksinės, aritmetinių veiksmų 
 					notacijos kurioje naudojami operatoriai yra tarp operandų transformavimui į atvikštinę lenkišką notaciją. Tai atliekama 
-					nenaudojant RulePool modulio, nes tai sudarė itin didelį kiekį papildomų taisyklių kurios turėjo būti naudojamos kiekvienai 
-					reikšmei. Tai lėmė analizės sulėtėjimą bei sudėtingą RulePool modulio taisyklių sąrašą.
-
-					Testavimas vykdomas lyginant gautą atvirkštinės lenkiškos notacjios veiksmą su apdorotu infiksinės notacijos rezultatu.
+					nenaudojant „RulePool“ modulio, nes tai sudarė itin didelį kiekį papildomų taisyklių kurios turėjo būti naudojamos kiekvienai 
+					reikšmei. Tai lėmė analizės sulėtėjimą bei sudėtingą „RulePool“ modulio taisyklių sąrašą.
 
 				5.1.1.4.2. Funkcijų ir masyvų atskyrimas:
 
-					Kalbos kūrimo metu pastebėta kad kai kurios kalbos struktūros (taipai bei funkcijos) reikalauja tam tikro konteksto jų analizei. 
-					Tai reiškia kad jie negali būti teisingai išanalizuoti naudojant SyntaxMatcher modulį. Pasirinkta juos laikyti funkcijomis ir 
+					Kalbos kūrimo metu pastebėta, kad kai kurios kalbos struktūros (taipai bei funkcijos) reikalauja tam tikro konteksto jų analizei. 
+					Tai reiškia kad jie negali būti teisingai išanalizuoti naudojant „SyntaxMatcher“ modulį. Pasirinkta juos laikyti funkcijomis ir 
 					kai žinomas papildomas kontekstas juos versti į teisingą tipą - funkcijos arba masyvo.					
 
 				5.1.1.4.3. Neigiamų skaičių atpažinimas:
 				
-					Neigiami skaičiai yra išanalizuojami į vienanarį minuso operatorių bei skaičių. Tai reiškė kad parsinimo dalyje jie negali būti
+					Neigiami skaičiai yra išanalizuojami į vienanarį minuso operatorių bei skaičių. Tai reiškė kad modulyje „Parser“ jie negali būti
 					teisingai atpažinti kaip neigiami skaičiai. Pridėta baigiamoji daryklė kuri randa tokius atvejus bei juos perdaro į neigiamų 
 					skaičių leksemas.
 
@@ -1964,8 +1934,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 					Pilni tipai, objektų narių pasiekimas naudoja taško operatorių. Tokios struktūros yra analizuojamos į sąrašą taškais
 					atskirtų leksemų, tačiau loginiu atžvilgiu tai turėtų būti medis kur kiekvienas sekantis taškas yra ankstesnio taško
-					segmento vaikas - struktūra System.Console.WriteLine turi būti išanalizuota į medį System -> Console -> WriteLine
-					o ne ["System", ".", "Console", ".", "WriteLine"]. Tačiau medžio formavimas reikalauja rekursijos kuri lėtina
+					segmento vaikas - struktūra „System.Console.WriteLine“ turi būti išanalizuota į medį „System“ -> „Console“ -> „WriteLine“
+					o ne [„System“, „.“, „Console“, „.“, „WriteLine“]. Tačiau medžio formavimas reikalauja rekursijos kuri lėtina
 					analizę. Dėl to sąrašas yra performuojamas į medį naudojant papildomą baigiamąją daryklę.
 
 				5.1.1.4.5. Perteklinių medžio šakų minimizavimas
@@ -2450,8 +2420,32 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		lekserio testai, parserio testai, kodo generatoriaus testai ir integracijos testai. 
 
 		5.3.1. Lekserio testavimas
-			;; Testai bailiams
+			Visi moduliai testuoti skirtingai, atsižvelgiant į jų veikimo principą.
+			
+			5.3.1.1 „Tokenizer“ testavimas
+					Modulis testuojamas naudojant išeities kodo pavyzdžius kurie sudaryti taip kad testais būtų padengtas visas šio modulis. 
+					Testai vyikdomi sugeneruojant leksemų sąrašą ir jį lyginant su anksčiau sugeneruotu leksemų sąrašu. Jei leksemų sąrašai 
+					nesutampa apie tai pranešama programuotojui ir jie patikrinami, lyginant su siekiamu rezultatu. Pagal tai ar atitinka 
+					rezultatą nusprendžiama ar testas yra sėkmingas ar nesėkmingas. Visi gauti sąrašai yra serializuojami ir saugomi kartu 
+					su testų duomenų sąrašu.
 
+			5.3.1.2 „RulePool“ testavimas
+
+					Taisyklių sąrašas testuotas jį naudojant sintaksės atpažinimo modulyje bei atliekant taisyklių analizę:
+						Tikrinama ar nėra nenaudojamų taisyklių
+						Tikrinama ar visi galimi žetonai yra apibrėžti taisyklėse
+						Tikrinama ar nėra begalinės rekursijos taisyklėse 
+
+			5.3.1.3 „Syntax Matcher“ testavimas
+
+					„SyntaxMatcher“ testuojamas regresiniais testais. Naudojant abię išeities kodo pavyzdžių yra sugeneurojami AST kurie yra lyginami 
+					su ankstesnės versijos modulio sugeneruotais AST. Tai leidžia paprastai sukurti naujus testus - užtenka parašyti kodo segmentą
+					kurį norima validuoti ir peržiūrėti sugeneruotą AST tikrinant jo korektiškumą.
+					Tokio testavimo trūkumai - kartu su išeities kodu reikia saugoti serializuotus ast, jei keičiasi medžio API reikia pergeneruoti
+					ir patikrinti daug duomenų.
+					
+					Testuose taip pat tikrinama kad medžiuose nėra nei vieno neatpažinto žetono kas reikštų kad taisyklių rinkinys nepadengia visos
+					kalbos gramatikos.
 
 			;;	Planas:
 			;;		RulePool testavimas - koki testai, kiek jų, rezultatai, kaip implementuoti testai (dfs kažkur atrodo buvo, įdomu tas visai)
