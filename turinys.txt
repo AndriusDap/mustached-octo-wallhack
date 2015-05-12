@@ -618,7 +618,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		2.4.11. Masyvų kūrimas
 		2.4.12. Nurodomasis tipo keitimas
 
-			Objektų tipas gali būti keičimas naudojant nurodomojo tipo keitimo operatorių kuris yra apskliaustas norimas tipas:
+			Jeigu statiškai neįmanoma įrodyti keitimo korektiškumo, bet vartotojas žino, jog jis bus teisingas, galimas nurodomasis tipo keitimas. 
+			Šiame keitime vartotojas nurodo tipą į kurį nori keisti naudojant tipo keitimo operatorių apskliaustą norimą tipą:
 
 			(<naujas tipas>) <objektas kurio tipas keičiamas>
 
@@ -627,7 +628,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			string bar = "bar";
 			auto foo = (Object) bar; 
 
-			Tipai gali būti keičiami iš vaiko klasės į tėvinę klasę ar sąsają.
+			Tipo keitimas yra galimas kai 
+			•	Abu tipai yra primityvūs ir nei vienas jų nėra bool.
+			•	Vienas iš tipų gali būti priskirtas kitam.
 
 
 	2.5. Sakiniai
