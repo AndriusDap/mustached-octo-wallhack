@@ -1464,52 +1464,60 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	4.3. Dainelė apie alaus butelius
 
-		Ši programa atspausdina dainelės apie alaus butelius tekstą.
+		Ši programa deklamuoja dainelės apie alaus butelius tekstą.
+		
+		// Ši programa naudoja biblioteką System.Speech.dll
+		use System;
+		use System.Speech.Synthesis;
 
-			use System;
-
-			entry auto BeerBottleSong = int()
-			{
-				auto count = 99;
-				Console.WriteLine("{0} on the wall, {0}.", Bottles(count));
-
-				while ((count -= 1) >= 0)
-				{
-					Console.WriteLine("Take one down and pass it around, {0} on the wall.", Bottles(count));
-					Console.WriteLine();
-					Console.WriteLine("{0} on the wall, {0}.", Bottles(count));
-				}
+		entry auto BeerBottleSong = int()
+		{
+			auto synthesizer = SpeechSynthesizer();
+			synthesizer.SetOutputToDefaultAudioDevice();
 	
-				Console.WriteLine("Go to the store and buy some more, {0} on the wall.", Bottles(99));
-				Console.ReadKey();
-				return 0;
-			};
+			const auto firstLine = string(int count) { return string.Format("{0} on the wall, {0}.", Bottles(count)); };
+			const auto secondLine = string(int count) { return string.Format("Take one down and pass it around, {0} on the wall.", Bottles(count)); };
+			const auto finalLine = string.Format("Go to the store and buy some more, {0} on the wall.", Bottles(99));
 
-			auto Bottles = string(int count)
+			auto count = 99;
+
+			synthesizer.Speak(firstLine(count));
+
+			while ((count -= 1) >= 0)
 			{
-				string ret;
+				synthesizer.Speak(secondLine(count));
+				synthesizer.Speak(firstLine(count));
+			}
+	
+			synthesizer.Speak(finalLine);
+			return 0;
+		};
 
-				if (count > 0)
+		auto Bottles = string(int count)
+		{
+			string ret;
+
+			if (count > 0)
+			{
+				ret += count;
+
+				if (count > 1)
 				{
-					ret += count;
-
-					if (count > 1)
-					{
-						ret += " bottles ";
-					}
-					else
-					{
-						ret += " bottle ";
-					}
+					ret += " bottles ";
 				}
 				else
 				{
-					ret += "no more bottles ";
+					ret += " bottle ";
 				}
+			}
+			else
+			{
+				ret += "no more bottles ";
+			}
 
-				ret += "of beer";
-				return ret;
-			};
+			ret += "of beer";
+			return ret;
+		};
 
 	4.4. Pirminiai skaičiai
 
