@@ -622,7 +622,48 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			;; tai ne implementation detail - D?
 			;; Ne, nes tai language feature, nes gali infinite recursion daryt
 
+		2.4.7 Operatorių perdengimas
+
+			LaborasLang palaiko palaiko perdengtų operatorių panaudojimą. Perdengtus operatorius galima iškviesti, jei jie yra deklaruoti 
+			pagal CLI standartą ([1] §I.10.3 Operator overloading). Tokios išraiškos rezultatas yra kviečiamas operatoriaus metodas.
+
+			Pavyzdžiui:
+
+				bool foo = "foo" == "bar";
+
+			Kompiliavimo metu yra keičiama:
+
+				bool foo = System.String.op_Equality("foo", "bar");
+
 		2.4.7. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
+
+			Priskyrimo operacija yra naudojama vienai išraiškai priskirti kitos išraiškos reikšmę.
+
+			<kairysis operandas> <operatorius> <dešinysis operandas>
+
+			Kairysis operandas privalo būti kairinė išraiška, dešinysis - dešininė.
+
+			Operandų tipai turi sutapti, arba turi būti galimas automatinis dešinio operandi tipo keitimas į kairiojo operando tipą.
+
+			LaborasLang palaiko paprastą priskyrimą "=" ir sudėtinį priskyrimą "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=".
+
+			Paprastasis priskyrimas kariajam operandui priskiria dešiniojo reikšmę. Sudėtinis priskyrimas atlieka atitinkamą dvinarę 
+			operaciją tarp abiejų operandų ir reikšmę priskiria kairiajam. 
+
+			Pavyzdys:
+
+				a += b;
+				a <<= b;
+
+			Yra analogiška
+
+				a = a + b;
+				a = a << b;
+
+			Tokio priskyrimo atveju kairysis operandas taip turi būti ir dešininė išraiška, kadangi jo reikšmė bus skaitoma.
+
+			Visi priskyrimo operatoriai išskyrus "=" gali būti perdengti. 
+			
 		2.4.8. Vienanarės operacijos
 			
 			Palaikomi vienanariai operatoriai yra
