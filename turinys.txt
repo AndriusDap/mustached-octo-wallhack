@@ -709,6 +709,21 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.7.4. Stūmimo operacijos
 
 		2.4.10. Objektų kūrimas
+			
+			Objekto kūrimo išraiška grąžina naują objektą. Jos pavidalas yra toks:
+			
+			<tipas>(<argumentų sąrašas>)
+
+			ši išraiška pažymi, jog objektas yra sukūriamas naudojantis tam tikru konstruktoriumi - metodu, skirtu sukonstruoti objektą.
+			Nurodyti argumentai turi būti suderinami su bent vienu tipo konstruktoriaus parametrais. Vienintelė šio atvejo išimtis yra
+			vertės tipo objekto kūrimas - vertės tipai visada turi konstruktorių be parametrų, netgi jei jis nenurodytas. Objekto
+			konstruktoriaus kvietimui galioja tokie patys reikalavimai kaip ir funkcijų kvietimui (§2.4.6. Funkcijos kvietimai).
+
+			Objekto kūrimo pavyzdžiai:
+			
+				auto integer = int(); // Sukūrimas naujas sveikasis skaičius
+				auto reader = StreamReader("C:\Windows\System32\ntoskrnl.exe"); // Sukūriamas naujas failų skaitymo objektas, nurodant vietą, iš kur skaitomas 
+
 		2.4.11. Masyvų kūrimas
 
 			Masyvo kūrimo išraiška, panašiai kaip objekto kūrimo, įvykdyta grąžina naują masyvą.
