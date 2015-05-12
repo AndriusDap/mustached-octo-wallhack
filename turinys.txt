@@ -2464,18 +2464,55 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		Pavyzdinis LaborasLang programavimo kalbos kompiliatorius be standartinių .NET karkaso bibliotekų naudojo vieną biblioteką:	Mono.Cecil
 		(https://github.com/jbevain/cecil). Ši biblioteka leidžia patogiai manipuliuoti CIL kodu ir asemblių metaduomenimis. Jos pagalba,
-		kompiliatorius sugeba nuskaityti iš disko asemblius, sukurti naujus asemblius, modifikuoti jų vidų (pavyzdžiui, generuoti kodą).
+		kompiliatorius sugeba nuskaityti iš disko asemblius, sukurti naujus asemblius, modifikuoti jų vidų (pavyzdžiui, generuoti kodą) ir
+		sukurti PDB failus, kurie leidžia įvairioms derintuvėms derinti sukompiliuotą programą.
 
 	5.5. Vartotojo dokumentacija
+
+		LaborasLang pavyzdinis kompiliatorius turi komandinės eilutės vartotojo sąsają. Kompiliatoriui visi parameterai yra paduodami juos
+		perduodant kaip komandinės eilutės argumentus. Bendras komandinės eilutės formatas yra toks:
+		
+			LaborasLangCompiler.exe <kompiliatoriaus_argumentai>
+
+		Visi argumentai yra atskiriami tarpu. Jei tam tikrame argumente yra tarpų, jį galima apgauti kabutėmis, taip pažymint, jog tai yra vienas
+		argumentas. Galimi kompiatoriaus argumentai yra pateikiami žemiau pavaizduoje lentelėje.
+
+		Argumento formatas           Argumento pavyzdžiai            Apibrėžimas ir pastabos
+
+		<išeities_kodo_failas>       "C:\My Docs\HelloWorld.ll"      Šiuo parametru yra nurodomas programos išeities kodo failas. Programą gali
+		                             ..\HelloWorld.ll                sudaryti vienas arba daugiau išeities kodo failų.
+									 HelloWorld.ll
+
+		/OUT:<asemblio_failas>		 /OUT:C:\out.exe                 Nurodo, kur kompiliatorius turi padėti ir kaip pavadinti
+		                             /OUT:..\out.dll                 sukompiliuotą asemblį. Jei programą sudaro tik vienas išeities kodo failas,
+									 /OUT:"hello world.exe"          šis argumentas nebūtinas - jo nenurodžius, kompiliatorius asemblį sukuria
+																     šalia išeities kodo failo. Šį parametrą galima nurodyti tik vieną kartą.
+
+		/REF:<bibliotekos_nuoroda>   /REF:System.dll                 Nurodo, jog kompiliuojama programa naudoja nurodytą biblioteką
+		                             /REF:System.Forms.dll           (§5.5.2. Bibliotekų nuorodos)
+									 /REF:E:\MyDotNetLibrary.dll
+
+		/DEBUG                                                       Nurodo kompiliatoriui nenaudoti „NOP instrukcijų šalinimo“ ir
+		                                                             „negyvo kodo šalinimo“ optimizacijų.
+
+		/CONSOLE                                                     Nurodo sukompiliuoto asemblio tipą (§5.5.1. Išvesties tipai). Išvesties tipą
+		/WINDOWS                                                     galima nurodyti tik vieną kartą. Šis parameteras nėra būtinas - jo nenurodžius
+		/DLL                                                         naudojama jo numatytoji reikšmė „/CONSOLE“.
+		
+		/ROOT:<šakninė_directorija>  /ROOT:C:\SourceFiles            Nurodo šakninę programos direktoriją (§5.5.3. Šakninės direktorijos). Šakninių
+		                             /ROOT:..\SomeOtherFolder        direktorijų gali būti daugiau nei viena, tačiau šis parameteras nėra būtinas.
+
+
 		5.5.1. Išvesties tipai
 		5.5.2. Bibliotekų nuorodos
 		5.5.3. Šakninės direktorijos
+
 6. Išvados
 
 7. Literatūra
 
 	[1] - Standard ECMA-335 - Common Language Infrastructure (CLI) (http://www.ecma-international.org/publications/standards/Ecma-335.htm)
-	[2] - Parsing Expression Grammars: A Recognition-Based Syntactic Foundation - (http://bford.info/pub/lang/peg.pdf)
+	[2] - Parsing Expression Grammars: A Recognition-Based Syntactic Foundation (http://bford.info/pub/lang/peg.pdf)
 	[3] - Packrat Parsing: Simple, Powerful, Lazy, Linear Time (http://bford.info/pub/lang/packrat-icfp02.pdf)
 	[4] - ALGOL-60 Translation (http://www.cs.utexas.edu/~EWD/MCReps/MR35.PDF)
 	
