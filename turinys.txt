@@ -1802,7 +1802,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Abstraktaus sintaksės medžio generavimas atliekamas trimis žingsniais:
 				1. Išeities kodo skaidymas žetonais (leksemomis)
 				2. Pirminis žetonų formavimas į abstraktų sintaksės medį
-				3. AST medžio apdorojimas baigiamosiomis doroklėmis (post processors)
+				3. AST medžio apdorojimas baigiamosiomis doroklėmis
 			Pirmas žingsnis atliekamas "Tokenizer" komponento, antrasis - "Syntax matcher" modulio, trečiasis "Post processor" modulio. 
 				;;todo išversti šitus žodžius, gal Jusas pasiūlys kokias lietuviškas alternatyvas
 				;; Jusas sakė neversti - T.
@@ -1922,9 +1922,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				Tam kad nereikėtų naudoti šios struktūros kituose moduliuose po suformavimo AST transformuojamas į medį kurio atmintį 
 				valdo Garbage Collector.
 
-			5.1.1.4. „PostProcesor“
+			5.1.1.4. „PostProcessor“
 
-				„PostProcesor“ yra modulis skirtas pridėti kontekstą į bekontekstinį lexerį. Po pirminės analizės kuri suformuoja abstraktų
+				„PostProcessor“ yra modulis skirtas pridėti kontekstą į bekontekstinį lexerį. Po pirminės analizės kuri suformuoja abstraktų
 				sintaksės medį medis yra transformuojamas kiekvienu aktyviu šio modulio elementu. Šio apdorojimo metu tikrinama medžio
 				struktūra ir ji keičiama modifikuojant medžio šakas - keičiamos elementų pozicijos, jų tipai, šalinami ir pridedami
 				elementai. Atliekamos operacijos:
@@ -1936,7 +1936,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				5.1.1.4.1. Operatorių prioritetizavimas
 
-					Naudojamas „Dijkstros Shunting yard“ algoritmas ([4] §Making a Translator for ALGOL 60) įprastos, infiksinės, aritmetinių veiksmų 
+					Naudojamas Dijkstros „Shunting yard“ algoritmas ([4] §Making a Translator for ALGOL 60) įprastos, infiksinės, aritmetinių veiksmų 
 					notacijos kurioje naudojami operatoriai yra tarp operandų transformavimui į atvikštinę lenkišką notaciją. Tai atliekama 
 					nenaudojant „RulePool“ modulio, nes tai sudarė itin didelį kiekį papildomų taisyklių kurios turėjo būti naudojamos kiekvienai 
 					reikšmei. Tai lėmė analizės sulėtėjimą bei sudėtingą „RulePool“ modulio taisyklių sąrašą.
