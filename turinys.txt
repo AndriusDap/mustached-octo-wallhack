@@ -296,10 +296,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		Abi deklaracijos sukompiliuojamos į identišką kodą.
 
 	2.3. Operatorių prioritetas
+
 		Galimi operatoriai, surikiuoti nuo aukščiausio prioriteto iki žemiausio, yra:
-		;; trūksta cast, reikia patikrinti ar nemeluojam
-			Taško operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
-			Vienanariai operatoriai: inversija ~x, neigimas !a, minuso ženklas -x, didinimo vienetu ++x, mažinimo vienetu --x
+
+			Nario išraiškos operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
+			Vienanariai operatoriai: bitų inversija ~x, loginė inversija !a, aritmetinė inversija -x, didinimo vienetu ++x, mažinimo vienetu --x, nurodomojo tipo keitimo operarius (<tipas>)x
 			Daugybos *, dalybos /, liekanos % operatoriai
 			Sudėties + ir skirtumo -
 			Postūmio operatoriai: postūmis į kairę << ir postūmis į dešinę >>
@@ -310,8 +311,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Priskyrimo operatoriai: =, *=, /=, %=, +=, -=, <<=, >>=, &=, ^=, |=
 
 		Operatorių prioritetas gali būti valdomas naudojant skliaustus:
-			auto a = 3 + 4 * 5; //a reikšmė yra 23, skaičiuojama kaip 3 + (4 * 5)
-			auto b = (3 + 4) * 5; //b reikšmė yra 35, skaičiuojama kaip (3 + 4) * 5
+
+			auto a = 3 + 4 * 5; // a reikšmė yra 23, skaičiuojama kaip 3 + (4 * 5)
+			auto b = (3 + 4) * 5; // b reikšmė yra 35, skaičiuojama kaip (3 + 4) * 5
 			auto c = (2 + 2).ToString(); //apskaičiuojama 2 + 2 reikšmė ir jai iškviečiamas metodas ToString
 
 	2.3. Kintamieji
@@ -666,28 +668,39 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.4.8. Vienanarės operacijos
 			
-			Palaikomi vienanariai operatoriai yra
-				Didinimo vienetu operatorius ++ 
-				Mažinimo vienetu operatorius --
-				Minuso ženklas -
-				Inversija ~ 
-				Neiginys !
+			Programavimo kalba LaborasLang palaiko penkis vienarius operatorius: 
+				* Didinimo vienetu operatorius ++ 
+				* Mažinimo vienetu operatorius --
+				* Aritmetinė inversija -
+				* Bitų inversija ~ 
+				* Loginė inversija !
 			
-			Operatoriai ++, -- naudojami operando didinimui ar mažinimui vienetu, nuo jų naudojimo vietos (prieš ar po operando) priklauso grąžinama reikšmė:
+			Operatoriai ++ ir -- naudojami operando didinimui ar mažinimui vienetu. Šiuos operatorius galima rašyti prieš arba po operando.
+			Šie operatoriai pakeičia operando reikšmę, todėl šių operatorių operandas turi būti kairinė reikšmė. Operatoriaus grąžinamas
+			rezultatas priklauso nuo to, kurioje operando pusėje parašytas operatorius:
 
-				auto a = 5--; // Operatorius naudojamas už operando grąžins pakeistą reikšmę, a vertė bus 4.
-				auto b = ++4; // Operatorius naudojamas prieš operandą grąžins reikšmę prieš jos pakeitimą, b vertė bus 4.
-			Kiti vienanariai operatoriai yra minuso ženklas -, inversija ~, neiginys !. Jie gali būti naudojami tik prieš operandą.
+				auto value = 5;
+				auto a = value--; // Operatorius grąžina seną operando reikšmę - a vertė bus 5.
+				auto b = ++value; // Operatorius grąžina naują operando reikšmę - b vertė bus 5.
+
+			Po šių operacijų, value reikšmė bus lygi pradinei reikšmei - 5.
+
+			Kiti vienanariai operatoriai yra aritmetinė, bitų ir loginė inversijos. Jie gali būti naudojami tik prieš operandą. Šie
+			operatoriai nekeičia operandų reikšmės, todėl juos galima naudoti ant dešininių reikšmių.
 			
-			Minuso operatorius atitinka daugybą iš -1:
+			Aritmetinė inversija atitinka daugybą iš -1:
+
 				auto a = 1;
 				auto b = -a; // b reikšmė yra -1.
 
-			Inversijos operatorius ~ gali būti naudojamas kai jo operandas yra sveiko skaičiaus tipo, šis operatorius pakeičia visus skaičiaus bitus į priešingą reikšmę:
-				auto a = ~1;
+			Bitų inversijos operatorius gali būti naudojamas kai jo operandas yra sveikasis skaičius. Šis operatorius pakeičia visus
+			skaičiaus bitus į priešingą reikšmę:
 
-			Neigimo operatorius ! gali b8ti naudojamas loginiams operandams, jis paneigia jų reikšmę. Naudojamas prieš operandą:
-				auto a = !true;// a reikšmė yra false
+				auto a = ~1; // a reikšmė bus -2
+
+			Loginės inversijos operatorius gali būti naudojamas tik ant bool tipo operandų. Jis pakeičia jo reikšmę į priešingą.
+
+				auto a = !true; // a reikšmė yra false
 
 		2.4.9. Dvinarės operacijos
 			2.4.7.1. Aritmetinės operacijos
