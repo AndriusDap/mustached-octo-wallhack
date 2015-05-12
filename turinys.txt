@@ -299,7 +299,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		Galimi operatoriai, surikiuoti nuo aukščiausio prioriteto iki žemiausio, yra:
 		;; trūksta cast, reikia patikrinti ar nemeluojam
 			Taško operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
-			Vienanariai operatoriai: inversija ~x, neigimas !a, minuso ženklas -x, didinimo vienetu ++x, mažinimo vienetu --x
+			Vienanariai operatoriai: inversija ~x, neigimas !a, minuso ženklas -x, didinimo vienetu ++x, mažinimo vienetu --x, nurodomojo tipo keitimo operarius (<tipas>)x
 			Daugybos *, dalybos /, liekanos % operatoriai
 			Sudėties + ir skirtumo -
 			Postūmio operatoriai: postūmis į kairę << ir postūmis į dešinę >>
