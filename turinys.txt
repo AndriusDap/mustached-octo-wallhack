@@ -480,7 +480,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Pavyzdžiai:
 
-					int arr = int[]{1, 2, 3};
+					int[] arr = int[] { 1, 2, 3 };
 					Console.WriteLine(arr[2]); // išspausdina "3"
 
 					getMap()["foo"];
@@ -593,11 +593,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				entry auto main = void()
 				{
-					byte a = 5;
+					uint8 a = 5;
 					foo(a); // klaida
 				};
 
-				Kadangi "byte" galima automatiškai keisti ir į "int" ir į "long", neįmanoma konkrečiai pasakyti kuri funkcija tinka.
+				Kadangi "uint8" galima automatiškai keisti ir į "int" ir į "long", neįmanoma konkrečiai pasakyti kuri funkcija tinka.
 
 			;; Čia reikia nepamiršti paminėti tail calls
 			;; tai ne implementation detail - D?
@@ -916,7 +916,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 					{
 						int a = 5;
-						float a = 0.0; // klaida, kintamasis "a" jau deklaruotas
+						float a = 0.0f; // klaida, kintamasis "a" jau deklaruotas
 					}
 
 				Tačiau, vardas gali būti vėl panaudojamas gilesniame bloke.
@@ -1073,6 +1073,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 
 						// Šis ciklas analogiškas while ciklui
+						int i = 0;
 						for (; i < 10;)
 						{
 							Console.WriteLine(i);
@@ -1405,7 +1406,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			sąlygos sakinys sudaromas iš raktažodžio "if", apskliaustos dešininės reikšmės, kodo struktūros kuri bus vykdoma jei sąlyga
 			yra teisinga bei neprivalomo "else" raktažodžio kartu su kodo struktūra kuri bus vykdoma jei sąlyga yra neteisinga
 
-4. LaborasLang programų pavyzdžiai	;; TODO: make sure everything builds and actually works
+4. LaborasLang programų pavyzdžiai
 	
 	Šiame skyriuje yra pateikiamos pavyzdinės LaborasLang programavimo kalbos programos.
 
@@ -1562,6 +1563,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		Pateikta programa iš įvestos interneto svetainės parsiunčia jos pavadinimą.
 
+			// Ši programa naudoja biblioteką System.dll
 			use System;
 			use System.IO;
 			use System.Net;
@@ -1592,6 +1594,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		Ši programa yra paprastas skaičiuotuvas, galintis atlikti keturias aritmetines operacijas: sudėti, atimti, dauginti ir dalinti.
 		Ji grafinei sąsajai naudoja Windows Forms karkasą.
 
+			// Ši programa naudoja bibliotekas System.Windows.Forms.dll ir System.Drawing.dll
 			use System;
 			use System.Drawing;
 			use System.Globalization;
@@ -2562,9 +2565,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		/REF:<bibliotekos_nuoroda>   /REF:System.dll                 Nurodo, jog kompiliuojama programa naudoja nurodytą biblioteką
 		                             /REF:System.Forms.dll           (§5.5.2. Bibliotekų nuorodos)
 									 /REF:E:\MyDotNetLibrary.dll
-
-		/DEBUG                                                       Nurodo kompiliatoriui nenaudoti „NOP instrukcijų šalinimo“ ir
-		                                                             „negyvo kodo šalinimo“ optimizacijų.
 
 		/CONSOLE                                                     Nurodo sukompiliuoto asemblio tipą (§5.5.1. Išvesties tipai). Išvesties tipą
 		/WINDOWS                                                     galima nurodyti tik vieną kartą. Šis parameteras nėra būtinas - jo nenurodžius
