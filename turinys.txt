@@ -605,10 +605,30 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.4.7. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
 		2.4.8. Vienanarės operacijos
-			;;2.4.6.1. Aritmeninės operacijos
-			;;2.4.6.2. Loginės operacijos
-			;;2.4.6.3. Bitinės operacijos
-			;;Joined
+			
+			Palaikomi vienanariai operatoriai yra
+				Didinimo vienetu operatorius ++ 
+				Mažinimo vienetu operatorius --
+				Minuso ženklas -
+				Inversija ~ 
+				Neiginys !
+			
+			Operatoriai ++, -- naudojami operando didinimui ar mažinimui vienetu, nuo jų naudojimo vietos (prieš ar po operando) priklauso grąžinama reikšmė:
+
+				auto a = 5--; // Operatorius naudojamas už operando grąžins pakeistą reikšmę, a vertė bus 4.
+				auto b = ++4; // Operatorius naudojamas prieš operandą grąžins reikšmę prieš jos pakeitimą, b vertė bus 4.
+			Kiti vienanariai operatoriai yra minuso ženklas -, inversija ~, neiginys !. Jie gali būti naudojami tik prieš operandą.
+			
+			Minuso operatorius atitinka daugybą iš -1:
+				auto a = 1;
+				auto b = -a; // b reikšmė yra -1.
+
+			Inversijos operatorius ~ gali būti naudojamas kai jo operandas yra sveiko skaičiaus tipo, šis operatorius pakeičia visus skaičiaus bitus į priešingą reikšmę:
+				auto a = ~1;
+
+			Neigimo operatorius ! gali b8ti naudojamas loginiams operandams, jis paneigia jų reikšmę. Naudojamas prieš operandą:
+				auto a = !true;// a reikšmė yra false
+
 		2.4.9. Dvinarės operacijos
 			2.4.7.1. Aritmetinės operacijos
 			2.4.7.2. Loginės operacijos
