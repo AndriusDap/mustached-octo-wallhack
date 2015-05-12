@@ -2228,7 +2228,37 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.2.x Indekso išraiška
 
+				Didžiausia problema su indeksais - lekseris negali atskirti masyvo kūrimo nuo indeksavimo. Todėl indeksavimas gali reikšti 
+				tris skirtingas išraiškas:
+
+					* Masyvo indeksavimas. Ši išraiška gaunama, jei indeksuojama išraiška yra masyvas. Patikrinama ar visi indeksai yra 
+					sveikieji skaičiai ir ar indeksų skaičius atitinka ranką.
+
+					* Indekso operatorius. Ši išraiška gaunama, jei indeksuojama išraiška yra objektas su tinkančiu indekso operatoriumi. 
+					Operatorius randamas taip pat kaip bet koks metodas.
+
+					* Masyvo kūrimas. Ši išraiška gaunama, jei indeksuojama išraiška yra tipas. Sukūriamas naujas masyvas pagal indeksus.
+
+				Jei nepavyksta panaudoti nei vienos išraiškos (pavyzdžiui, indeksuojamas objektas be indekso operatoriaus) gražinama klaida.
+
 			5.1.2.x Kvietimo išraiška
+
+				Kvietimo išraiška turi panašią problemą kaip indekso - sintaksiškai objekto kūrimas ir funkcijos kvietimas yra vienodi. 
+				Parsinimo metu šias išraiškas reikia atskirti. Galimos išraiškos:
+
+					* Objekto kūrimas. Išraiška gaunama jei kviečiama išraiška yra tipas. Šiuo atveju yra iškviečiamas objekto konstruktorius 
+					atitinkamais parametrais.
+
+					* Reikšmės tipo kūrimas. Išraiška gaunama jei kviečiama išraiška yra reikšmės tipas ir kviečiama be argumentų. Tai yra 
+					specialus konstruktoriaus atvejis, kadangi visi reikšmės tipai turi tuščią konstruktorių, kurį galima kviesti, bet jo 
+					negalima niekaip aprašyti.
+					;; reiktų linko į spec - D.
+
+					* Funkcijos objekto kvietimas. Išraiška gaunama jei kviečiama išraiška yra funkcijos tipo išraiška.
+
+					* Metodo kvietimas. Išraiška gaunama jei kviečiama išraiška yra metodas arba metodų grupė.
+
+				Gaunama viena iš išraiškų, arba gražinama klaida, jei išraiškos neįmanoma iškviesti.
 
 			5.1.2.x Gražinimo validacija
 
