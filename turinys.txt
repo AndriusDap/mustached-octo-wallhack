@@ -299,7 +299,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		Galimi operatoriai, surikiuoti nuo aukščiausio prioriteto iki žemiausio, yra:
 
-			Taško operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
+			Nario išraiškos operatorius ., funkcijos kvietimo operatorius (), indeksavimo operatorius [], didinimo ir mažinimo vienetu operatoriai einantys po operando x++, x--
 			Vienanariai operatoriai: bitų inversija ~x, loginė inversija !a, aritmetinė inversija -x, didinimo vienetu ++x, mažinimo vienetu --x, nurodomojo tipo keitimo operarius (<tipas>)x
 			Daugybos *, dalybos /, liekanos % operatoriai
 			Sudėties + ir skirtumo -
