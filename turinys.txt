@@ -663,7 +663,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Tokio priskyrimo atveju kairysis operandas taip turi būti ir dešininė išraiška, kadangi jo reikšmė bus skaitoma.
 
 			Visi priskyrimo operatoriai išskyrus "=" gali būti perdengti. 
-			
+
 		2.4.8. Vienanarės operacijos
 			
 			Palaikomi vienanariai operatoriai yra
@@ -696,6 +696,75 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.7.4. Stūmimo operacijos
 		2.4.10. Objektų kūrimas
 		2.4.11. Masyvų kūrimas
+
+			Masyvo kūrimo išraiška, panašiai kaip objekto kūrimo, įvykdyta gražina naują masyvą.
+
+			<tipas>[<matmenų sąrašas>]
+			<tipas>[<matmenų sąrašas>]{<išraiškų sąrašas>}
+			{<išraiškų sąrašas>}
+
+			Pirmasis variantas sukuria nurodyto tipo masyvą su nurodytais matmenimis. Antrasis variantas šį masyvą taip pat inicializuoja
+			su nurodytomis reikšmėmis. 
+			Matmenų sąrašas yra sąrašas dešininių "int" arba "uint" tipo išraiškų atskirtų kableliais.
+
+			Pavyzdžiai:
+
+				auto a = int[5]; // penkių elementų int tipo masyvas
+				auto b = bool[2, 2]; // 2x2 matmenų bool tipo matrica.
+
+			Inicialializacijos sąrašas yra sąrašas išraiškų, kurių reikšmėmis bus užpildytas masyvas atskirtų kableliais.
+
+				auto a = int[5]{1, 2, 3, 4, 5};
+
+			Inicializuojat masyvą jo matmenų sąrašą galima praleisti.
+
+				auto a = int[]{1, 2, 3, 4, 5};
+
+			Tokiu atveju matmenys bus parinkti pagal inicializacijos sąrašą. Sąrašo tipas turi atitikti masyvo tipą.
+			Jei inicializuojame masyve yra nurodyti matmenys, jie privalo atitikti inicializatoriaus matmenis.
+
+			Jei inicializacijos sąraše yra kitų sąrašų, daroma prielaida, jog yra kuriama matrica.
+
+				auto a = int[,]{{1, 2}, {3, 4}};
+
+			Jei matmenys nėra rašomi, jų skaičius visvien turi būti nurodomas kableliais.
+
+			Matricos formos privalo būti taisiklingos.
+
+				auto a = int[,]{{1, 2, 3}, {1, 2}}; // klaida, vienas stulpelis turi 3 elementus, kitas 2
+
+			Dantyto masyvo kūrimas aprašomas panašiai:
+
+				auto a = int[][5]; // int tipo masyvų masyvas
+
+			Šiuo atveju matmenys rašomi tik paskutiniame sąraše, kadangi šiuo atveju "int[]" yra masyvo elemento tipas ir kūrime nedalyvauja.
+
+				auto a = int[6][5]; // klaida, int[6] nėra validus tipas
+
+			Dantytus masyvus galima inicializuoti taip pat kaip įprastus.
+
+				auto a = int[][]{int[]{5}, int[]{6}, null};
+
+			Masyvo tipą taip pat galima nustatyti automatiškai, šiuo atveju visa išraiška yra tik inicializacijos sąrašas.
+
+				auto a = {1, 2, 3, 4, 5};
+
+			Šis sakinys analogiškas pirmam inicializacijos pavyzdžiui.
+
+			Sąrašo tipas yra nustatomas pagal elementų tipų hierarchiją, jie neprivalo būti vienodi. Tipas bus parinktas toks, kuris gali laikyti visų 
+			elementų reikšmes. Jei laikoma, kad "object" yra žemiausias tipas, o išraiškos tipas yra aukščiausias, bus parinktas aukščiausias 
+			įmanomas tipas. 
+
+			;; example
+
+			Inicializacijos sąrašas taip pat gali būti tuščias, bet šiuo atveju reikia nurodyti masyvo tipą.
+
+				auto a = int[]{};
+
+			Yra analogiška:
+
+				auto a = int[0];
+
 		2.4.12. Nurodomasis tipo keitimas
 
 			Jeigu statiškai neįmanoma įrodyti keitimo korektiškumo, bet vartotojas žino, jog jis bus teisingas, galimas nurodomasis tipo keitimas. 
