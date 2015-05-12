@@ -1466,58 +1466,58 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		Ši programa deklamuoja dainelės apie alaus butelius tekstą.
 		
-		// Ši programa naudoja biblioteką System.Speech.dll
-		use System;
-		use System.Speech.Synthesis;
+			// Ši programa naudoja biblioteką System.Speech.dll
+			use System;
+			use System.Speech.Synthesis;
 
-		entry auto BeerBottleSong = int()
-		{
-			auto synthesizer = SpeechSynthesizer();
-			synthesizer.SetOutputToDefaultAudioDevice();
-	
-			const auto firstLine = string(int count) { return string.Format("{0} on the wall, {0}.", Bottles(count)); };
-			const auto secondLine = string(int count) { return string.Format("Take one down and pass it around, {0} on the wall.", Bottles(count)); };
-			const auto finalLine = string.Format("Go to the store and buy some more, {0} on the wall.", Bottles(99));
-
-			auto count = 99;
-
-			synthesizer.Speak(firstLine(count));
-
-			while ((count -= 1) >= 0)
+			entry auto BeerBottleSong = int()
 			{
-				synthesizer.Speak(secondLine(count));
+				auto synthesizer = SpeechSynthesizer();
+				synthesizer.SetOutputToDefaultAudioDevice();
+	
+				const auto firstLine = string(int count) { return string.Format("{0} on the wall, {0}.", Bottles(count)); };
+				const auto secondLine = string(int count) { return string.Format("Take one down and pass it around, {0} on the wall.", Bottles(count)); };
+				const auto finalLine = string.Format("Go to the store and buy some more, {0} on the wall.", Bottles(99));
+
+				auto count = 99;
+
 				synthesizer.Speak(firstLine(count));
-			}
-	
-			synthesizer.Speak(finalLine);
-			return 0;
-		};
 
-		auto Bottles = string(int count)
-		{
-			string ret;
-
-			if (count > 0)
-			{
-				ret += count;
-
-				if (count > 1)
+				while ((count -= 1) >= 0)
 				{
-					ret += " bottles ";
+					synthesizer.Speak(secondLine(count));
+					synthesizer.Speak(firstLine(count));
+				}
+	
+				synthesizer.Speak(finalLine);
+				return 0;
+			};
+
+			auto Bottles = string(int count)
+			{
+				string ret;
+
+				if (count > 0)
+				{
+					ret += count;
+
+					if (count > 1)
+					{
+						ret += " bottles ";
+					}
+					else
+					{
+						ret += " bottle ";
+					}
 				}
 				else
 				{
-					ret += " bottle ";
+					ret += "no more bottles ";
 				}
-			}
-			else
-			{
-				ret += "no more bottles ";
-			}
 
-			ret += "of beer";
-			return ret;
-		};
+				ret += "of beer";
+				return ret;
+			};
 
 	4.4. Pirminiai skaičiai
 
