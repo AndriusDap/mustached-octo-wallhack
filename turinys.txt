@@ -140,7 +140,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		uint64, ulong	 System.UInt64	         8 baitų dydžio sveikasis skaičius be ženklo. Galimos reikšmės: [0; 18,446,744,073,709,551,615].
 		float	         System.Single	         4 baitų dydžio slankaus kablelio skaičius, atitinkantis IEC 60559:1989 standartą.
 		double	         System.Double	         8 baitų dydžio slankaus kablelio skaičius, atitinkantis IEC 60559:1989 standartą.
-		void	         System.Void	         Tipas neturintis reikšmės. Naudojamas pažymėti, jog funkcija negražina rezultato.
+		void	         System.Void	         Tipas neturintis reikšmės. Naudojamas pažymėti, jog funkcija negrąžina rezultato.
 		object	         String.Object	         Objektas – fundamentaliausias tipas. Jis gali laikyti bet kurio kito tipo reikšmes.
 		string	         System.String	         Simbolių eilutės tipas.
 
@@ -171,7 +171,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	2.2.2. Funkcijų tipai
 
-		LaborasLang kalboje, funkcijų tipus apibrėžia funkcijos gražinamas tipas ir jos priimamų argumentų tipai. 
+		LaborasLang kalboje, funkcijų tipus apibrėžia funkcijos grąžinamas tipas ir jos priimamų argumentų tipai. 
 		Pilna funkcijos tipo sintaksė yra:
 
 		<grąžinamas tipas>(<parametrų tipai atskirti kableliais>)
@@ -188,12 +188,12 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		int[](System.Collections.IList) - funkcija grąžina masyvą, kurio elemento tipas yra int, ir priima vieną argumentą, kurio tipas 
 		yra System.Collections.IList.
 
-		void tipas gali būti naudojamas tik kaip funkcijos gražinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše 
+		void tipas gali būti naudojamas tik kaip funkcijos grąžinamas tipas. C stiliaus sintaksė int(void), kurioje void parametrų sąraše 
 		reikšdavo parametrų nebuvimą nėra leidžiama, tam yra naudojamas tuščias parametrų sąrašas.
 
-		Kadangi funkcijos yra pirmos klasės nariai, funkcijos taip pat gali gražinti kitas funkcijas. Pavyzdys: 
+		Kadangi funkcijos yra pirmos klasės nariai, funkcijos taip pat gali grąžinti kitas funkcijas. Pavyzdys: 
 
-		string()() - funkcija, kuri gražina string() tipo funkciją ir neima jokių argumentų.
+		string()() - funkcija, kuri grąžina string() tipo funkciją ir neima jokių argumentų.
 
 		Funkcija, kurią laiko funkcijos tipo kintamasis, yra iškviečiama šalia kintamojo parašant skliausteliuose argumentus, atskirtus kableliais. Pavyzdžiui:
 
@@ -340,7 +340,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	2.4. Išraiškos
 
-		Išraiška yra kodo fragmentas, kurios gali gražinti reikšmę, arba priimti reikšmę. Išraiškos, kurios gražina reikšmę, dar vadinamos 
+		Išraiška yra kodo fragmentas, kurios gali grąžinti reikšmę, arba priimti reikšmę. Išraiškos, kurios grąžina reikšmę, dar vadinamos 
 		dešininėmis išraiškomis. Dauguma išraiškų yra dešininės. Išraiškos, kurios gali priimti reikšmę vadinamos kairinėmis išraiškomis. 
 		Kairinėmis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra dešininė ar kairinė priklauso nuo 
 		išraiškos. Šios taisyklės tiksliai aprašomos prie kiekvieno išraiškos tipo.
@@ -425,15 +425,15 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				* metodų grupė. Išraiška gaunama tada jei tipas turi kelis metodus tuo pačiu vardu. Šią išraišką reikia sukonkretinti taip, 
 				kad būtų parinktas vienas iš metodų. Tam yra du būdai:
-					* metodo kvietimas. Pagal argumentus bus parinktas reikiamas metodas, arba gražinama klaida jei tokio metodo nėra.
-					* panaudojimas kitose išraiškose. Jei išraiška reikalaja tam tikro tipo, bus parinktas tinkantis metodas arba gražinama 
+					* metodo kvietimas. Pagal argumentus bus parinktas reikiamas metodas, arba grąžinama klaida jei tokio metodo nėra.
+					* panaudojimas kitose išraiškose. Jei išraiška reikalaja tam tikro tipo, bus parinktas tinkantis metodas arba grąžinama 
 					klaida, jei tokio nėra.
 				 Kadangi metodų grupė neturi konkretaus tipo, ji negali būti naudojama deklaracijos inicializacijoje su tipu "auto".
 				 Sukonkretinus metodų grupę ji tampa metodo išraiška.
 
 				* sąvybė. Sąvybė gaunama kaip laukas. Sąvybė yra kairinė ir dešininė jei pasiekiami "set" ir "get" metodai atitinkamai.
 
-			Jei tipo narys turi apribotą pasiekiamumą ir nėra pasiekiamas iš failo, kuriame rašoma išraiška, gražinama klaida.
+			Jei tipo narys turi apribotą pasiekiamumą ir nėra pasiekiamas iš failo, kuriame rašoma išraiška, grąžinama klaida.
 			Pavyzdžiai:
 
 			Console . WriteLine
@@ -546,7 +546,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Funkcija gali būti funkcijos objektas, CLI metodas arba metodų grupė. Nors abi kategorijos kviečiamos vienodai, jų panaudojime 
 			yra subtilių skirtumų. Kviečiant argumentų tipai turi atitikti parametrams, arba turi būti galimas automatinis konvertavimas 
-			tarp jų. Kitaip gražinama klaida.
+			tarp jų. Kitaip grąžinama klaida.
 
 			Pavyzdžiai:
 
@@ -601,7 +601,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kviečiant funkcijų grupę atsiranda papildomas reikalavimas: pagal tipus turi būti įmanoma tiksliai nustatyti kurią funkciją
 				reikia kviesti. Jei argumentų tipai tiksliai neatitinka parametrų tipų, argumentai gali tikti kelioms funkcijoms iš grupės. 
-				Tokiu atveju gražinama klaida.
+				Tokiu atveju grąžinama klaida.
 
 				Pavyzdžiui:
 
@@ -705,12 +705,13 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		2.4.9. Dvinarės operacijos
 			2.4.7.1. Aritmetinės operacijos
 			2.4.7.2. Loginės operacijos
-			2.4.7.3. Bitinės operacijos
+			2.4.7.3. Bitų operacijos
 			2.4.7.4. Stūmimo operacijos
+
 		2.4.10. Objektų kūrimas
 		2.4.11. Masyvų kūrimas
 
-			Masyvo kūrimo išraiška, panašiai kaip objekto kūrimo, įvykdyta gražina naują masyvą.
+			Masyvo kūrimo išraiška, panašiai kaip objekto kūrimo, įvykdyta grąžina naują masyvą.
 
 			<tipas>[<matmenų sąrašas>]
 			<tipas>[<matmenų sąrašas>]{<išraiškų sąrašas>}
@@ -838,7 +839,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			* Deklaracija privalo būti inicializuota.
 			* Inicializatorius negali būti "null", kadangi "null" neturi tipo.
 
-			Jei nesilaikoma vieno iš šių apribojimų, kintamojo tipo nustatyti neįmanoma ir yra gražinama klaida.
+			Jei nesilaikoma vieno iš šių apribojimų, kintamojo tipo nustatyti neįmanoma ir yra grąžinama klaida.
 
 				auto foo; // klaida, nėra inicializacijos
 				auto bar = null; // klaida, null neturi tipo
@@ -961,18 +962,18 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				return;
 				return <reikšmė>;
 
-			"return" sakinio tipas privalo atitikti funkcijos gražinamą tipą. Jei gražinas "void" tipas, leidžiamas tik tuščias "return" sakinys. Toks sakinys naudojamas tik užbaigti funkcijos darbą. "void" tipo funkcijos gali neturėti "return" sakinio, jų darbas bus baigtas pasiekus funkcijos bloko galą. 
+			"return" sakinio tipas privalo atitikti funkcijos grąžinamą tipą. Jei grąžinas "void" tipas, leidžiamas tik tuščias "return" sakinys. Toks sakinys naudojamas tik užbaigti funkcijos darbą. "void" tipo funkcijos gali neturėti "return" sakinio, jų darbas bus baigtas pasiekus funkcijos bloko galą. 
 
-			Jei funkcijos tipas nėra "void", ji privalo gražinti reikšmę, todėl privalomas bent vienas "return" sakinys su reikšme. Šios reikšmės tipas turi atitikti funkcijos tipą, arba turi egzistuoti automatinis keitimas iš reikšmės į funkcijos gražinamą tipą.
+			Jei funkcijos tipas nėra "void", ji privalo grąžinti reikšmę, todėl privalomas bent vienas "return" sakinys su reikšme. Šios reikšmės tipas turi atitikti funkcijos tipą, arba turi egzistuoti automatinis keitimas iš reikšmės į funkcijos grąžinamą tipą.
 
-			Norint užtikrinti, jog funkcija tikrai gražins reikšmę, kompiliatoriuje įvedama gražinančio sakinio sąvoka.
+			Norint užtikrinti, jog funkcija tikrai grąžins reikšmę, kompiliatoriuje įvedama grąžinančio sakinio sąvoka.
 
-			Sakinys gražina jei:
+			Sakinys grąžina jei:
 			* tai yra "return" sakinys
-			* tai yra kodo blokas ir bent vienas jo sakinių gražina
-			* tai yra sąlygos sakinys, jis turi abi atšakas ir jos abi yra gražinantys blokai
+			* tai yra kodo blokas ir bent vienas jo sakinių grąžina
+			* tai yra sąlygos sakinys, jis turi abi atšakas ir jos abi yra grąžinantys blokai
 
-			Jei funkcijos blokas nėra gražinantis blokas, kompiliatorius gražina klaidą.
+			Jei funkcijos blokas nėra grąžinantis blokas, kompiliatorius grąžina klaidą.
 
 			Pavyzdžiai:
 
@@ -982,19 +983,19 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					int a = 5;
 				}
 
-				// klaida, ši funkcija negali gražinti
+				// klaida, ši funkcija negali grąžinti
 				void()
 				{
 					return 5;
 				}
 
-				// klaida, funcija negražina reikšmės
+				// klaida, funcija negrąžina reikšmės
 				int()
 				{
 					int a = 5;
 				}
 
-				// teisingas kodas, abi šakos gražina reikšmę
+				// teisingas kodas, abi šakos grąžina reikšmę
 				int()
 				{
 					int a = GetNum();
@@ -1008,7 +1009,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					}
 				}
 
-				// klaida, viena iš šakų negražina reikšmės
+				// klaida, viena iš šakų negrąžina reikšmės
 				int()
 				{
 					int a = GetNum();
@@ -1022,7 +1023,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					}
 				}
 
-				// klaida, viena iš šakų negražina reikšmės
+				// klaida, viena iš šakų negrąžina reikšmės
 				int()
 				{
 					int a = 5;
@@ -1036,7 +1037,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					}
 				}
 
-			Šis kodo fragmentas parodo sistemos trūkumą. Nors jūs esatę įsitikinę, kad funkcija gražins reikšmę, kompiliatorius naudoja 
+			Šis kodo fragmentas parodo sistemos trūkumą. Nors jūs esatę įsitikinę, kad funkcija grąžins reikšmę, kompiliatorius naudoja 
 			paprastą analizę, kuri negali garantuoti šio fakto. Tokiu atveju tenka naudoti "return" sakinius, kurie niekada nebus įvykdyti.
 
 		2.5.4 Tuščias sakinys
@@ -1050,7 +1051,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				<išraiška>;
 
-			Bet kokia išraiška taip pat gali būti panaudota kaip sakinys. Tokia išraiška bus įvykdyta ir jos gražinama reikšmė atmesta.
+			Bet kokia išraiška taip pat gali būti panaudota kaip sakinys. Tokia išraiška bus įvykdyta ir jos grąžinama reikšmė atmesta.
 
 		2.5.6. Kontrolės blokai
 
@@ -1075,7 +1076,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						a++;
 					}
 
-				Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau gražins klaidą (nebent yra kitų kintamųjų vardu a).
+				Kintamasis a galioja iki bloko pabaigos, bandymai jį naduoti vėliau grąžins klaidą (nebent yra kitų kintamųjų vardu a).
 
 					{
 						int b = 5;
@@ -1223,7 +1224,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						2. Įvykdoma ciklo sąlyga. Jei rezultatas nėra "true", baigiamas ciklo vykdymas.
 						3. Įvykdomas ciklo sakinys.
 						4. Jei nebuvo išeita iš sakinio (pavyzdžiui "return" sakiniu) ir yra aprašytas iteratorius, jis yra įvykdomas.
-							Vykdymas gražinamas į 2 punktą.
+							Vykdymas grąžinamas į 2 punktą.
 
 					Naudojant "while" ciklą, "for" galima aprašyti taip:
 
@@ -2142,7 +2143,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				* klasės skirtos apdoroti grupę struktūrų. Šios klasės iteruoja per lekserio mazgo vaikus, išparsina juos naudodamos kitas 
 				klases ir renka gautus objektus. Pavyzdžiai: kodo bloko mazgas, klasės mazgas.
 
-				* klasės skirtos apdoroti kelias vienos rūšies struktūras. Šios klasės gali gražinti skirtingus objektus atsižvelgiant į 
+				* klasės skirtos apdoroti kelias vienos rūšies struktūras. Šios klasės gali grąžinti skirtingus objektus atsižvelgiant į 
 				tai, kokio tipo lekserio mazgas buvo paduotas. Pavyzdžiai: išraiškos mazgo klasė, literalo mazgo klasė.
 
 				* klasės skirtos apdoroti vieną struktūrą. Šios klasės suformuoja mazgus, kurie bus naudojami gautame medyje. Paprastai 
@@ -2187,8 +2188,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		        	* ForEachNode
 		        	* FunctionDeclarationNode
 
-		        GetClass visada gražina šio failo klasę. GetMethod gražina metodą, jei mazgas yra metode. GetSymbol atlieka rekursinę 
-		        identifikatoriaus paiešką ir gražina išraišką, jei identifikatorius buvo rastas.
+		        GetClass visada grąžina šio failo klasę. GetMethod grąžina metodą, jei mazgas yra metode. GetSymbol atlieka rekursinę 
+		        identifikatoriaus paiešką ir grąžina išraišką, jei identifikatorius buvo rastas.
 
 		    5.1.2.x Laukai ir metodai
 
@@ -2196,7 +2197,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		    	Tai yra daroma jei funkcijos tipo kintamasis yra konstanta ir taip pat yra inicializuotas. Kadangi kintamojo reikšmė 
 		    	negali kisti, jį galima saugiai keisti metodu. Metodo iškvietimas yra greitesnis negu funkcijos objekto, taip pat metodai 
 		    	leidžia naudoti perdengimą. Dėl šių priežasčių standartinis funkcijos kintamumo atributas yra "const". Metodas išlaiko 
-		    	tą patį gražinamą tipą, pasiekiamumo atributą ir parametrus kaip funkcija.
+		    	tą patį grąžinamą tipą, pasiekiamumo atributą ir parametrus kaip funkcija.
 
 			5.1.2.x Anoniminių metodų generavimas
 
@@ -2241,7 +2242,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 					1. Deklaracija. Parsinami "use" sakiniai ir kintamųjų deklaracijos. 
 						Deklaracijose yra parsinami tik tipai ir identifikatoriai. Funkcijos kintamojo atveju yra išparsinama funkcijos 
-						antraštė - gražinamas tipas ir parametrai. Tai reikalinga rekursijai - parsinant funkcijos kodą privalo egzistuoti 
+						antraštė - grąžinamas tipas ir parametrai. Tai reikalinga rekursijai - parsinant funkcijos kodą privalo egzistuoti 
 						jos kintamasis. Visi metodai ir laukai, kurių tipas nėra "auto" yra deklaruojami klasės TypeEmitter.
 
 					2. Inicializacija. Parsinami laukų inicializatoriai. 
@@ -2256,7 +2257,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			5.1.2.x Automatinis tipo radimas
 
 				Vienas iš parserio fundamentaliųjų tipų yra netikras tipas - "auto". Jei išparsinus deklaracijos tipą gaunamas šis tipas,
-				 jis yra keičiamas inicializatoriaus tipu, arba gražinama klaida jei inicializatoriaus nėra ar jis netinkamas tipo radimui.
+				 jis yra keičiamas inicializatoriaus tipu, arba grąžinama klaida jei inicializatoriaus nėra ar jis netinkamas tipo radimui.
 
 				Lokalių kintamųjų tipo radimas paprastas - išparsinamas inicializatorius ir naudojamas jo tipas. Sudėtingas yra globalių 
 				kintamųjų tipo radimas. Kadangi inicializatoriaus parsinimas yra atidedamas, deklaracijos tipas gali būti nežinomas 
@@ -2281,7 +2282,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					* realieji skaičiai: reikšmė parsinama naudojant Covert klasės .ToSingle arba .ToDouble metodus, atsižvelgiant į tipą.
 					* sveikieji skaičiai: reikšmė parsinama naudojant BigInteger klasę. Gautas skaičius lyginamas su sveikųjų skaičių tipų 
 					ribinėm reikšmėm. Jei gautas skaičius "telpa" į nurodytą tipą, naudojamas šis tipas. Kitu atveju parenkamas didesnis 
-					tipas, arba gražinama klaida jei skaičius netelpa į nei vieną sveikųjų skaičių tipą.
+					tipas, arba grąžinama klaida jei skaičius netelpa į nei vieną sveikųjų skaičių tipą.
 
 			5.1.2.x IAmbiguousNode sąsaja
 
@@ -2293,7 +2294,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				        ExpressionNode RemoveAmbiguity(ContextNode context, TypeReference expectedType);
 				    }
 
-				Jei išraiškos tipą įmanoma pakeisti į norimą, metodas gražina naują išraišką, kitu atveju gražinama ta pati išraiška.
+				Jei išraiškos tipą įmanoma pakeisti į norimą, metodas grąžina naują išraišką, kitu atveju grąžinama ta pati išraiška.
 				Toks tipo keitimas leidžia veiksmus, kurie kitaip būtų negalimi, taip pat leidžia panaikinti dviprasmybes kai kurios 
 				išraiškose. Paprastai ši sąsaja naudojama ExpressionNode.Parse metode, gavus naują išraišką patikrinama ar jos tipą įmanoma pakeisti į norimą.
 
@@ -2319,7 +2320,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			5.1.2.x Nario išraiška
 
 				Nario išraiškos veikimo principas - abu nariai parsinami kaip išraiškos, vėliau jungiami. Identifikatoriai nėra parsinami 
-				pilnai - gražinama identifikatoriaus išraiška, o to identifikatoriau apdorojimas paliekamas nario išraiškai.
+				pilnai - grąžinama identifikatoriaus išraiška, o to identifikatoriau apdorojimas paliekamas nario išraiškai.
 
 				Abi nario išraiškos dalys yra parsinamos kaip išraiškos. Jei išraiškos yra idenfitikatoriai, jos papildomai aprodojamos.
 
@@ -2327,7 +2328,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				išsaugojama. Ši išraiška gali būti bet kokio tipo.
 
 				Nario identifikatoriaus yra paeiliui parsinamas kaip visos įmanomos identifikatoriaus kategorijos. Jei nepavyksta viena 
-				kategorija, bandoma kita. Jei nepavyko nei viena kategorija, gražinama klaida. Bandymo tvarka:
+				kategorija, bandoma kita. Jei nepavyko nei viena kategorija, grąžinama klaida. Bandymo tvarka:
 					1. Laukas. Jei išraiška yra vardų grupė, bandomas kita kategorija. Jei išraiška yra tipas, ieškoma statinio lauko šiuo vardu. 
 					Kitais atvejais, išraiškos tipe ieškoma nestatinio lauko.
 					2. Metodas. Parisinimas analogiškas laukui. Ieškoma metodo arba metodų grupės.
@@ -2343,16 +2344,16 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.2.x Kvietimo išraiška
 
-			5.1.2.x Gražinimo validacija
+			5.1.2.x grąžinimo validacija
 
-				Parseris turi užtikrinti dvi gražinimo taisykles:
-					1. gražinamos reikšmės tipas sutampa su funkcijos gražinamu tipu, arba yra galimas automatinis tipo keitimas
-					2. jei funkcijos gražinamas tipas nėra "void", funkcija privalo garantuotai gražinti reikšmę
+				Parseris turi užtikrinti dvi grąžinimo taisykles:
+					1. grąžinamos reikšmės tipas sutampa su funkcijos grąžinamu tipu, arba yra galimas automatinis tipo keitimas
+					2. jei funkcijos grąžinamas tipas nėra "void", funkcija privalo garantuotai grąžinti reikšmę
 
-				Pirma taisyklė realizuojama "return" sakinio klasėje - parseris iš konteksto gauna funkciją, o iš jos gauna gražinamą tipą. 
-				Patikrinama ar galimas tokios reikšmės gražinimas.
+				Pirma taisyklė realizuojama "return" sakinio klasėje - parseris iš konteksto gauna funkciją, o iš jos gauna grąžinamą tipą. 
+				Patikrinama ar galimas tokios reikšmės grąžinimas.
 
-				Antrajai taisyklei buvo sukurta sąsaja IReturningNode. Šią sąsają realizuoja sakiniai, kuriuos įvykdžius galimas gražinimas iš metodo.
+				Antrajai taisyklei buvo sukurta sąsaja IReturningNode. Šią sąsają realizuoja sakiniai, kuriuos įvykdžius galimas grąžinimas iš metodo.
 
 				    interface IReturningNode
 				    {
@@ -2360,11 +2361,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				    }
 
 				Realizacijos:
-					* "return" sakinys. Šis sakinys garantuotai gražina.
-					* kodo blokas. Šis sakinys gražina jei bent vienas jo sakinių gražina.
-					* sąlygos sakinys. Šis sakinys gražina, jei egzistuoja abi atšakos ir jos abi yra gražinantys kodo blokai.
+					* "return" sakinys. Šis sakinys garantuotai grąžina.
+					* kodo blokas. Šis sakinys grąžina jei bent vienas jo sakinių grąžina.
+					* sąlygos sakinys. Šis sakinys grąžina, jei egzistuoja abi atšakos ir jos abi yra grąžinantys kodo blokai.
 
-				Išparsinus funkcijos deklaraciją patikrinama ar jos blokas gražina. Jei negražina, o gražinamas tipas nėra "void", parseris gražina klaidą.
+				Išparsinus funkcijos deklaraciją patikrinama ar jos blokas grąžina. Jei negrąžina, o grąžinamas tipas nėra "void", parseris grąžina klaidą.
 
 				Tokia realizacija leidžia nerašyti "return" sakinio metodo gale, jei garantuojama, kad toks sakinys yra anksčiau ir bus pasiektas.
 
@@ -2380,7 +2381,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 						}
 					}
 
-					Nors metodo bloke nėra "return" sakinio, jis garantuotai gražina, kadangi yra sąlygos sakinys, kurio abi atšakos garantuotai gražina.
+					Nors metodo bloke nėra "return" sakinio, jis garantuotai grąžina, kadangi yra sąlygos sakinys, kurio abi atšakos garantuotai grąžina.
 
 			5.1.2.x Importavimo realizacija
 
@@ -2491,9 +2492,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kiekvienas funkcijos tipas LaborasLang kalboje atitinka vieną bazinį funktorių. Bazinis funktoriaus tipas yra abstrakti 
 				klasė, turinti du metodus:
-					1. Invoke(), kuris priima savyje laikomos funkcijos parametrus ir grąžina funkcijos gražinamą reikšmę;
+					1. Invoke(), kuris priima savyje laikomos funkcijos parametrus ir grąžina funkcijos grąžinamą reikšmę;
 					2. AsDelegate(), kuris funktorių paverčia į CLI specifikaciją atitinkantį "delegate" objektą ([1], §I.8.9.3. Delegates). 
-					Šio gražinamo "delegate" objekto tipas yra deklaruotas kaip vidinis bazinio funktoriaus tipas.
+					Šio grąžinamo "delegate" objekto tipas yra deklaruotas kaip vidinis bazinio funktoriaus tipas.
 
 				Funktoriaus implementacijos tipas paveldi iš atitinkančio bazinio tipo. Šis tipas yra sukuriamas, kai funkcijos tipo 
 				kintamajam yra priskiriama tam tikra funkcija. Šio tipo Invoke() metodas iškvies priskirtą funkciją, o AsDelegate() metodas 
@@ -2656,7 +2657,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			anksčiau išsaugota. Išsaugojimas naudojamas pirmą kartą leidžiant testą arba kai pakinta medžio struktūra. Testas laikomas 
 			sekmingu, jei atitinka išsaugotas ir naujas medžiai. Taip pat atsižvelgiama į kompiliatoriaus klaidas - kiekviename teste yra 
 			nurodyta aibė klaidų, kurias testas turi gauti. Jei gaunamos klaidos neatitinka nurodytų, testas buvo nesekmingas. Taip 
-			patikrinama ar teisingas kodas buvo sekmindai išparsintas ir ar neteisingas kodas gražino reikiamas klaidas.
+			patikrinama ar teisingas kodas buvo sekmindai išparsintas ir ar neteisingas kodas grąžino reikiamas klaidas.
 
 		5.3.3. Kodo generatorius testavimas
 			
