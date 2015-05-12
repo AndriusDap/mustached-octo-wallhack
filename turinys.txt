@@ -712,7 +712,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		2.4.12. Nurodomasis tipo keitimas
 
 			Jeigu statiškai neįmanoma įrodyti keitimo korektiškumo, bet vartotojas žino, jog jis bus teisingas, galimas nurodomasis tipo keitimas. 
-			Šiame keitime vartotojas nurodo tipą į kurį nori keisti naudojant tipo keitimo operatorių apskliaustą norimą tipą:
+			Šiame keitime vartotojas nurodo tipą į kurį nori keisti naudojant tipo keitimo operatorių - apskliaustą norimą tipą:
 
 			(<naujas tipas>) <objektas kurio tipas keičiamas>
 
@@ -721,10 +721,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			string bar = "bar";
 			auto foo = (Object) bar; 
 
-			Tipo keitimas yra galimas kai 
+			Tipo keitimas yra galimas jei bent viena sąlyga galioja: 
 			•	Abu tipai yra primityvūs ir nei vienas jų nėra bool.
-			•	Vienas iš tipų gali būti priskirtas kitam.
-
+			•	Vienas iš tipų kintamasis gali būti priskirtas kito kito kintamajam.
 
 	2.5. Sakiniai
 
