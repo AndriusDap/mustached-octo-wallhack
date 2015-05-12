@@ -2050,22 +2050,22 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				ContextNode klasė:
 
-				abstract class ContextNode : ParserNode
-			    {
-			        public ContextNode Parent { get; private set; }
-			        public Parser Parser { get; private set; }
-			        public AssemblyEmitter Assembly { get { return Parser.Assembly; } }
+					abstract class ContextNode : ParserNode
+				    {
+				        public ContextNode Parent { get; private set; }
+				        public Parser Parser { get; private set; }
+				        public AssemblyEmitter Assembly { get { return Parser.Assembly; } }
 
-			        public abstract FunctionDeclarationNode GetMethod();
-			        public abstract ClassNode GetClass();
-			        public abstract ExpressionNode GetSymbol(string name, ContextNode scope, SequencePoint point);
+				        public abstract FunctionDeclarationNode GetMethod();
+				        public abstract ClassNode GetClass();
+				        public abstract ExpressionNode GetSymbol(string name, ContextNode scope, SequencePoint point);
 
-			        protected ContextNode(Parser parser, ContextNode parent, SequencePoint point) : base(point)
-			        {
-			        	Parser = parser;
-            			Parent = parent;
+				        protected ContextNode(Parser parser, ContextNode parent, SequencePoint point) : base(point)
+				        {
+				        	Parser = parser;
+	            			Parent = parent;
+				        }
 			        }
-		        }
 
 		        Iš šios klasės paveldi:
 		        	* ClassNode
@@ -2150,12 +2150,63 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				deklaravimo stadijoje. Tokiu atveju kintamasis yra sukūriamas tik inicializavimo stadijoje.
 
 			5.1.2.x Literalai
+
+				Literalą nusako du objektai - lekserio mazgo tipas ir mazgo tekstinė reikšmė. 
+
+				Literalų parsinimą sudaro šie žingsniai:
+
+					1. Pagal lekserio mazgo tipą randamas literalo tipas.
+					2. Pagal literalo tipą parenkamas reikšmės parsinimo algoritmas.
+
+				Palengvinti darbą su literalais buvo sukurta klasė Literal. Ši klasė turi IConvertible tipo literalo reikšmę ir operatorius 
+				skirtus konvertuoti šią reikšmę į norimus tipus. Todėl keičiant literalo tipą galima naudoti tą patį Literal objektą, 
+				reikšmės konvertavimas bus atliktas tik tada, kada reikšmė bus reikalinga.
+
+				Parsinimo algoritmai yra keli:
+					* teksto eilutės ir loginės reikšmės: sukuriamas Literal objektas su mazgo reikšme.
+					* tekstinis simbolis: taip pat kuriamas objektas, bet neleidžiamos reikšmės ilgesnės už 1.
+					* realieji skaičiai: reikšmė parsinama naudojant Covert klasės .ToSingle arba .ToDouble metodus, atsižvelgiant į tipą.
+					* sveikieji skaičiai: reikšmė parsinama naudojant BigInteger klasę. Gautas skaičius lyginamas su sveikųjų skaičių tipų 
+					ribinėm reikšmėm. Jei gautas skaičius "telpa" į nurodytą tipą, naudojamas šis tipas. Kitu atveju parenkamas didesnis 
+					tipas, arba gražinama klaida jei skaičius netelpa į nei vieną sveikųjų skaičių tipą.
+
+			5.1.2.x IAmbiguousNode sąsaja
+
+				Kai kurios išraiškos gali įgyti kelis tipus, iš kurių geriausią galima parinkti kompiliavimo metu. Šios išraiškos 
+				realizuoja sąsają IAmbiguousNode.
+
+				    interface IAmbiguousNode : IExpressionNode
+				    {
+				        ExpressionNode RemoveAmbiguity(ContextNode context, TypeReference expectedType);
+				    }
+
+				Jei išraiškos tipą įmanoma pakeisti į norimą, metodas gražina naują išraišką, kitu atveju gražinama ta pati išraiška.
+				Toks tipo keitimas leidžia veiksmus, kurie kitaip būtų negalimi, taip pat leidžia panaikinti dviprasmybes kai kurios 
+				išraiškose. Paprastai ši sąsaja naudojama ExpressionNode.Parse metode, gavus naują išraišką patikrinama ar jos tipą įmanoma pakeisti į norimą.
+
+				Šią sąsają realizuoja dvi klasės: LiteralNode ir AmbiguousMethodNode.
+
+			5.1.2.x Vidiniai medžio objektai
+
+				Kai kurios išraiškos yra naudojamos tik parserio viduje kaip tarpiniai objektai. Tai yra išraiškos, kurios negali būti 
+				įvykdytos, bet yra svarbios parsinimo metu.
+
+				5.1.2.x.x Tipas ir vardų grupė
+
+					Nors šios išraiškos neturi prasmės kodo generatoriui, jos yra naudojamos parsinant nario išraiškas. Vardų grupės 
+					paprastai būna panaudotos toliau parsinti tipams arba importavimo sakiniams, o tipai tampa narių išraiškos dalimi, 
+					arba jų informacija panaudojama deklaracijose.
+
+				5.1.2.x.x Metodų grupė
+
+					Ši išraiška gaunam, jei per nario išraišką pasiektas metodas yra perdengtas. Ji privalo būti pakeista metodo išraiška, 
+					bet jos parsinimo metu nėra tam reikalingos infomacijos. Kviečiant tokią išraišką reikiamas metodas yra parenkamas 
+					naudojant MetadataHelpers klasę. Naudojant šią išraišką tarp kitų išraiškų, metodas parenkamas pagal reikamą funckijos tipą. 
+
 			5.1.2.x Nario išraiška
 			5.1.2.x Indekso išraiška
 			5.1.2.x Kvietimo išraiška
-			5.1.2.x IAmbiguousNode sąsaja
-			5.1.2.x Vidiniai medžio objektai
-			5.1.2.x Kodo blokų generavimas
+			5.1.2.x Kodo blokas
 			5.1.2.x Gražinimo validacija
 			5.1.2.x Importavimų panaudojimas
 
