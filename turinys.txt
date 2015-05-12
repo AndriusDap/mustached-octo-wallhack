@@ -2623,3 +2623,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 8. Priedai
 	8.1. Parserio medžio sąsajos
+
+
+SO FAR TODO:
+
+komentarai
+double check compilation of snippets
+
+lekseris, parseris, syntax matcheris, postprocesorius -> kabutes ir lietuviskai
