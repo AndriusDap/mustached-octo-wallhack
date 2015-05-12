@@ -2504,8 +2504,41 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 
 		5.5.1. Išvesties tipai
+
+			Pavyzdinis LaborasLang kompiliatorius palaiko trys asemblių tipus:
+
+				* „Console“ - tai yra aplikacija, naudojanti komandinę eilutę vartotojo sąsajai. Tai yra numatytasis asemblio tipas. Šio tipo
+				asembliai yra vykdomieji failai, jie turi galūnę „.exe“.
+				* „Windows“ - tai yra aplikacija, kuri neturi komandinės eilutės lango. Šio tipo asembiai yra vykdomieji failai, jie turi
+				galūnę „.exe“.
+				* „DLL“ - tai yra LaborasLang biblioteka. Šio tipo asembiai nėra vykdomieji failai, jie turi galūnę „.dll“.
+
 		5.5.2. Bibliotekų nuorodos
+
+			LaborasLang programavimo kalba sugeba naudotis kitų .NET programavimo kalbų bibliotekomis. Tai galima pasiekti LaborasLang
+			kompiliatoriui nurodant "/REF:<>" parametrą su bibliotekos asemblio failu. Nurodžius biblioteką, joje esančius tipus galima naudoti
+			tiesiogiai.
+
 		5.5.3. Šakninės direktorijos
+
+			LaborasLang kalbos pavyzdinis kompiliatorius palaiko „Šakninių direktorijų“ sąvoką. Šios direktorijos nurodo kompiliatoriui į kokias
+			vardų grupes įdėti LaborasLang tipus. Kadangi kiekvienas LaborasLang išeities kodo failas pavirsta į klasę kompiliavimu metu,
+			tai kiekvienam failui galima priskirti po vardų grupę. Nurodytose šakninėse direktorijose esantys failai būna priskiriami į tuščią
+			vardų grupę, o failai, esantys pakatalogiuose įgyja pakatalogių vardų grupę. Pavyzdžiui, jei nurodoma viena šaktininė direktorija
+			„C:\MySource“, tai šie failai pateks į atitinkamas vardų grupes:
+
+				C:\MySource\a.ll                                 (tuščia vardų grupė)
+
+				C:\MySource\First\b.ll                           First
+
+				C:\MySource\Second\b.ll                          Second
+
+				C:\MySource\First\Sub\b.ll                       First.Sub
+
+			Kiekvienoje vardų grupėje gali būti tik vienas išeities kodo failas, turintis tokį patį pavadinimą. Jei yra nurodyta bent viena
+			šakninė direktorija, visi išeities kodo failai turi būti bent viename šakninės direktorijos pakatalogyje. Jei nenurodyta nei viena
+			šakninė direktorija, failams, kurie yra nurodomi pilnu vardu (pvz. „C:\MySource\a.ll“), priskiriama tuščia vardų grupė, failas,
+			kurie nurodomi naudojantis reliatyvų vardą (pvz. „..\MySource\a.ll“) yra priskiriama reliatyvią direktoriją atitinkanti vardų grupė.
 
 6. Išvados
 
