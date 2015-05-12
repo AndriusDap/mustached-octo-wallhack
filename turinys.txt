@@ -2160,11 +2160,76 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					naudojant MetadataHelpers klasę. Naudojant šią išraišką tarp kitų išraiškų, metodas parenkamas pagal reikamą funckijos tipą. 
 
 			5.1.2.x Nario išraiška
+
+				Nario išraiškos veikimo principas - abu nariai parsinami kaip išraiškos, vėliau jungiami. Identifikatoriai nėra parsinami 
+				pilnai - gražinama identifikatoriaus išraiška, o to identifikatoriau apdorojimas paliekamas nario išraiškai.
+
+				Abi nario išraiškos dalys yra parsinamos kaip išraiškos. Jei išraiškos yra idenfitikatoriai, jos papildomai aprodojamos.
+
+				Jei pagrindinė išraiška yra identifikatorius, ji toliau aprodojama kaip pavienis identifikatorius. Pagrindinė išraiška 
+				išsaugojama. Ši išraiška gali būti bet kokio tipo.
+
+				Nario identifikatoriaus yra paeiliui parsinamas kaip visos įmanomos identifikatoriaus kategorijos. Jei nepavyksta viena 
+				kategorija, bandoma kita. Jei nepavyko nei viena kategorija, gražinama klaida. Bandymo tvarka:
+					1. Laukas. Jei išraiška yra vardų grupė, bandomas kita kategorija. Jei išraiška yra tipas, ieškoma statinio lauko šiuo vardu. 
+					Kitais atvejais, išraiškos tipe ieškoma nestatinio lauko.
+					2. Metodas. Parisinimas analogiškas laukui. Ieškoma metodo arba metodų grupės.
+					3. Tipas. Jei išraiška yra vardų grupė, joje ieškoma tipo šiuo vardu, jei tipas - tipe ieškoma šio tipo. Kitais atvejais 
+					bandoma kita kategorija.
+					4. Vardų grupė. Jei išraiška yra vardų grupė, joje ieškoma tipo arba vardų grupės identifikatoriaus vardu. 
+					5. Savybė. Parsinimas analogiškas metodui ir laukui.
+
+				Jei rezultatas nėra vardų grupė, po parsinimo tikrinama ar šią išraišką galima pasiekti. Tikrinimas priklauso nuo išraiškos, 
+				jo veikimo principai atitinka CLI specifikaciją ([1] §I.8.5.3 Visibility, accessibility, and security).
+
 			5.1.2.x Indekso išraiška
+
 			5.1.2.x Kvietimo išraiška
-			5.1.2.x Kodo blokas
+
 			5.1.2.x Gražinimo validacija
-			5.1.2.x Importavimų panaudojimas
+
+				Parseris turi užtikrinti dvi gražinimo taisykles:
+					1. gražinamos reikšmės tipas sutampa su funkcijos gražinamu tipu, arba yra galimas automatinis tipo keitimas
+					2. jei funkcijos gražinamas tipas nėra "void", funkcija privalo garantuotai gražinti reikšmę
+
+				Pirma taisyklė realizuojama "return" sakinio klasėje - parseris iš konteksto gauna funkciją, o iš jos gauna gražinamą tipą. 
+				Patikrinama ar galimas tokios reikšmės gražinimas.
+
+				Antrajai taisyklei buvo sukurta sąsaja IReturningNode. Šią sąsają realizuoja sakiniai, kuriuos įvykdžius galimas gražinimas iš metodo.
+
+				    interface IReturningNode
+				    {
+				        bool Returns { get; }
+				    }
+
+				Realizacijos:
+					* "return" sakinys. Šis sakinys garantuotai gražina.
+					* kodo blokas. Šis sakinys gražina jei bent vienas jo sakinių gražina.
+					* sąlygos sakinys. Šis sakinys gražina, jei egzistuoja abi atšakos ir jos abi yra gražinantys kodo blokai.
+
+				Išparsinus funkcijos deklaraciją patikrinama ar jos blokas gražina. Jei negražina, o gražinamas tipas nėra "void", parseris gražina klaidą.
+
+				Tokia realizacija leidžia nerašyti "return" sakinio metodo gale, jei garantuojama, kad toks sakinys yra anksčiau ir bus pasiektas.
+
+					int(bool a)
+					{
+						if(a)
+						{
+							return 4;
+						}
+						else
+						{
+							return -4;
+						}
+					}
+
+					Nors metodo bloke nėra "return" sakinio, jis garantuotai gražina, kadangi yra sąlygos sakinys, kurio abi atšakos garantuotai gražina.
+
+			5.1.2.x Importavimo realizacija
+
+				Importavimo sakinys nurodo parseriui, kad vardų grupę reikia įtraukti į importuotų sąrašą. Vėliau šios vardų grupės yra 
+				naudojamos identifikatorių paieškoje. Kadangi tipai yra identifikuojami pagal jų pilną vardą, vardų grupės niekaip neįtakoja
+				kompiliuotos programos veikimo, tik pakeičia identifikatorių, kuriuo galima jį pasiekti.
 
 		5.1.3. Kodo generatorius
 			
