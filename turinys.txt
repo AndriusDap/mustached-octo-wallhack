@@ -2524,6 +2524,16 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				nepadengia visos kalbos gramatikos.
 
 		5.3.2. Parserio testavimas
+
+			Parserio testai pagrįsti nedidelių kodo fragmentų parsinimu. Šie fragmentai yra išleksinami ir išparsinami, bet kodo generatorius 
+			nėra kviečiamas. Tai pagreitina testus ir taip pat leidžia atsiskirti nuo generatoriaus ir galimų jo klaidų. Lekserio medžio 
+			sudėtingumas neleidžia jo rašyti ranka - testai būtų labai sudėtingai rašomi ir nepatikrintų ar atitinka lekserio duodama ir 
+			parseriui reikalinga struktūra. Įvykdžius testą suformuojama medžio tekstinė reprezentacija ir išsaugoma arba palyginima su 
+			anksčiau išsaugota. Išsaugojimas naudojamas pirmą kartą leidžiant testą arba kai pakinta medžio struktūra. Testas laikomas 
+			sekmingu, jei atitinka išsaugotas ir naujas medžiai. Taip pat atsižvelgiama į kompiliatoriaus klaidas - kiekviename teste yra 
+			nurodyta aibė klaidų, kurias testas turi gauti. Jei gaunamos klaidos neatitinka nurodytų, testas buvo nesekmingas. Taip 
+			patikrinama ar teisingas kodas buvo sekmindai išparsintas ir ar neteisingas kodas gražino reikiamas klaidas.
+			
 		5.3.3. Kodo generatorius testavimas
 			
 			Kodo generatoriaus testai testuoja skirtingas kodo generatoriaus dalis. Šiuos testus galima suskirstyti į tris grupes: vienetų 
