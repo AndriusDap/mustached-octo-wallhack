@@ -1,4 +1,4 @@
-Šiame darbe aprašoma kūriama programavimo kalba LaborasLang ir pavyzdinis jos kompiliatorius.
+Šiame darbe aprašoma kuriama programavimo kalba LaborasLang ir pavyzdinis jos kompiliatorius.
 
 Pagrindiniai tikslai, keliami LaborasLang, yra:
 	•	Esamiems programuotojams pažįstama sintaksė. Yra siekiama, kad programuotojai, pažystami su bet kuria programavimo kalba, kurios sintaksė yra kilusi iš C kalbų šeimos, galėtų greitai išmokti programuoti su LaborasLang.
