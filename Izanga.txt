@@ -11,3 +11,9 @@ Pagrindiniai tikslai, keliami LaborasLang, yra:
 Kalbos sintaksė ir veikimas aprašyti jos specifikacijoje.
 
 Kompiliatorių sudaro trys dalys: lekseris, parseris ir kodo generatorius. Šių dalių autoriai yra Andrius Dapševičius, Darius Lapūnas ir Tautvydas Žylys atitinkamai. Lekseris atlieka sintaksinę išeities kodo analizę ir suformuoja abstraktų sintaksės medį. Parseris sukonkretina šį medį įvesdamas tipus, kintamuosius ir funkcijas. Kodo generatorius naudodamas parserio medį sugeneruoja galutinį programos kodą. Kompiliatorius yra rašomas C# programavimo kalba ir reikalauja sistemos palaikančios .NET 4.5 karkasą.
+
+
+Išvados:
+
+;; čia smarkiai draft
+Įgyti kompiliatorių kūrimo pagrindai, išmokta daug apie programavimo kalbų veikimą. Sukurtas kompiliatorius yra nemaža sistema su keliais autoriais, išmokta grupinio darbo, sistemų architektūros.
