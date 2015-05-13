@@ -10,7 +10,18 @@ Pagrindiniai tikslai, keliami LaborasLang, yra:
 
 Kalbos sintaksė ir veikimas aprašyti jos specifikacijoje.
 
-Kompiliatorių sudaro trys dalys: lekseris, parseris ir kodo generatorius. Šių dalių autoriai yra Andrius Dapševičius, Darius Lapūnas ir Tautvydas Žylys atitinkamai. Lekseris atlieka sintaksinę išeities kodo analizę ir suformuoja abstraktų sintaksės medį. Parseris sukonkretina šį medį įvesdamas tipus, kintamuosius ir funkcijas. Kodo generatorius naudodamas parserio medį sugeneruoja galutinį programos kodą. Kompiliatorius yra rašomas C# programavimo kalba ir reikalauja sistemos palaikančios .NET 4.5 karkasą.
+Kompiliatorių sudaro trys moduliai: lekseris, parseris ir kodo generatorius. Jų autoriai yra Andrius Dapševičius, Darius Lapūnas ir Tautvydas Žylys atitinkamai. 
+
+Lekseris atlieka sintaksinę kodo analizę. Šią analizę sudaro du etapai. Pirma, iš išeities kodo yra suformuojami žetonai, kiekvienas
+žetonas atitinka elementarų kodo fragmentą. Iš šių žetonų yra suformuojamas abstraktus sinktasės medis naudojant aukšto lygio gramatikos
+taisykles.
+
+Parseris naudodamas šį medį suformuoja naują, konkretesnį kodo medį. Šis medis turi tikslią tipų, kintamųjų ir funkcijų informaciją.
+Parseris taip pat atlieka didžiają dalį klaidų radimo - aptinka tipų sistemos, galiojimo srities ir kitas klaidas.
+
+Kodo generatorius naudodamas parserio medį sugeneruoja galutinį programos kodą. ;; not done
+
+Kompiliatorius yra rašomas C# programavimo kalba ir reikalauja sistemos palaikančios .NET 4.5 karkasą.
 
 Išvados:
 
