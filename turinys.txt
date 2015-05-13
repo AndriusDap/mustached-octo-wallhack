@@ -282,6 +282,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			•	Vienas iš tipų gali būti automatiškai keičiamas kitu;
 			•	Abu tipai yra primityvūs ir nei vienas jų nėra bool.
 
+		Laikoma, kad tipą A galima priskirti tipui B, jei tipai sutampa, arba jei įmanomas automatinis tipo A keitimas į tipą B.
+
 	2.2.5 Null reikšmės tipas
 
 		null yra išskirtinė reikšmė tuo, kad ji neturi tipo. Ją gali įgyti bet koks nuorodinio tipo kintamasis.
@@ -347,11 +349,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		Išraiška yra kodo fragmentas, kurios gali grąžinti reikšmę, arba priimti reikšmę. Išraiškos, kurios grąžina reikšmę, dar vadinamos 
 		dešininėmis išraiškomis. Dauguma išraiškų yra dešininės. Išraiškos, kurios gali priimti reikšmę vadinamos kairinėmis išraiškomis. 
 		Kairinėmis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra dešininė ar kairinė priklauso nuo 
-		išraiškos. Šios taisyklės tiksliai aprašomos prie kiekvieno išraiškos tipo.
+		išraiškos. Jei nenurodyta kitaip, išraiška yra tik dešininė.
 
 		2.4.1. Literalai
 
-			Literalai yra reikšmės įrašytos kode. Literalai yra tik dešininės išraiškos.
+			Literalai yra reikšmės įrašytos kode.
 
 			2.4.1.1 Loginiai literalai
 
@@ -380,6 +382,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					foo((long)5);
 
 				Literalo tipą galima paversti į "long" jo pabaigoje prirašant simbolį 'l' arba 'L'.
+
+					auto a = 161216l;
 
 			2.4.1.3 Realiųjų skaičių literalai
 
@@ -422,7 +426,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				* laukas. Išraiška gaunama jei:
 					* pagrindinė išraiška yra tipas. Šiuo atveju pasiekiami statiniai laukai, atitinkantys identifikatorių.
 					* pagrindinė išraiška yra reikšmė. Šiuo atveju pasiekiami nestatiniai laukai.
-				 Laukai yra visada dešininiai. Laukas yra kairinis jei nėra deklaruotas su atributu "readonly" ([1] §III.2.3 readonly. (prefix)). 
+				 Laukas yra kairinis jei nėra deklaruotas su atributu "readonly" ([1] §III.2.3 readonly. (prefix)). 
 
 				* metodas. Išraiška gaunama taip pat kaip laukas, bet metodai yra tik dešininiai. Naudojant metodą kaip išraišką, 
 				jis yra keičiamas funkcijos kintamuoju.
@@ -453,8 +457,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				
 		2.4.3. Pavieniai identifikatoriai
 		
-			Identifikatorius yra bet koks legalus simbolis (§3.3. Leksinė gramatika). Naudojant identifikatorių kaip išraišką atliekama paieška 
-			pagal galiojimo sritį:
+			Naudojant identifikatorių kaip išraišką atliekama paieška pagal galiojimo sritį:
 
 				1. Jei identifikatorius nėra naudojamas funkcijos viduje einama į punktą 4
 				2. Ieškoma tarp lokalių kintamųjų. Kodo bloke neradus identifikatoriaus, paieška tesiama aukštesniame bloke kol pasiekiamas 
@@ -476,6 +479,15 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Šiuo būdu gautos tipo ar vardų grupės išraiškos yra aprašytos skyriuje Nario išraiška.
 
+			Pavyzdys:
+
+				void(int a)
+				{
+					System.Console.WriteLine(a);
+				}
+
+			Šiame fragmento trečioje eilutėje yra du pavieniai identifikatoriai: vardų grupė System ir parametras a.
+
 		2.4.4. Indeksavimas
 
 			LaborasLang palaiko du indeksavimo tipus: masyvo indeksavimą ir indekso operatorių.
@@ -491,10 +503,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.2.x Masyvo indeksavimas
 
 				Jei kolekcija yra masyvas, indeksavimas nustatomas pagal masyvo tipą:
-
 				* Išraiškos reikšmės tipas yra masyvo elemento tipas.
 				* Indeksų skaičius turi atitikti masyvo matmenų skaičių.
 				* Indeksai gali būti sveikieji skaičiai išskyrus "int64" ir "uint64" tipus.
+
+				Ši išraiška yra dešininė ir kairinė.
 
 			2.4.2.x Indekso operatorius
 
@@ -513,6 +526,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					// objektas su keliais skritingais operatoriais
 					incrediblyComplexStructure[1, "agurkas", 6];
 					incrediblyComplexStructure[5];
+
+				LaborasLang leidžia panaudoti indekso operatorius aprašytus C# kalboje pagal ([5] §17.2.7.3 Member names reserved for indexers).
+				Ar išraiška yra dešininė, ar kairinė nustatoma taip pat kaip sąvybės išraiškoje.
 
 		2.4.5. Funkcijos
 
@@ -551,6 +567,8 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			Funkcija gali būti funkcijos objektas, CLI metodas arba metodų grupė. Nors abi kategorijos kviečiamos vienodai, jų panaudojime 
 			yra subtilių skirtumų. Kviečiant argumentų tipai turi atitikti parametrams, arba turi būti galimas automatinis konvertavimas 
 			tarp jų. Kitaip grąžinama klaida.
+
+			Argumentų sąrašas yra išraiškos atskirtos kableliais.
 
 			Pavyzdžiai:
 
@@ -630,8 +648,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.4.7 Operatorių perdengimas
 
-			LaborasLang palaiko palaiko perdengtų operatorių panaudojimą. Perdengtus operatorius galima iškviesti, jei jie yra deklaruoti 
-			pagal CLI standartą ([1] §I.10.3 Operator overloading). Tokios išraiškos rezultatas yra kviečiamas operatoriaus metodas.
+			LaborasLang palaiko palaiko perdengtų operatorių panaudojimą. Perdengus operatorių norimui tipui, šį operatorių galima naudoti
+			su tipo reikšmėmis kaip įprastą operatorių. Perdengtus operatorius galima iškviesti, jei jie yra deklaruoti pagal
+			CLI standartą ([1] §I.10.3 Operator overloading). Tokios išraiškos rezultatas yra kviečiamas peratoriaus metodas.
 
 			Pavyzdžiui:
 
@@ -649,7 +668,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Kairysis operandas privalo būti kairinė išraiška, dešinysis - dešininė.
 
-			Operandų tipai turi sutapti, arba turi būti galimas automatinis dešinio operandi tipo keitimas į kairiojo operando tipą.
+			Dešinio operando tipas turi būti priskiriamas kairiojo operando tipui.
 
 			LaborasLang palaiko paprastą priskyrimą "=" ir sudėtinį priskyrimą "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=".
 
@@ -666,7 +685,18 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				a = a + b;
 				a = a << b;
 
-			Tokio priskyrimo atveju kairysis operandas taip turi būti ir dešininė išraiška, kadangi jo reikšmė bus skaitoma.
+			Tokio priskyrimo atveju kairysis operandas taip turi būti ir dešininė išraiška, kadangi jo reikšmė bus skaitoma. Kompiliavimo
+			metu ši operacija bus keičiama priskyrimo ir dvinario operatoriaus išraiška, arba perdengto operatoriaus metodu, jei toks yra.
+
+			Ši išraiška grąžina dešiniojo operando reikšmę, todėl priskyrimo operacijas galima jungti.
+
+				a = b = c;
+
+			Kadangi grąžinama yra dešiniojo operando reikšmė, šio operando išraiška bus įvykdyta tik vieną kartą.
+
+				a = b = foo();
+
+			Funkcija "foo()" bus iškviesta vieną kartą ir jos rezultatas priskirtas abiems kintemiesiems.
 
 			Visi priskyrimo operatoriai išskyrus "=" gali būti perdengti. 
 
@@ -706,15 +736,17 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				auto a = !true; // a reikšmė yra false
 
-			Visi šie operatoriai taip gali būti su operandais, kurių tipai yra perkrovę tam tikros operacijos operandus ([1], §I.10.3.1 Unary operators).
+			Visi šie operatoriai gali būti perdengti.
 
 		2.4.9. Dvinarės operacijos
 
 			LaborasLang kalboje visos dvinarės operacijos susideda iš dviejų operandų ir operatoriaus. Jos yra užrašomos šitaip:
 
-			<operandas 1> <operatorius> <operandas 2>
+			<kairysis operandas> <operatorius> <dešinysis operandas>
 
 			Visos šios operacijos grąžina operacijos rezultatą, tačiau nekeičia operandų reikšmės.
+
+			Abu operandai privalo būti dešininės išraiškos.
 
 			2.4.7.1. Aritmetinės operacijos
 
@@ -727,16 +759,65 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					dalyba                            /
 					liekanos gavimo operacija         %
 
-				Kiekviena iš šių operacijų gali būti atlikta su sveikųjų skaičių arba slankiojo kablelio skaičių operandais. Papildomai,
-				sudėtis galima su simbolių eilutės operandais. Taip pat operacija galima, jei tipas yra perkrovęs tos operacijos operatorių
-				([1], §I.10.3.2 Binary Operators).
+				Operatoriai "+", "-", "*", "/" galimi su bet kokiais suderinamais skaitiniais tipais. "%" galimas tik su sveikaisiai
+				skaičiais. "+" operatorius taip pat galimas jei vienas iš operandų yra "string" tipo. Kompiliavimo metu tokia operacija
+				keičiama string.Concat metodu.
+
+				Operandai laikomi suderinamais jei vieno iš jų tipą galima priskriti kito operando tipui. Kitaip, jei vieno iš operandų
+				tipas gali laikyti abu operandus. Gražinama reikšmė yra šio tipo išraiška.
 
 				;; TODO: rezultato tipai, ka su kuo galima operaruoti, examples.
+				;; čia kinda simple, nežinau ar pvz išvis reikia - D.
 				
-
 			2.4.7.2. Loginės operacijos
+
+				Loginės operacijos yra naudojamos paprastiems loginiams veiksmams:
+				
+				    Operacija                         Operatorius
+					arba 							  ||
+					ir                                &&
+
+				Šios opercijos yra naudojamos su loginiais operandais, jų rezultatas taip pat yra loginė reikšmė.
+
 			2.4.7.3. Bitų operacijos
+
+				Bitų operacijos leidžia paprastą manipuliavimą bitais.
+
+				    Operacija                         Operatorius
+					arba     						  |
+					ir                                &
+					suma moduliu du                   ^
+
+				Abu operandai turi būti vienodo pločio sveikieji skaičiai. Rezultato tipas yra kairiojo operando tipas.
+
 			2.4.7.4. Stūmimo operacijos
+
+				Stumimo operacijos perstumia kairio operando bitus į kairė arba dešinę per pozicijų kiek yra dešinio operando reikšmė.
+
+				    Operacija                         Operatorius
+					stūmimas į kairę                  <<
+					stūmimas į dešinę                 >>
+
+				Kairys operandas turi būti bet koks sveikasis skaičius, o dešinysis - sveikasis skaičius, bet ne "long" ar "ulong".
+				Grąžinama reikšmė yra kairiojo operando tipo.
+				;; overflow reikia turbūt
+
+			2.4.7.5. Palyginimo operacijos
+
+				Palyginimo operacijos palyginina dvi reikšmes ir gražina loginę reikšmę.
+
+					Operacija                         Operatorius
+					lygu 							  ==
+					nelygu                            !=
+					daugiau                           >
+					mažiau                            <
+					daugiau arba lygu                 >=
+					mažiau arba lygu                  <=
+
+				Šios operacijos leidžiamos jei vienam iš operandų tipui galima priskriti kitą.
+				Operatoriai "==" ir "!=" leidžiami su bet kokio tipo reikšmėmis, kiti tik su primytiviais tipais.
+
+			Visi dvinariai operatoriai gali būti perdengti.
 
 		2.4.10. Objektų kūrimas
 			
@@ -2859,6 +2940,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 	[2] - Parsing Expression Grammars: A Recognition-Based Syntactic Foundation (http://bford.info/pub/lang/peg.pdf)
 	[3] - Packrat Parsing: Simple, Powerful, Lazy, Linear Time (http://bford.info/pub/lang/packrat-icfp02.pdf)
 	[4] - ALGOL-60 Translation (http://www.cs.utexas.edu/~EWD/MCReps/MR35.PDF)
+	[5] - Standard ECMA-334 - C# Language Specification (http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-334.pdf)
 	
 
 8. Priedai
