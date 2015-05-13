@@ -754,16 +754,63 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					dalyba                            /
 					liekanos gavimo operacija         %
 
-				Operacijos "+", "-", "*", "/" galimos su bet kokiais suderinamais skaitiniais tipais. "%" galima tik su sveikaisiai skaičiais. "+" operacija taip pat galima jei vienas iš operandų yra "string" tipo. Kompiliavimo metu tokia operacija keičiama string.Concat metodu.
+				Operatoriai "+", "-", "*", "/" galimi su bet kokiais suderinamais skaitiniais tipais. "%" galimas tik su sveikaisiai
+				skaičiais. "+" operatorius taip pat galimas jei vienas iš operandų yra "string" tipo. Kompiliavimo metu tokia operacija
+				keičiama string.Concat metodu.
 
-				Operandai laikomi suderinamais jei vieno iš jų tipą galima priskriti kito operando tipui. Kitaip, jei vieno iš operandų tipas gali laikyti abu operandus. Gražinama reikšmė yra šio tipo išraiška.
+				Operandai laikomi suderinamais jei vieno iš jų tipą galima priskriti kito operando tipui. Kitaip, jei vieno iš operandų
+				tipas gali laikyti abu operandus. Gražinama reikšmė yra šio tipo išraiška.
 
 				;; TODO: rezultato tipai, ka su kuo galima operaruoti, examples.
 				;; čia kinda simple, nežinau ar pvz išvis reikia - D.
 
 			2.4.7.2. Loginės operacijos
+
+				Loginės operacijos yra naudojamos paprastiems loginiams veiksmams:
+				
+				    Operacija                         Operatorius
+					arba 							  ||
+					ir                                &&
+
+				Šios opercijos yra naudojamos su loginiais operandais, jų rezultatas taip pat yra loginė reikšmė.
+
 			2.4.7.3. Bitų operacijos
+
+				Bitų operacijos leidžia paprastą manipuliavimą bitais.
+
+				    Operacija                         Operatorius
+					arba     						  |
+					ir                                &
+					suma moduliu du                   ^
+
+				Abu operandai turi būti vienodo pločio sveikieji skaičiai. Rezultato tipas yra kairiojo operando tipas.
+
 			2.4.7.4. Stūmimo operacijos
+
+				Stumimo operacijos perstumia kairio operando bitus į kairė arba dešinę per pozicijų kiek yra dešinio operando reikšmė.
+
+				    Operacija                         Operatorius
+					stūmimas į kairę                  <<
+					stūmimas į dešinę                 >>
+
+				Kairys operandas turi būti bet koks sveikasis skaičius, o dešinysis - sveikasis skaičius, bet ne "long" ar "ulong".
+				Grąžinama reikšmė yra kairiojo operando tipo.
+				;; overflow reikia turbūt
+
+			2.4.7.5. Palyginimo operacijos
+
+				Palyginimo operacijos palyginina dvi reikšmes ir gražina loginę reikšmę.
+
+					Operacija                         Operatorius
+					lygu 							  ==
+					nelygu                            !=
+					daugiau                           >
+					mažiau                            <
+					daugiau arba lygu                 >=
+					mažiau arba lygu                  <=
+
+				Šios operacijos leidžiamos jei vienam iš operandų tipui galima priskriti kitą.
+				Operatoriai "==" ir "!=" leidžiami su bet kokio tipo reikšmėmis, kiti tik su primytiviais tipais.
 
 			Visi dvinariai operatoriai gali būti perdengti.
 
