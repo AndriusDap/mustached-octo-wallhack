@@ -9,38 +9,36 @@ Summary
 Lentelių sąrašas
 Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
-	Asemblis – failas, kuris yra LaborasLang programos kompiliavimo rezultatas. 
+	Asemblis (assembly) – failas, kuris yra LaborasLang programos kompiliavimo rezultatas.
+	Automatinis tipo keitimas (implicit cast) – reikšmės tipas pagal poreikį keičiamas be vartotojo reikalavimo.
 	CIL (Common Intermediate Language) – kalba, kurią supranta ir geba vykdyti CLI implementacijų vykdymo aplinkos.
 	CLI (Common Language Infrastructure) – tai specifikacija, aprašanti virtualią vykdymo aplinką ir CIL kodą. CLI yra specifikuota ECMA-335 tarptautiniame standarte. Dvi populiariausios CLI implementacijos yra CLR (.NET karkaso dalis) ir Mono Runtime.
-	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie nurodomi LaborasLang kompiliatoriui kaip duomenys. 
-	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus vykdomąjį failą.
-	Išraiška (expression) – kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
-	Dešininė išraiška (rvalue) – išraiška, kurios reikšmę galima nuskaityti.
-	Kairinė išraiška (lvalue) – išraiška, kuriai galima nustatyti reikšmę.
-	Lokalus kintamasis (local variable) – kintamasis deklaruotas funkcijoje.
-	Globalus kintamasis (global variable) – kintamasis deklaruotas faile.
-	Galiojimo sritis (scope) – taisyklės nusakančios kintamųjų pasiekiamumą.
-	Sąveika (interoperability) – sistemos galimybė bendrauti su kitomis sistemomis. Kalbos kontekste tai yra galimybė naudoti resursus sukurtus kitomis kalbomis, taip pat kitose kalbose naudoti LaborasLang resursus.
-	Blokas, kodo blokas – Kodo fragmentas apribotas simboliais „{“ ir „}“.
-	Literalas (literal) – Kode įrašyta reikšmė.
-	Vertės tipas (value type) – tipas, kurio kintamasis laiko reikšmę.
-	Nuorodos tipas (reference type) – tipas, kurio kintamasis laiko nuorodą į reikšmę.
-	Daugybinis tipas (generic type) – tipas turintis kelis daugybinius parametrus, galintis aprašyti kelis skirtigus tipus.
-	Tipo pseudonimas (type alias) – papildomas vardas skiriamas tipui.
 	Dantytas masyvas (jagged array) – masyvas sudarytas iš kitų masyvų.
-	Automatinis tipo keitimas (implicit cast) – reikšmės tipas pagal poreikį keičiamas be vartotojo reikalavimo.
-	Nurodomasis tipo keitimas (explicit cast) – reikšmės tipas keičiamas, nes taip nurodė vartotojas.
-	Funkcijos parametras (function parameter) - funkcijos deklaruojamas kintamasis, kuris įgyja funkcijos argumento reikšmę. ;;geriau nemoku parašyti, bet niekas nežino kuo arg nuo param skirias
+	Daugybinis tipas (generic type) – tipas turintis kelis daugybinius parametrus, galintis aprašyti kelis skirtigus tipus.
+	Dešininė išraiška (rvalue) – išraiška, kurios reikšmę galima nuskaityti.
+	Funkcijos parametras (function parameter) - funkcijos deklaruojamas kintamasis, kuris įgyja funkcijos argumento reikšmę.
 	Funkcijos argumentas (function argument) - reikšmė paduodama funkcijai.
-	Vardų grupė (namespace) - ;; dunno, lol - D.
+	Galiojimo sritis (scope) – taisyklės nusakančios kintamųjų pasiekiamumą.
+	Globalus kintamasis (global variable) – kintamasis deklaruotas faile.
+	Išraiška (expression) – kodo fragmentas, kurį įvykdžius galima gauti reikšmę, arba jam nustatyti reikšmę.
+	Įeities taškas (entry point) – speciali funkcija, kuri yra iškviečiama paleidus vykdomąjį failą.
+	Kairinė išraiška (lvalue) – išraiška, kuriai galima nustatyti reikšmę.
+	LaborasLang programa – vienas ar daugiau išeities kodo failų, kurie nurodomi LaborasLang kompiliatoriui kaip duomenys. 
+	Literalas (literal) – Kode įrašyta reikšmė.
+	Lokalus kintamasis (local variable) – kintamasis deklaruotas funkcijoje.
+	Metaduomenys (metadata) - asemblyje egzistuojanti informacija apie tipus, metodus, laukus ir t.t.
+	Nurodomasis tipo keitimas (explicit cast) – reikšmės tipas keičiamas, nes taip nurodė vartotojas.
+	Nuorodos tipas (reference type) – tipas, kurio kintamasis laiko nuorodą į reikšmę.
 	PEG - parsing expression grammar ;; jei ką čia žemaitiškai o ne angliškai - A.
-	Metaduomenys - ;; TO DO
+	Sąveika (interoperability) – sistemos galimybė bendrauti su kitomis sistemomis. Kalbos kontekste tai yra galimybė naudoti resursus sukurtus kitomis kalbomis, taip pat kitose kalbose naudoti LaborasLang resursus.
+	Tipo pseudonimas (type alias) – papildomas vardas skiriamas tipui.
+	Vertės tipas (value type) – tipas, kurio kintamasis laiko reikšmę.
 
 Įvadas
 
 	Ši specifikacija aprašo programavimo kalbą, pavadinimu „LaborasLang“. LaborasLang kalbos autoriai yra Andrius Dapševičius, Darius Lapūnas ir Tautvydas Žilys. 
 	Pagrindiniai tikslai, keliami LaborasLang, yra:
-	•	Esamiems programuotojams pažįstama sintaksė. Yra siekiama, kad programuotojai,  pažystami su bet kuria programavimo kalba, kurios sintaksė yra kilusi iš C kalbų šeimos, galėtų greitai išmokti programuoti su LaborasLang.
+	•	Esamiems programuotojams pažįstama sintaksė. Yra siekiama, kad programuotojai, pažystami su bet kuria programavimo kalba, kurios sintaksė yra kilusi iš C kalbų šeimos, galėtų greitai išmokti programuoti su LaborasLang.
 	•	Statinė tipų sistema. LaborasLang kompiliatorius turi sugebėti statiškai patikrinti tipų naudojimą.
 	•	Funkcijos – pirmos klasės nariai. LaborasLang programavimo kalboje, funkcijas galima naudoti lygiai taip pat, kaip ir bet kurį kitą duomenų tipą.
 	•	Paprastumas. Vienas iš LaborasLang uždavinių – būti kuo įmanoma paprastesnei.
@@ -660,7 +658,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				bool foo = System.String.op_Equality("foo", "bar");
 
-		2.4.7. Priskyrimo operacija ;; parašyt kas būna kai dešinėj yra metodas
+		2.4.7. Priskyrimo operacija
 
 			Priskyrimo operacija yra naudojama vienai išraiškai priskirti kitos išraiškos reikšmę.
 
@@ -765,9 +763,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Operandai laikomi suderinamais jei vieno iš jų tipą galima priskriti kito operando tipui. Kitaip, jei vieno iš operandų
 				tipas gali laikyti abu operandus. Gražinama reikšmė yra šio tipo išraiška.
-
-				;; TODO: rezultato tipai, ka su kuo galima operaruoti, examples.
-				;; čia kinda simple, nežinau ar pvz išvis reikia - D.
 				
 			2.4.7.2. Loginės operacijos
 
@@ -800,7 +795,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				Kairys operandas turi būti bet koks sveikasis skaičius, o dešinysis - sveikasis skaičius, bet ne "long" ar "ulong".
 				Grąžinama reikšmė yra kairiojo operando tipo.
-				;; overflow reikia turbūt
 
 			2.4.7.5. Palyginimo operacijos
 
@@ -893,9 +887,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			Sąrašo tipas yra nustatomas pagal elementų tipų hierarchiją, jie neprivalo būti vienodi. Tipas bus parinktas toks, kuris gali laikyti visų 
 			elementų reikšmes. Jei laikoma, kad "object" yra žemiausias tipas, o išraiškos tipas yra aukščiausias, bus parinktas aukščiausias 
-			įmanomas tipas. 
-
-			;; example
+			įmanomas tipas.
 
 			Inicializacijos sąrašas taip pat gali būti tuščias, bet šiuo atveju reikia nurodyti masyvo tipą.
 
@@ -1013,9 +1005,6 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					b = 8; // reikšmę galima ir skaityti ir rašyti
 
 					const int c; // klaida, konstantas būtina inicializuoti
-
-				;; dabar galvoju, gal čia compiler detalė - D?
-				;; Ne. Butu implementacijos detale, jei pasakytumem, jog kompiliuojasi i metoda - T.
 
 				Standartinis atributas yra mutable, išskrus vieną atvejį. Globalūs funkcijų tipo kintamieji yra deklaruojami su const atributu. Tokia 
 				taisyklė leidžia funkcijų perdengimą ir kelias optimizacijas. Norint gauti globalų funkcijos kintamajį, kuris nėra konstanta, 
@@ -2086,7 +2075,13 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 	5.1. Komponentai
 	
-		;; Truksta ivadinio sakinio
+		Pavyzdinis LaborasLang kompiliatorius turi tris pagrindius komponentus: „Lexer“, „Parser“ ir kodo generatorių. Kiekvienas kalbos autorius
+		buvo atsakingas už vieną kompiliatoriaus dalį:
+
+			* Andrius Dapševičius kūrė „Lexer“;
+			* Darius Lapūnas kūrė „Parser“;
+			* Tautvydas Žilys kūrė kodo generatorių.
+
 		5.1.1. „Lexer“
 
 			Šis modulis iš programos išeities kodo sugeneruoja abstraktų sintaksės medį kuris yra toliau naudojamas semantinėje analizėje.
@@ -2470,7 +2465,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 			5.1.2.x Kvietimo išraiška
 
-			5.1.2.x grąžinimo validacija
+			5.1.2.x Grąžinimo validacija
 
 				Parseris turi užtikrinti dvi grąžinimo taisykles:
 					1. grąžinamos reikšmės tipas sutampa su funkcijos grąžinamu tipu, arba yra galimas automatinis tipo keitimas
