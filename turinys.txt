@@ -344,11 +344,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 		Išraiška yra kodo fragmentas, kurios gali grąžinti reikšmę, arba priimti reikšmę. Išraiškos, kurios grąžina reikšmę, dar vadinamos 
 		dešininėmis išraiškomis. Dauguma išraiškų yra dešininės. Išraiškos, kurios gali priimti reikšmę vadinamos kairinėmis išraiškomis. 
 		Kairinėmis išraiškomis gali būti yra simboliai, klasių nariai ir indeksavimas. Ar išraiška yra dešininė ar kairinė priklauso nuo 
-		išraiškos. Šios taisyklės tiksliai aprašomos prie kiekvieno išraiškos tipo.
+		išraiškos. Jei nenurodyta kitaip, išraiška yra tik dešininė.
 
 		2.4.1. Literalai
 
-			Literalai yra reikšmės įrašytos kode. Literalai yra tik dešininės išraiškos.
+			Literalai yra reikšmės įrašytos kode.
 
 			2.4.1.1 Loginiai literalai
 
@@ -421,7 +421,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				* laukas. Išraiška gaunama jei:
 					* pagrindinė išraiška yra tipas. Šiuo atveju pasiekiami statiniai laukai, atitinkantys identifikatorių.
 					* pagrindinė išraiška yra reikšmė. Šiuo atveju pasiekiami nestatiniai laukai.
-				 Laukai yra visada dešininiai. Laukas yra kairinis jei nėra deklaruotas su atributu "readonly" ([1] §III.2.3 readonly. (prefix)). 
+				 Laukas yra kairinis jei nėra deklaruotas su atributu "readonly" ([1] §III.2.3 readonly. (prefix)). 
 
 				* metodas. Išraiška gaunama taip pat kaip laukas, bet metodai yra tik dešininiai. Naudojant metodą kaip išraišką, 
 				jis yra keičiamas funkcijos kintamuoju.
@@ -498,10 +498,11 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 			2.4.2.x Masyvo indeksavimas
 
 				Jei kolekcija yra masyvas, indeksavimas nustatomas pagal masyvo tipą:
+					* Išraiškos reikšmės tipas yra masyvo elemento tipas.
+					* Indeksų skaičius turi atitikti masyvo matmenų skaičių.
+					* Indeksai gali būti sveikieji skaičiai išskyrus "int64" ir "uint64" tipus.
 
-				* Išraiškos reikšmės tipas yra masyvo elemento tipas.
-				* Indeksų skaičius turi atitikti masyvo matmenų skaičių.
-				* Indeksai gali būti sveikieji skaičiai išskyrus "int64" ir "uint64" tipus.
+				Ši išraiška yra dešininė ir kairinė.
 
 			2.4.2.x Indekso operatorius
 
@@ -522,6 +523,7 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					incrediblyComplexStructure[5];
 
 				LaborasLang leidžia panaudoti indekso operatorius aprašytus C# kalboje pagal ([5] §17.2.7.3 Member names reserved for indexers).
+				Ar išraiška yra dešininė, ar kairinė nustatoma taip pat kaip sąvybės išraiškoje.
 
 		2.4.5. Funkcijos
 
@@ -641,8 +643,9 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.4.7 Operatorių perdengimas
 
-			LaborasLang palaiko palaiko perdengtų operatorių panaudojimą. Perdengtus operatorius galima iškviesti, jei jie yra deklaruoti 
-			pagal CLI standartą ([1] §I.10.3 Operator overloading). Tokios išraiškos rezultatas yra kviečiamas operatoriaus metodas.
+			LaborasLang palaiko palaiko perdengtų operatorių panaudojimą. Perdengus operatorių norimui tipui, šį operatorių galima naudoti
+			su tipo reikšmėmis kaip įprastą operatorių. Perdengtus operatorius galima iškviesti, jei jie yra deklaruoti pagal
+			CLI standartą ([1] §I.10.3 Operator overloading). Tokios išraiškos rezultatas yra kviečiamas peratoriaus metodas.
 
 			Pavyzdžiui:
 
@@ -677,7 +680,18 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 				a = a + b;
 				a = a << b;
 
-			Tokio priskyrimo atveju kairysis operandas taip turi būti ir dešininė išraiška, kadangi jo reikšmė bus skaitoma.
+			Tokio priskyrimo atveju kairysis operandas taip turi būti ir dešininė išraiška, kadangi jo reikšmė bus skaitoma. Kompiliavimo
+			metu ši operacija bus keičiama priskyrimo ir dvinario operatoriaus išraiška, arba perdengto operatoriaus metodu, jei toks yra.
+
+			Ši išraiška grąžina dešiniojo operando reikšmę, todėl priskyrimo operacijas galima jungti.
+
+				a = b = c;
+
+			Kadangi grąžinama yra dešiniojo operando reikšmė, šio operando išraiška bus įvykdyta tik vieną kartą.
+
+				a = b = foo();
+
+			Funkcija "foo()" bus iškviesta vieną kartą ir jos rezultatas priskirtas abiems kintemiesiems.
 
 			Visi priskyrimo operatoriai išskyrus "=" gali būti perdengti. 
 
@@ -717,15 +731,17 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 				auto a = !true; // a reikšmė yra false
 
-			Visi šie operatoriai taip gali būti su operandais, kurių tipai yra perkrovę tam tikros operacijos operandus ([1], §I.10.3.1 Unary operators).
+			Visi šie operatoriai gali būti perdengti.
 
 		2.4.9. Dvinarės operacijos
 
 			LaborasLang kalboje visos dvinarės operacijos susideda iš dviejų operandų ir operatoriaus. Jos yra užrašomos šitaip:
 
-			<operandas 1> <operatorius> <operandas 2>
+			<kairysis operandas> <operatorius> <dešinysis operandas>
 
 			Visos šios operacijos grąžina operacijos rezultatą, tačiau nekeičia operandų reikšmės.
+
+			Abu operandai privalo būti dešininės išraiškos.
 
 			2.4.7.1. Aritmetinės operacijos
 
@@ -738,16 +754,18 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 					dalyba                            /
 					liekanos gavimo operacija         %
 
-				Kiekviena iš šių operacijų gali būti atlikta su sveikųjų skaičių arba slankiojo kablelio skaičių operandais. Papildomai,
-				sudėtis galima su simbolių eilutės operandais. Taip pat operacija galima, jei tipas yra perkrovęs tos operacijos operatorių
-				([1], §I.10.3.2 Binary Operators).
+				Operacijos "+", "-", "*", "/" galimos su bet kokiais suderinamais skaitiniais tipais. "%" galima tik su sveikaisiai skaičiais. "+" operacija taip pat galima jei vienas iš operandų yra "string" tipo. Kompiliavimo metu tokia operacija keičiama string.Concat metodu.
+
+				Operandai laikomi suderinamais jei vieno iš jų tipą galima priskriti kito operando tipui. Kitaip, jei vieno iš operandų tipas gali laikyti abu operandus. Gražinama reikšmė yra šio tipo išraiška.
 
 				;; TODO: rezultato tipai, ka su kuo galima operaruoti, examples.
-				
+				;; čia kinda simple, nežinau ar pvz išvis reikia - D.
 
 			2.4.7.2. Loginės operacijos
 			2.4.7.3. Bitų operacijos
 			2.4.7.4. Stūmimo operacijos
+
+			Visi dvinariai operatoriai gali būti perdengti.
 
 		2.4.10. Objektų kūrimas
 			
