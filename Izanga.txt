@@ -1,0 +1,13 @@
+Šiame darbe aprašoma kūriama programavimo kalba LaborasLang ir pavyzdinis jos kompiliatorius.
+
+Pagrindiniai tikslai, keliami LaborasLang, yra:
+	•	Esamiems programuotojams pažįstama sintaksė. Yra siekiama, kad programuotojai, pažystami su bet kuria programavimo kalba, kurios sintaksė yra kilusi iš C kalbų šeimos, galėtų greitai išmokti programuoti su LaborasLang.
+	•	Statinė tipų sistema. LaborasLang kompiliatorius turi sugebėti statiškai patikrinti tipų naudojimą.
+	•	Funkcijos – pirmos klasės nariai. LaborasLang programavimo kalboje, funkcijas galima naudoti lygiai taip pat, kaip ir bet kurį kitą duomenų tipą.
+	•	Paprastumas. Vienas iš LaborasLang uždavinių – būti kuo įmanoma paprastesnei.
+	•	Vykdymo greitis. LaborasLang kalba parašytos programos turi galėti efektyviai išnaudoti kompiuterio resursus.
+	•	Sąveika su kitomis programavimo kalbomis. LaborasLang kalba parašytos programos turi galėti naudotis bibliotekomis, kurios yra parašytos kitomis .NET programavimo kalbomis. Dėl šios priežasties, LaborasLang programos yra kompiliuojamos į CIL. Taip pat bibliotekos parašytos LaborasLang turi veikti kitose .NET kalbose.
+
+Kalbos sintaksė ir veikimas aprašyti jos specifikacijoje.
+
+Kompiliatorių sudaro trys dalys: lekseris, parseris ir kodo generatorius. Šių dalių autoriai yra Andrius Dapševičius, Darius Lapūnas ir Tautvydas Žylys atitinkamai. Lekseris atlieka sintaksinę išeities kodo analizę ir suformuoja abstraktų sintaksės medį. Parseris sukonkretina šį medį įvesdamas tipus, kintamuosius ir funkcijas. Kodo generatorius naudodamas parserio medį sugeneruoja galutinį programos kodą. Kompiliatorius yra rašomas C# programavimo kalba ir reikalauja sistemos palaikančios .NET 4.5 karkasą.
