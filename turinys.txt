@@ -255,12 +255,16 @@ Terminų ir santrumpų žodynas ;; TO DO: sort by name
 
 		2.2.4.1 Automatinis tipo keitimas
 
-			Kai kuriais atvejais nesutampa reikšmės tipas ir reikalaujamas tipas, bet kompiliatorius gali nustatyti, kad keitimas galimas. Keitimo pagrindinės taisyklės:
-			•	Jei tipai vienodi, keitimas nereikalingas. 
-			•	Jei tai primityvūs tipai, ar norimas tipas gali įgyti visas keičiamo tipo reikšmes.
-			•	Jei tai yra funkcijų tipai, ar sutampa parametrų skaičius? Ar reikšmės parametrus galima automatiškai keisti į norimo tipo parametrus?
-			•	Jei tai masyvų tipai, ar sutampa matmenų skaičius? Ar reikšmės elemento tipą galima keisti į norimo tipo elementą?
-			•	Ar reikšmės tipas paveldi iš norimo tipo?
+			Kai kuriais atvejais nesutampa reikšmės tipas ir reikalaujamas tipas, bet kompiliatorius gali nustatyti, kad keitimas galimas. Tipą galima keisti
+			automatiškai, jei galioja bent viena iš šių taisyklių:
+
+				•	Tipai yra vienodi;
+				•	Abu tipai yra primityvūs tipai ir egzistuoja teisinga tipo vertimo operacija (šios operacijos apibrėžtos žemiau).
+				•	Abu tipai yra masyvų tipai, jų matmenys sutampa, abiejų masyvų tipų elemento tipai yra nuorodiniai tipai arba
+					elemento tipai skiriasi tik ženklu (pvz int8 ir uint8.)
+				•	Tipas, iš kurio verčiama paveldi (jei tipas į kurį verčiama yra klasė) arba implementuoja (jei tipas į kurį verčiama
+					yra sąsaja) tipą į kurį verčiama.
+
 			Jei netenkinama nei viena šių taisyklių, keitimas neleidžiamas ir rodoma klaida.
 			Keičiant primityvius tipus, naudojama galimų keitimų lentelė.
 
